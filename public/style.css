@@ -1,0 +1,288 @@
+/* 
+    z-index
+    -1 : 
+     1 : ヘッダー , フッター
+     2 : 
+     3 : canvas
+     4 : ハンバーガーボタン
+     5 : 
+*/
+
+body {
+    margin: 0;
+    background-color: #EEB725;
+    height: 100vh;
+}
+/* -------------------------------------------------- */
+/* ヘッダー */
+
+header {
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    background-color: #ffffff;
+    border-style: none none solid;
+    border-color: #EEB706;
+    border-width: 1px;
+}
+
+#logo-img {
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+}
+
+#menu-button-on-img {
+    width: 30px;
+    height: 40px;
+    height: 20px;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    padding: 5px;
+}
+
+#header-space {
+    width: 100%;
+    height: 50px;
+}
+
+/* -------------------------------------------------- */
+/* フッター */
+footer {
+    z-index: 1;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 45px;
+    background-color: #ffffff;
+    border-style: none none solid;
+    border-color: #EEB706;
+    border-width: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#footer-text {
+    font-size: 12px;
+    color: #F2E1A2;
+}
+
+/* -------------------------------------------------- */
+/* ハンバーガーメニュー */
+canvas {
+    z-index: 3;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+
+#menu {
+    display: none;
+    z-index: 4;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.menu-button {
+    font-size: 20px;
+    color: #FFFFFF;
+    opacity: 0;
+    width: 60%;
+    margin: 20px auto;
+    max-width: 500px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#menu-header {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 50px;
+}
+
+#menu-button-off-img {
+    width: 30px;
+    height: 40px;
+    height: 20px;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    padding: 5px;
+}
+
+/* -------------------------------------------------- */
+/* メイン */
+.pages {
+    display: none;
+}
+
+/* -------------------------------------------------- */
+/* トップページ */
+
+#top-title {
+    font-size: 18px;
+    color: #FFFFFF;
+    width: 300px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+#top-logo-wrapper {
+    background-color: #FFFFFF;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+#top-logo-img {
+    width: 200px;
+    height: 200px;
+    margin: 25px;
+}
+
+#top-navi-text {
+    font-size: 18px;
+    color: #FFFFFF;
+    width: 300px;
+    margin: 60px auto 0;
+    text-align: center;
+}
+
+#top-login-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #00ACEE;
+    border-radius: 5px;
+    margin: 10px 25px;
+}
+
+#top-login-twitter-logo {
+    margin: 10px;
+    width: 20px;
+}
+
+#top-login-button-text {
+    margin: 10px;
+    font-size: 15px;
+    color: #FFFFFF
+}
+
+/* -------------------------------------------------- */
+/* マイページ */
+#my-profile-container {
+    background-color: #FFFFFF;
+    padding: 10px;
+}
+
+#my-title-wapper {
+    display: grid;
+    grid-template-rows: 25px 20px;
+    grid-template-columns: 45px 1fr 52px;
+    grid-template-areas:
+        "icon  name    prof"
+        "icon  title   prof";
+}
+
+#my-icon {
+    grid-area: icon;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+}
+
+#my-name {
+    grid-area: name;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+#my-title {
+    grid-area: title;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+#my-prof {
+    grid-area: prof;
+    width: 25px;
+    height: 25px;
+    margin: auto;
+}
+
+#my-bio {
+    font-size: 12px;
+    padding: 5px;
+}
+
+#my-edit-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 35px;
+}
+
+#my-edit-button-img {
+    margin: 2px 25px 0;
+    vertical-align: middle;
+    width: 70px;
+    height: 27px;
+    cursor: pointer;
+}
+
+.edit-mode {
+    display: none;
+}
+
+#add-list-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #FFFFFF;
+    opacity:0.9;
+    margin: 2px 0;
+    height: 60px;
+}
+
+#add-list-img {
+    width: 30px;
+    height: 30px;
+}
+
+#done-list-container {
+    margin-top: 25px; 
+}
+
+.list-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    margin: 2px 0;
+    height: 60px;
+}
+
+.list-check-box {
+    margin: 15px 15px 15px 25px;
+}
+
+.list-text-box {
+    font-size: 18px;
+    width: 80%;
+    margin-right: 25px;
+    white-space: nowrap; /* 横幅のMAXに達しても改行しない */
+    overflow: hidden; /* ハミ出した部分を隠す */
+    text-overflow: ellipsis; /* 「…」と省略 */
+    -webkit-text-overflow: ellipsis; /* Safari */
+    -o-text-overflow: ellipsis; /* Opera */
+}
+

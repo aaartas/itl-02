@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="./style.css">
+        <script type="text/javascript" src="./main.js"></script>
+    </head>
+    <body>
+        <canvas id="canvas-area"></canvas>
+
+        <header>
+            <img id="logo-img" src="./data/logo.svg" alt="">
+            <img id="menu-button-on-img" src="../data/menu.png" alt="">
+        </header>
+        <div id="header-space"></div>
+
+        <div id="menu">
+            <div id="menu-header">
+                <img id="menu-button-off-img" src="../data/menu.png" alt="">
+            </div>
+            <div class="menu-button" id="menu-button-home">HOME</div>
+            <div class="menu-button" id="menu-button-login">LOGIN</div>
+            <div class="menu-button" id="menu-button-logout">LOGUOT</div>
+            <div class="menu-button" id="menu-button-mypage">MY PAGE</div>
+            <div class="menu-button" id="menu-button-how">HOW TO</div>
+            <div class="menu-button" id="menu-button-show">SHOW</div>
+        </div>
+
+        <main>
+            <!-- トップページ -->
+            <div class="pages" id="top-page">
+                <div id="top-title">行きたい場所リストを共有しよう!</div>
+                <div id="top-logo-wrapper">
+                    <img id="top-logo-img" src="./data/logo.svg" alt="">
+                </div>
+                <div id="top-navi-text">サインインしてリストを作成</div>
+                <div id="top-login-button">
+                    <img id="top-login-twitter-logo" src="./data/twitter.svg" alt="">
+                    <div id="top-login-button-text">Twitterでサインイン</div>
+                </div>
+            </div>
+
+            <!-- マイページ -->
+            <div class="pages" id="my-page">
+                    <div id="my-profile-container">
+                        <div id="my-title-wapper">
+                            <img id="my-icon" src="./data/logo40.png" alt="">
+                            <div id="my-name"></div>
+                            <div id="my-title">の行きたいとこリスト</div>
+                            <img id="my-prof" src="./data/twitter.png" alt="">
+                        </div>
+                        <div id="my-bio">
+                            <p>テストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテスト</p>
+                        </div>
+                    </div>
+                    <div id="my-edit-wrapper">
+                        <img id="my-edit-button-img" src="./data/editbutton.svg" alt="">
+                    </div>
+                    <div id="list-container">
+                        <div class="edit-mode">
+                            <div id="add-list-wrapper">
+                                <img id="add-list-img" src="./data/addbutton.svg" alt="">
+                            </div>
+                        </div>
+                        <div id="yet-list-container"></div>
+                        <div id="done-list-container"></div>
+                    </div>
+                    
+
+            </div>
+
+            <!-- 閲覧ページ -->
+            <div class="pages" id="show-page">閲覧ページ</div>
+
+            <!-- 使い方ページ -->
+            <div class="pages" id="how-page">使い方ページ</div>
+        </main>
+        
+        
+
+        <footer>
+            <div id="footer-text">powered by teamSODA</div>
+        </footer>
+    </body>
+</html>
