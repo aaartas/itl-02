@@ -54,14 +54,24 @@
                             <p>テストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテストテキストテスト</p>
                         </div>
                     </div>
-                    <div id="my-edit-wrapper">
-                        <img id="my-edit-button-img" src="./data/editbutton.svg" alt="">
+                    <div class="my-view-mode">
+                        <div class="my-edit-wrapper">
+                            <img class="edit-button" id="my-edit-button-img" src="./data/editbutton.svg" alt="">
+                        </div>
                     </div>
+                    
+                    <div class="my-edit-mode">
+                        <div class="my-edit-wrapper" id="my-save-wrapper">
+                            <img class="edit-button" id="my-save-button-img" src="./data/savebutton.svg" alt="">
+                        </div>
+                    </div>
+                    
                     <div id="list-container">
-                        <div class="edit-mode">
+                        <div class="my-edit-mode">
                             <div id="add-list-wrapper">
                                 <img id="add-list-img" src="./data/addbutton.svg" alt="">
                             </div>
+                            <div class="my-add-mode"><input type="text" id="my-add-input"><button id="my-add-submit-button">追加</button></div>
                         </div>
                         <div id="yet-list-container"></div>
                         <div id="done-list-container"></div>

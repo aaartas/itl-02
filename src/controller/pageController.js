@@ -1,4 +1,13 @@
-//ページルーティング
+
+// ページ遷移用の関数
+
+// 引数にページ名を入力
+//   ''       :  トップページ
+//   'mypage' :  マイページ
+//   'show'   :  閲覧ページ
+//   'how'    :  使い方ページ
+// 引数を渡さない場合、URLパラメータを読んでページを切り替え
+
 export const routing = async (hash) => {
 
     if (hash == undefined) {
@@ -48,46 +57,3 @@ export const routing = async (hash) => {
         }
     }
 }
-
-// const showToppage = async () => {
-//     console.log('show-toppage');
-//     document.getElementById("top-page").style.display = 'block';
-//     document.getElementById("my-page").style.display = 'none';
-//     document.getElementById("show-page").style.display = 'none';
-//     document.getElementById("how-page").style.display = 'none';
-//     const { toppageController } = await import('./pages/toppageController');
-//     toppageController();
-// }
-
-// const showMypage = async () => {
-//     const { getAuth, onAuthStateChanged } = await import('firebase/auth');
-//     onAuthStateChanged(getAuth(), (user) => {
-//         if (user){
-//             console.log(user.uid);
-//             console.log('show-mypage');
-//             document.getElementById("top-page").style.display = 'none';
-//             document.getElementById("my-page").style.display = 'block';
-//             document.getElementById("show-page").style.display = 'none';
-//             document.getElementById("how-page").style.display = 'none';
-//         } else {
-//             console.log('logouted');
-//             routing('');
-//         }
-//     });
-// }
-
-// const showShowpage = () => {
-//     console.log('show-showpage');
-//     document.getElementById("top-page").style.display = 'none';
-//     document.getElementById("my-page").style.display = 'none';
-//     document.getElementById("show-page").style.display = 'block';
-//     document.getElementById("how-page").style.display = 'none';
-// }
-
-// const showHowpage = () => {
-//     console.log('show-how');
-//     document.getElementById("top-page").style.display = 'none';
-//     document.getElementById("my-page").style.display = 'none';
-//     document.getElementById("show-page").style.display = 'none';
-//     document.getElementById("how-page").style.display = 'block';
-// }

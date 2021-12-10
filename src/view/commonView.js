@@ -86,3 +86,42 @@ export const clickButton = () => {
     clickX = mouseX;
     clickY = mouseY;
 }
+
+//メニュー
+const speed = 20;
+const menu = document.getElementsByClassName("menu-button");
+const menuNum = menu.length;
+
+export const show = () => {
+    showAnimation();
+    document.getElementById("menu").style.display = 'block';
+    let count = 0;
+    const showMenu = () => {
+        for (let i = 0; i < menuNum; i++) {
+            menu[i].style.opacity = count / speed;
+        }
+        
+        count++;
+        if (count <= speed) {
+            requestAnimationFrame(showMenu);
+        }
+    }
+    showMenu();
+}
+
+export const hide = () => {
+    hideAnimation();
+    let count = 0;
+    const hideMenu = () => {
+        for (let i = 0; i < menuNum; i++){
+            menu[i].style.opacity = 1 - count / speed;
+        }
+        count++;
+        if (count <= speed) {
+            requestAnimationFrame(hideMenu);
+        } else {
+            document.getElementById("menu").style.display = 'none';
+        }
+    }
+    hideMenu();
+}

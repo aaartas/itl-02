@@ -1,17 +1,17 @@
 
-//共通ページ
-export const common = async () => {
+// 全ページ共通機能
+export const commonController = async () => {
     const { routing } = await import('./pageController');
     const { login, logout } = await import('../model/auth');
-    const { show, hide } = await import('../view/common/menuView');
-    const { clickButton } = await import('../view/common/canvas');
+    
 
-    //ロゴクリックでtopページに遷移
+    // ロゴクリック時、topページに遷移
     document.getElementById("logo-img").addEventListener( 'click', () => {
         routing('');
     }, false );
 
-    //ハンバーガーメニュー表示切り替え
+    // ハンバーガーメニュー表示切り替え
+    const { show, hide, clickButton } = await import('../view/commonView');
     document.getElementById("menu-button-on-img").addEventListener( 'click', () => {
         show();
     }, false );
@@ -19,7 +19,7 @@ export const common = async () => {
         hide();
     }, false );
 
-    //メニューリンク設定
+    // ハンバーガーメニューリンク設定
     document.getElementById("menu-button-home").addEventListener( 'click', () => {
         routing('');
         document.getElementById("menu").style.display = 'none';
@@ -54,6 +54,4 @@ export const common = async () => {
         document.getElementById("menu").style.display = 'none';
         clickButton();
     }, false );
-
-
 }

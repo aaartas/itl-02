@@ -224,14 +224,21 @@ canvas {
     padding: 5px;
 }
 
-#my-edit-wrapper {
+.my-edit-wrapper {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     height: 35px;
 }
 
-#my-edit-button-img {
+#my-save-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 35px;
+}
+
+.edit-button {
     margin: 2px 25px 0;
     vertical-align: middle;
     width: 70px;
@@ -239,7 +246,11 @@ canvas {
     cursor: pointer;
 }
 
-.edit-mode {
+.my-edit-mode {
+    display: none;
+}
+
+.my-add-mode {
     display: none;
 }
 
@@ -261,6 +272,7 @@ canvas {
 
 #done-list-container {
     margin-top: 25px; 
+    padding-bottom: 50px;
 }
 
 .list-wrapper {
@@ -271,7 +283,7 @@ canvas {
     height: 60px;
 }
 
-.list-check-box {
+.list-check-box-yet, .list-check-box-done {
     margin: 15px 15px 15px 25px;
 }
 

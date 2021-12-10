@@ -1,6 +1,6 @@
 
 window.addEventListener('load', async () => {
-    const { drawCanvas } = await import('./view/common/canvas');
+    const { drawCanvas } = await import('./view/commonView');
     drawCanvas();
     //firebase初期化
     const { initFirebase } = await import('./model/init');
@@ -9,11 +9,8 @@ window.addEventListener('load', async () => {
     const { routing } = await import('./controller/pageController');
     routing();
     //共通ページ
-    const { common } = await import('./controller/commonController');
-    common();
-    //開発用
-    // const { dev } = await import('./controller/devController');
-    // dev();
+    const { commonController } = await import('./controller/commonController');
+    commonController();
 }, false);
 
 window.addEventListener('hashchange', async () => {
