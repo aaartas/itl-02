@@ -8,50 +8,50 @@
 //   'how'    :  使い方ページ
 // 引数を渡さない場合、URLパラメータを読んでページを切り替え
 
-export const routing = async (hash) => {
-
-    if (hash == undefined) {
-        hash = location.hash.substr(1);
-        console.log('load-route : ' + hash);
-        if (hash === '') {
+export const routing = async (path) => {
+    scrollTo(0, 0);
+    if (path == undefined) {
+        path = location.pathname;
+        console.log('load-route : ' + path);
+        if (path === '/') {
             const { showToppage } = await import('./pages/toppageController')
             showToppage();
         } else
-        if (hash === 'mypage') {
-            const { showMypage } = await import('./pages/mypageController');
+        if (path === '/mypage') {
+            const { showMypage } = await import('./pages/mypageController')
             showMypage();
         } else
-        if (hash === 'show') {
+        if (/show/.test(path)) {
             const { showShowpage } = await import('./pages/showpageController');
             showShowpage();
         } else
-        if (hash === 'how') {
+        if (path === '/how') {
             const { showHowpage } = await import('./pages/howpageController');
             showHowpage();
         } else {
             history.back();
         }
     } else {
-        console.log('change-route : ' + hash);
-        if (hash === '') {
+        console.log('change-route : ' + path);
+        if (path === '') {
+            history.pushState(null, null, '/')
             const { showToppage } = await import('./pages/toppageController')
             showToppage();
-            history.pushState(null, null, '/')
         } else
-        if (hash === 'mypage') {
+        if (path === 'mypage') {
+            history.pushState(null, null, 'mypage');
             const { showMypage } = await import('./pages/mypageController')
             showMypage();
-            history.pushState(null, null, '#mypage');
         } else
-        if (hash === 'show') {
+        if (path === 'show') {
+            history.pushState(null, null, 'show?id=qluDnqRzxkdLO8U0GqSgUWUltPf1');
             const { showShowpage } = await import('./pages/showpageController');
             showShowpage();
-            history.pushState(null, null, '#show');
         } else
-        if (hash === 'how') {
+        if (path === 'how') {
+            history.pushState(null, null, 'how');
             const { showHowpage } = await import('./pages/howpageController');
             showHowpage();
-            history.pushState(null, null, '#how');
         } else {
             history.back();
         }

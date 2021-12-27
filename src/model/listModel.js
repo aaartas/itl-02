@@ -15,7 +15,9 @@ export const getLists = async (uid) => {
             id: doc.id,
             name: doc.data().name,
             check: doc.data().check,
-            removed: doc.data().removed
+            removed: doc.data().removed,
+            order: doc.data().order,
+            timestamp: doc.data().timestamp,
         })
     });
 
@@ -45,7 +47,8 @@ export const saveData = async (uid, yetLists, doneLists) => {
                 id: doc.id,
                 name: doc.data().name,
                 check: doc.data().check,
-                removed: doc.data().removed
+                removed: doc.data().removed,
+                order: doc.data().order
             })
         });
     }
@@ -55,12 +58,13 @@ export const saveData = async (uid, yetLists, doneLists) => {
         //元々行ったチェックされていたリストを更新
         doneLists.map((list) => {
             if(list.id === preList.id){
-                if(JSON.stringify(list) !== JSON.stringify(preList)){
+                if(list.removed && !preList.removed) {
                     const db = getFirestore();
                     updateDoc(doc(db, 'users', uid, 'lists', preList.id), {
                         name: list.name,
                         check: list.check,
                         removed: list.removed,
+                        order: list.order,
                         timestamp: serverTimestamp()
                     });
                 }
@@ -75,6 +79,7 @@ export const saveData = async (uid, yetLists, doneLists) => {
                         name: list.name,
                         check: list.check,
                         removed: list.removed,
+                        order: list.order,
                         timestamp: serverTimestamp()
                     });
                 }
@@ -92,10 +97,11 @@ export const saveData = async (uid, yetLists, doneLists) => {
     //DBにリストデータ新規作成
     newLists.map((list) => {
         const db = getFirestore();
-        addDoc(collection(db, "users", uid, 'lists'), {
+        addDoc(collection(db, 'users', uid, 'lists'), {
             name: list.name,
             check: list.check,
             removed: list.removed,
+            order: list.order,
             timestamp: serverTimestamp()
         });
     });

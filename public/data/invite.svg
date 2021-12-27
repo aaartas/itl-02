@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="77" height="25" viewBox="0 0 77 25">
+  <g id="グループ_70" data-name="グループ 70" transform="translate(-287 -185)">
+    <rect id="長方形_21" data-name="長方形 21" width="77" height="25" rx="2" transform="translate(287 185)" fill="#f59f30"/>
+    <g id="グループ_21" data-name="グループ 21" transform="translate(2 2)">
+      <text id="行きたい" transform="translate(295 199)" fill="#fff" font-size="10" font-family="HiraKakuProN-W3, Hiragino Kaku Gothic ProN"><tspan x="0" y="0">行きたい</tspan></text>
+      <path id="Icon_ionic-ios-send" data-name="Icon ionic-ios-send" d="M15.247,4.528,4.64,9.151a.243.243,0,0,0,.009.442l2.869,1.621a.463.463,0,0,0,.529-.052L13.7,6.284c.038-.032.127-.092.162-.058s-.02.124-.052.162L8.919,11.9a.461.461,0,0,0-.046.552l1.875,3.008a.244.244,0,0,0,.439-.006L15.573,4.848A.243.243,0,0,0,15.247,4.528Z" transform="translate(336.5 185.497)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

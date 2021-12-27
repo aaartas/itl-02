@@ -1,24 +1,32 @@
 /* 
     z-index
     -1 : 
-     1 : ヘッダー , フッター
-     2 : 
+     1 : 入力フォーム(マイページ)
+     2 : ヘッダー , フッター , 編集バー(マイページ) , 
      3 : canvas
      4 : ハンバーガーボタン
-     5 : 
+     5 : ポップアップ(マイページ)
 */
 
 body {
+	min-width: 100vw;
     margin: 0;
     background-color: #EEB725;
     height: 100vh;
+    font-family: sans-serif;
 }
+
+input{
+    -webkit-appearance: none;
+}
+
 /* -------------------------------------------------- */
 /* ヘッダー */
 
 header {
     z-index: 1;
     position: fixed;
+    top: 0;
     width: 100%;
     height: 50px;
     background-color: #ffffff;
@@ -30,7 +38,7 @@ header {
 #logo-img {
     width: 30px;
     height: 30px;
-    padding: 10px;
+    padding: 10px 25px;
 }
 
 #menu-button-on-img {
@@ -38,14 +46,9 @@ header {
     height: 40px;
     height: 20px;
     position: absolute;
-    right: 5px;
+    right: 20px;
     top: 10px;
     padding: 5px;
-}
-
-#header-space {
-    width: 100%;
-    height: 50px;
 }
 
 /* -------------------------------------------------- */
@@ -67,7 +70,7 @@ footer {
 
 #footer-text {
     font-size: 12px;
-    color: #F2E1A2;
+    color: #EEB706;
 }
 
 /* -------------------------------------------------- */
@@ -75,6 +78,7 @@ footer {
 canvas {
     z-index: 3;
     position: fixed;
+    top: 0;
     width: 100vw;
     height: 100vh;
     pointer-events: none;
@@ -84,10 +88,11 @@ canvas {
     display: none;
     z-index: 4;
     position: fixed;
-    top: 0;
+    top: 50px;
     right: 0;
     width: 100vw;
     height: 100vh;
+    padding-top: 50px;
 }
 
 .menu-button {
@@ -101,26 +106,11 @@ canvas {
     cursor: pointer;
 }
 
-#menu-header {
-    width: 100%;
-    height: 50px;
-    margin-bottom: 50px;
-}
-
-#menu-button-off-img {
-    width: 30px;
-    height: 40px;
-    height: 20px;
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    padding: 5px;
-}
-
 /* -------------------------------------------------- */
 /* メイン */
 .pages {
     display: none;
+    padding-top: 50px;
 }
 
 /* -------------------------------------------------- */
@@ -179,9 +169,12 @@ canvas {
 
 /* -------------------------------------------------- */
 /* マイページ */
+
+/* プロフィール */
 #my-profile-container {
     background-color: #FFFFFF;
-    padding: 10px;
+    padding: 12px 25px 4px;
+    margin-bottom: 4px;
 }
 
 #my-title-wapper {
@@ -210,47 +203,70 @@ canvas {
     grid-area: title;
     font-size: 16px;
     padding-left: 10px;
+    height: 18px;
+    border: none;
+    outline: none;
 }
 
 #my-prof {
     grid-area: prof;
     width: 25px;
     height: 25px;
-    margin: auto;
+    justify-self: end;
 }
 
 #my-bio {
+    position: relative;
+}
+
+#my-bio-textarea {
+    top: 0;
+    left: 0;
+    margin: 10px 0;
+    width: 100%;
+    height: 20px;
+    border: none;
     font-size: 12px;
-    padding: 5px;
+    line-height: 20px;
+    resize: none;
+    outline: none;
+}
+
+/* 編集バー */
+#my-sticky-container {
+    z-index: 1;
+    position: sticky;
+    top: 50px;
+    background-color: #EEB706;
 }
 
 .my-edit-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
     height: 35px;
 }
 
-#my-save-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    height: 35px;
+#my-share-button-img {
+    left: 0px;
 }
 
 .edit-button {
-    margin: 2px 25px 0;
-    vertical-align: middle;
+    margin: 4px 25px 0;
+    position: absolute;
+    right: 0px;
     width: 70px;
     height: 27px;
     cursor: pointer;
+}
+
+#my-edit-cancel-button-img {
+    left: 0px;
+    width: 45px;
 }
 
 .my-edit-mode {
     display: none;
 }
 
-.my-add-mode {
+.my-input-mode {
     display: none;
 }
 
@@ -261,8 +277,8 @@ canvas {
     cursor: pointer;
     background-color: #FFFFFF;
     opacity:0.9;
-    margin: 2px 0;
     height: 60px;
+    margin-bottom: 4px;
 }
 
 #add-list-img {
@@ -270,27 +286,86 @@ canvas {
     height: 30px;
 }
 
+/* 入力フォーム */
+#my-text-edit {
+    z-index: 2;
+    position: fixed;
+    top: 50px;
+    width: 100%;
+    height: 100%;
+    background-color: #D66805;
+}
+
+#edit-form-wrapper {
+    background-color: #FFFFFF;
+    position: relative;
+}
+
+#my-text-edit-area {
+    margin: 25px;
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 100px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+#my-input-submit-bar {
+    display: flex;
+}
+
+#my-input-cancel {
+    width: 100px;
+    margin-left: 25px;
+}
+
+.my-submit-button {
+    margin: 0 25px 0 auto;
+}
+
+/* リスト */
+
+#my-list-unregistered {
+    color: #FFF;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    margin: 20px auto;
+}
+
 #done-list-container {
     margin-top: 25px; 
     padding-bottom: 50px;
 }
 
+.list-parent {
+    position: relative;
+}
+
+.list-delete-button {
+    background-color: #FF0000;
+    height: 60px;
+}
+
 .list-wrapper {
+    position: absolute;
+    top: 0;
+    width: 100%;
     display: flex;
     align-items: center;
     background-color: #FFFFFF;
-    margin: 2px 0;
     height: 60px;
 }
 
 .list-check-box-yet, .list-check-box-done {
-    margin: 15px 15px 15px 25px;
+    padding: 15px 15px 15px 25px;
 }
 
 .list-text-box {
     font-size: 18px;
     width: 80%;
-    margin-right: 25px;
+    padding-right: 25px;
     white-space: nowrap; /* 横幅のMAXに達しても改行しない */
     overflow: hidden; /* ハミ出した部分を隠す */
     text-overflow: ellipsis; /* 「…」と省略 */
@@ -298,3 +373,124 @@ canvas {
     -o-text-overflow: ellipsis; /* Opera */
 }
 
+.list-sort-button {
+    padding: 15px 25px 15px 15px;
+}
+
+/* ポップアップ */
+#my-popup {
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+}
+
+#my-popup-wrapper {
+    background-color: #FFF;
+    width: 80%;
+    position: absolute;
+    top: 100px;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16);
+}
+
+.my-popup-item {
+    font-size: 12px;
+    text-align: center;
+    width: 80%;
+    margin: 10px auto;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+#my-popup-message {
+    font-weight: bold;
+}
+
+#my-popup-twitter {
+    background-color: #00ACEE;
+    color: #FFF;
+}
+
+#my-popup-copylink {
+    background-color: #EFECEC;
+}
+
+
+/* -------------------------------------------------- */
+/* 閲覧ページ */
+
+/* プロフィール */
+#show-profile-container {
+    background-color: #FFFFFF;
+    padding: 12px 25px 4px;
+}
+
+#show-title-wapper {
+    display: grid;
+    grid-template-rows: 25px 20px;
+    grid-template-columns: 45px 1fr 52px;
+    grid-template-areas:
+        "icon  name    prof"
+        "icon  title   prof";
+}
+
+#show-icon {
+    grid-area: icon;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+}
+
+#show-name {
+    grid-area: name;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+#show-title {
+    grid-area: title;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+#show-prof {
+    grid-area: prof;
+    width: 25px;
+    height: 25px;
+    justify-self: end;
+}
+
+#show-bio {
+    font-size: 12px;
+}
+
+#show-bio-text {
+    margin: 15px 0;
+    line-height: 20px;
+}
+
+#show-list-unregistered {
+    color: #FFF;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    margin: 20px auto;
+}
+
+#show-yet-list-container {
+    margin-top: 25px;
+}
+
+#show-done-list-container {
+    margin-top: 25px; 
+    padding-bottom: 50px;
+}
+
+.show-invite-button-img {
+    padding: 15px 25px 15px 15px;
+}

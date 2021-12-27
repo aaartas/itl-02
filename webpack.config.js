@@ -8,17 +8,19 @@ module.exports = {
         //  出力ファイルのディレクトリ名(省略可)
         path: `${__dirname}/public`,
         // 出力ファイル名
-        filename: 'main.js'
+        filename: 'main.js',
+        path: path.resolve(__dirname, 'public'),
     },
 
     devServer: {
         static: "public",
-        open: true
+        open: true,
+        historyApiFallback: true,
     },
     cache: {
         type: 'filesystem',
         buildDependencies: {
-          config: [__filename]
+            config: [__filename]
         }
-      }
+    }
 };
