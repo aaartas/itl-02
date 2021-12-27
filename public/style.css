@@ -1,8 +1,8 @@
 /* 
     z-index
     -1 : 
-     1 : 入力フォーム(マイページ)
-     2 : ヘッダー , フッター , 編集バー(マイページ) , 
+     1 : ヘッダー , フッター , 編集バー(マイページ)
+     2 : 入力フォーム(マイページ)
      3 : canvas
      4 : ハンバーガーボタン
      5 : ポップアップ(マイページ)
@@ -41,9 +41,8 @@ header {
     padding: 10px 25px;
 }
 
-#menu-button-on-img {
-    width: 30px;
-    height: 40px;
+#menu-button {
+    width: 20px;
     height: 20px;
     position: absolute;
     right: 20px;
@@ -109,7 +108,7 @@ canvas {
 /* -------------------------------------------------- */
 /* メイン */
 .pages {
-    display: none;
+    /* display: none; */
     padding-top: 50px;
 }
 
@@ -327,6 +326,7 @@ canvas {
 /* リスト */
 
 #my-list-unregistered {
+    display: none;
     color: #FFF;
     font-size: 20px;
     text-align: center;
@@ -385,7 +385,7 @@ canvas {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.2);
-    display: flex;
+    display: none;
     justify-content: center;
 }
 
@@ -475,6 +475,7 @@ canvas {
 }
 
 #show-list-unregistered {
+    display: none;
     color: #FFF;
     font-size: 20px;
     text-align: center;

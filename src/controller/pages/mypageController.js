@@ -1,3 +1,16 @@
+export const showMypage = () => {
+    const request = new XMLHttpRequest();
+    request.open('GET', '/template/mypage.html', true);
+    request.onload = () => {
+        if (request.status >= 200 && request.status < 400) {
+            const restxt=request.responseText;
+			document.getElementById('main').innerHTML = restxt;
+            showMypage__();
+        }
+    };
+    request.send();
+}
+
 // マイページ
 let mode;
 let uid;
@@ -8,7 +21,7 @@ let preLists = [];
 let yetLists = [];
 let doneLists = [];
 
-export const showMypage = async () => {
+export const showMypage__ = async () => {
     mode = 'view';
     
     const { getAuth, onAuthStateChanged } = await import('firebase/auth');
@@ -23,19 +36,13 @@ export const showMypage = async () => {
             // プロフィールの取得
             const { getUserData } = await import('../../model/userModel');
             userData = await getUserData(user.uid);
-            
             document.getElementById('my-icon').src = userData.user_icon;
             document.getElementById('my-name').innerHTML = userData.user_name;
             document.getElementById('my-title').value = userData.user_title;
             document.getElementById('my-title').readOnly = true;
             const bio = document.getElementById('my-bio-textarea');
             bio.value = userData.user_bio;
-            document.getElementById('my-popup').style.display = 'none';
-            document.getElementById('how-page').style.display = 'none';
-            document.getElementById('top-page').style.display = 'none';
-            document.getElementById('my-page').style.display = 'block';
-            document.getElementById('show-page').style.display = 'none';
-            document.getElementById('how-page').style.display = 'none';
+
             setMode('view');
             if (bio.offsetHeight < bio.scrollHeight) {
                 bio.style.height = bio.scrollHeight + 'px';
@@ -185,7 +192,7 @@ const setEvents = async () => {
 
     document.getElementById('my-popup-twitter').onclick = () => {
         document.getElementById('my-popup').style.display = 'none';
-        const url = "https://campa-room.web.app/show?id=" + uid;
+        const url = "https://campa-room.web.app/show/" + uid;
         const text = "行きたいとこリストを更新しました!";
         const hashtag = "行きたいとこリスト";
         location.href = 'http://twitter.com/share?url=' + url + '&text=' + text + '&hashtags=' + hashtag;
@@ -193,7 +200,7 @@ const setEvents = async () => {
 
     document.getElementById('my-popup-copylink').onclick = () => {
         document.getElementById('my-popup').style.display = 'none';
-        navigator.clipboard.writeText("https://campa-room.web.app/show?id=" + uid);
+        navigator.clipboard.writeText("https://campa-room.web.app/show/" + uid);
     };
 
     document.getElementById('my-popup-close').onclick = () => {
@@ -217,10 +224,10 @@ const addList = async (id, name, check) => {
 
     let checkBox = document.createElement('img');
     if (check) {
-        checkBox.setAttribute('src', './data/done.svg');
+        checkBox.setAttribute('src', '/data/done.svg');
         checkBox.setAttribute('class', 'list-check-box-done');
     } else {
-        checkBox.setAttribute('src', './data/yet.svg');
+        checkBox.setAttribute('src', '/data/yet.svg');
         checkBox.setAttribute('class', 'list-check-box-yet');
 
         checkBox.onclick = () => {
@@ -228,10 +235,10 @@ const addList = async (id, name, check) => {
                 const find = yetLists.filter(list => list.id === id);
                 console.log(find[0])
                 if (find[0].check) {
-                    checkBox.setAttribute('src', './data/yet.svg');
+                    checkBox.setAttribute('src', '/data/yet.svg');
                     find[0].check = false;
                 } else {
-                    checkBox.setAttribute('src', './data/done.svg');
+                    checkBox.setAttribute('src', '/data/done.svg');
                     find[0].check = true;
                 }
             }
@@ -262,7 +269,7 @@ const addList = async (id, name, check) => {
     // 並べ替えボタン
     // if (!check) {
     //     let sortButton = document.createElement('img');
-    //     sortButton.setAttribute('src', './data/sort.svg');
+    //     sortButton.setAttribute('src', '/data/sort.svg');
     //     sortButton.setAttribute('class', 'list-sort-button my-edit-mode');
     //     listWrapper.appendChild(sortButton);
 

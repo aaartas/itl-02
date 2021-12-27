@@ -1,11 +1,21 @@
 //閲覧ページ
-export const showShowpage = async () => {
-    
-    const url = new URL(window.location.href);
-    // URLSearchParamsオブジェクトを取得
-    const params = url.searchParams;
-    // getメソッド
-    const uid = params.get('id');
+export const showShowpage = () => {
+    const request = new XMLHttpRequest();
+    request.open('GET', '/template/show.html', true);
+    request.onload = () => {
+        if (request.status >= 200 && request.status < 400) {
+            const restxt=request.responseText;
+			document.getElementById('main').innerHTML = restxt;
+            showShowpage__();
+        }
+    };
+    request.send();
+}
+
+const showShowpage__ = async () => {
+    // URLからユーザーIDを取得
+    const path = location.pathname.toString();
+    const uid = path.substring(6);
 
     // プロフィールの取得
     const { getUserData } = await import('../../model/userModel');
@@ -28,11 +38,6 @@ export const showShowpage = async () => {
 
     setEvents(userData.twitter_disp_id);
     setLists(lists, uid, userData.twitter_sys_id);
-
-    document.getElementById('top-page').style.display = 'none';
-    document.getElementById('my-page').style.display = 'none';
-    document.getElementById('show-page').style.display = 'block';
-    document.getElementById('how-page').style.display = 'none';
 }
 
 const setEvents = (id) => {
@@ -44,9 +49,9 @@ const setEvents = (id) => {
 
 // listsをHTMLに追加
 const setLists = async (lists, uid, twitterID) => {
-    document.getElementById('yet-list-container').innerHTML = '';
-    document.getElementById('done-list-container').innerHTML = '';
-
+    document.getElementById('show-yet-list-container').innerHTML = '';
+    document.getElementById('show-done-list-container').innerHTML = '';
+    
     let yetLists = lists.filter(list => !list.check && !list.removed);
     yetLists.sort((a, b) => a.order - b.order);
     yetLists.forEach(list => {
@@ -74,10 +79,10 @@ const addList = async (id, name, check, uid, twitterID) => {
 
     let checkBox = document.createElement('img');
     if (check) {
-        checkBox.setAttribute('src', './data/done.svg');
+        checkBox.setAttribute('src', '/data/done.svg');
         checkBox.setAttribute('class', 'list-check-box-done');
     } else {
-        checkBox.setAttribute('src', './data/yet.svg');
+        checkBox.setAttribute('src', '/data/yet.svg');
         checkBox.setAttribute('class', 'list-check-box-yet');
     }
     
@@ -102,12 +107,12 @@ const addList = async (id, name, check, uid, twitterID) => {
         let inviteLink = document.createElement('a');
         let shareLink = 'https://twitter.com/messages/compose?';
         shareLink += 'recipient_id=' + twitterID;
-        shareLink += '&text=' + 'https://campa-room.web.app/show?id=' + uid + "%0A";
+        shareLink += '&text=' + 'https://campa-room.web.app/show/' + uid + "%0A";
         shareLink += '行きたいとこリストからの送信%0A' + name + 'に一緒に行きませんか?'
         inviteLink.setAttribute('href', shareLink);
 
         let inviteButton = document.createElement('img');
-        inviteButton.setAttribute('src', './data/invite.svg');
+        inviteButton.setAttribute('src', '/data/invite.svg');
         inviteButton.setAttribute('class', 'show-invite-button-img');
         inviteLink.appendChild(inviteButton);
         listWrapper.appendChild(inviteLink);

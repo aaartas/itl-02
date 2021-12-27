@@ -3,15 +3,15 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link type="text/css" rel="stylesheet" href="./style.css">
-        <script async type="text/javascript" src="./main.js"></script>
+        <link type="text/css" rel="stylesheet" href="/style.css">
+        <script async type="text/javascript" src="/main.js"></script>
     </head>
     <body>
         <canvas id="canvas-area"></canvas>
 
         <header>
-            <img id="logo-img" src="./data/logo.svg" alt="">
-            <div id="menu-button-on-img"></div>
+            <img id="logo-img" src="/data/logo.svg">
+            <div id="menu-button"></div>
         </header>
 
         <div id="menu">
@@ -24,119 +24,8 @@
         </div>
 
         <main id="main">
-            <!-- トップページ -->
-            <div class="pages" id="top-page">
-                <div id="top-title">行きたい場所リストを共有しよう!</div>
-                <div id="top-logo-wrapper">
-                    <img id="top-logo-img" src="./data/logo.svg" alt="">
-                </div>
-                <div id="top-navi-text">サインインしてリストを作成</div>
-                <div id="top-login-button">
-                    <img id="top-login-twitter-logo" src="./data/twitter.svg" alt="">
-                    <div id="top-login-button-text">Twitterでサインイン</div>
-                </div>
-            </div>
-
-            <!-- マイページ -->
-            <div class="pages" id="my-page">
-                <!-- 編集バー -->
-                <div id="my-sticky-container">
-                    <div class="my-view-mode">
-                        <div class="my-edit-wrapper">
-                            <img class="edit-button" id="my-share-button-img" src="./data/sharebutton.svg" alt="">
-                            <img class="edit-button" id="my-edit-button-img" src="./data/editbutton.svg" alt="">
-                        </div>
-                    </div>
-                    
-                    <div class="my-edit-mode">
-                        <div class="my-edit-wrapper">
-                            <img class="edit-button" id="my-edit-cancel-button-img" src="./data/editcancel.svg" alt="">
-                            <img class="edit-button" id="my-save-button-img" src="./data/savebutton.svg" alt="">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- プロフィール -->
-                <div id="my-profile-container">
-                    <div id="my-title-wapper">
-                        <img id="my-icon" src="./data/logo40.png" alt="">
-                        <div id="my-name"></div>
-                        <input type="text" id="my-title" class="my-editable">
-                    </div>
-                    <div id="my-bio">
-                        <textarea name="bio" id="my-bio-textarea" class="my-editable" placeholder="自己紹介文を入力しよう！"></textarea>
-                        <!-- <p id="my-bio-text"></p> -->
-                    </div>
-                </div>
-
-                
-                <!-- 入力フォーム -->
-                <div class="my-input-mode" id="my-text-edit">
-                    <div id="edit-form-wrapper">
-                        <div id="my-input-submit-bar">
-                            <div id="my-input-cancel">キャンセル</div>
-                            <img class="my-submit-button" id="my-add-submit-button" src="./data/addsubmit.svg" alt="">
-                            <img class="my-submit-button" id="my-rename-submit-button" src="./data/savebutton.svg" alt="">
-                        </div>
-                        <textarea name="edit-form" id="my-text-edit-area" rows="3"></textarea>
-                        
-                    </div>
-                </div>
-
-                <!-- リスト -->
-                <div id="list-container">
-                    <div class="my-edit-mode">
-                        <div id="add-list-wrapper">
-                            <img id="add-list-img" src="./data/addbutton.svg" alt="">
-                        </div>
-                        
-                    </div>
-                    <div id="my-list-unregistered">まだリストを追加してないよ</div>
-                    <div id="yet-list-container"></div>
-                    <div id="done-list-container"></div>
-                </div>
-
-                <!-- ポップアップ -->
-                <div id="my-popup">
-                    <div id="my-popup-wrapper">
-                        <div class="my-popup-item" id="my-popup-message">変更したリストをみんなと共有しよう!</div>
-                        <div class="my-popup-item" id="my-popup-twitter">Twitterでシェアして保存</div>
-                        <div class="my-popup-item" id="my-popup-copylink">URLをコピーして保存</div>
-                        <div class="my-popup-item" id="my-popup-close">閉じる</div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- 閲覧ページ -->
-            <div class="pages" id="show-page">
-                <!-- プロフィール -->
-                <div id="show-profile-container">
-                    <div id="show-title-wapper">
-                        <img id="show-icon" src="./data/logo40.png" alt="">
-                        <div id="show-name"></div>
-                        <div id="show-title">の行きたいとこリスト</div>
-                        <img id="show-prof" src="./data/twitter.png" alt="">
-                    </div>
-                    <div id="show-bio">
-                        <p id="show-bio-text"></p>
-                    </div>
-                </div>
-
-                <!-- リスト -->
-                <div id="show-list-container">
-                    <div id="show-list-unregistered">まだリストを追加してないよ</div>
-                    <div id="show-yet-list-container"></div>
-                    <div id="show-done-list-container"></div>
-                </div>
-            </div>
-
-            <!-- 使い方ページ -->
-            <div class="pages" id="how-page">使い方ページ</div>
         </main>
         
-        
-
         <footer>
             <div id="footer-text">powered by teamSODA</div>
         </footer>

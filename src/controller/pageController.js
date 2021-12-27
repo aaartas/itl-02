@@ -39,17 +39,17 @@ export const routing = async (path) => {
             showToppage();
         } else
         if (path === 'mypage') {
-            history.pushState(null, null, 'mypage');
+            history.pushState(null, null, '/mypage');
             const { showMypage } = await import('./pages/mypageController')
             showMypage();
         } else
         if (path === 'show') {
-            history.pushState(null, null, 'show?id=qluDnqRzxkdLO8U0GqSgUWUltPf1');
+            history.pushState(null, null, '/show/qluDnqRzxkdLO8U0GqSgUWUltPf1');
             const { showShowpage } = await import('./pages/showpageController');
             showShowpage();
         } else
         if (path === 'how') {
-            history.pushState(null, null, 'how');
+            history.pushState(null, null, '/how');
             const { showHowpage } = await import('./pages/howpageController');
             showHowpage();
         } else {

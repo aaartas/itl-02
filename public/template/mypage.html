@@ -1,0 +1,68 @@
+<!-- マイページ -->
+<div class="pages" id="my-page">
+    <!-- 編集バー -->
+    <div id="my-sticky-container">
+        <div class="my-view-mode">
+            <div class="my-edit-wrapper">
+                <img class="edit-button" id="my-share-button-img" src="/data/sharebutton.svg" alt="">
+                <img class="edit-button" id="my-edit-button-img" src="/data/editbutton.svg" alt="">
+            </div>
+        </div>
+        
+        <div class="my-edit-mode">
+            <div class="my-edit-wrapper">
+                <img class="edit-button" id="my-edit-cancel-button-img" src="/data/editcancel.svg" alt="">
+                <img class="edit-button" id="my-save-button-img" src="/data/savebutton.svg" alt="">
+            </div>
+        </div>
+    </div>
+    
+    <!-- プロフィール -->
+    <div id="my-profile-container">
+        <div id="my-title-wapper">
+            <img id="my-icon" src="/data/userIcon.svg" alt="">
+            <div id="my-name"></div>
+            <input type="text" id="my-title" class="my-editable">
+        </div>
+        <div id="my-bio">
+            <textarea name="bio" id="my-bio-textarea" class="my-editable" placeholder="自己紹介文を入力しよう！"></textarea>
+        </div>
+    </div>
+    
+    <!-- 入力フォーム -->
+    <div class="my-input-mode" id="my-text-edit">
+        <div id="edit-form-wrapper">
+            <div id="my-input-submit-bar">
+                <div id="my-input-cancel">キャンセル</div>
+                <img class="my-submit-button" id="my-add-submit-button" src="/data/addsubmit.svg" alt="">
+                <img class="my-submit-button" id="my-rename-submit-button" src="/data/savebutton.svg" alt="">
+            </div>
+            <textarea name="edit-form" id="my-text-edit-area" rows="3"></textarea>
+            
+        </div>
+    </div>
+
+    <!-- リスト -->
+    <div id="list-container">
+        <div class="my-edit-mode">
+            <div id="add-list-wrapper">
+                <img id="add-list-img" src="/data/addbutton.svg" alt="">
+            </div>
+            
+        </div>
+        <div id="my-list-unregistered">まだリストを追加してないよ</div>
+        <div id="yet-list-container"></div>
+        <div id="done-list-container"></div>
+    </div>
+
+    <!-- ポップアップ -->
+    <div id="my-popup">
+        <div id="my-popup-wrapper">
+            <div class="my-popup-item" id="my-popup-message">変更したリストをみんなと共有しよう!</div>
+            <div class="my-popup-item" id="my-popup-twitter">Twitterでシェアして保存</div>
+            <div class="my-popup-item" id="my-popup-copylink">URLをコピーして保存</div>
+            <div class="my-popup-item" id="my-popup-close">閉じる</div>
+        </div>
+    </div>
+
+</div>
