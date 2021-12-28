@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: `./src/index.js`,
     // ファイルの出力設定
     output: {
