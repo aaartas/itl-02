@@ -41,14 +41,14 @@ export const showShowpage = () => {
 const setUserData = async (userData) => {
     document.getElementById('show-icon').src = userData.user_icon;
     document.getElementById('show-name').innerHTML = userData.user_name;
-    document.getElementById('show-title').innerHTML = userData.user_title;
+    document.getElementById('show-title').innerHTML = userData.list_title;
     document.getElementById('show-bio-text').innerHTML = userData.user_bio;
 
     // 登録リストの取得
     const { getLists } = await import('../../model/listModel');
-    let lists = await getLists(userData.uid);
+    let list = await getLists(userData.uid);
     
-    if (lists.length == 0) {
+    if (list.length == 0) {
         document.getElementById('show-list-unregistered').style.display = 'block';
     } else {
         document.getElementById('show-list-unregistered').style.display = 'none';
@@ -60,26 +60,27 @@ const setUserData = async (userData) => {
 }
 
 // リストデータをHTMLに反映
-const setLists = async (lists, uid, twitterID) => {
+const setLists = async (list, uid, twitterID) => {
     document.getElementById('show-yet-list-container').innerHTML = '';
     document.getElementById('show-done-list-container').innerHTML = '';
     
-    let yetLists = lists.filter(list => !list.check && !list.removed);
-    yetLists.sort((a, b) => a.order - b.order);
-    yetLists.forEach(list => {
-        addList(list.id, list.name, list.check, uid, twitterID);
+    let yetList = list.filter(item => !item.check);
+    yetList.sort((a, b) => a.order - b.order);
+    yetList.forEach(item => {
+        addList(item.iid, item.name, item.check, uid, twitterID);
     });
 
-    let doneLists = lists.filter(list => list.check && !list.removed);
-    doneLists.forEach(list => {
-        addList(list.id, list.name, list.check);
+    let doneList = list.filter(item => item.check);
+    doneList.sort((a, b) => a.check_date - b.check_date);
+    doneList.forEach(item => {
+        addList(item.iid, item.name, item.check);
     });
 }
 
-const addList = async (id, name, check, uid, twitterID) => {
+const addList = async (iid, name, check, uid, twitterID) => {
     let listParent = document.createElement('div');
     listParent.setAttribute('class', 'list-parent');
-    listParent.setAttribute('id', 'id-' + id);
+    listParent.setAttribute('id', 'id-' + iid);
 
     let listDelete = document.createElement('div');
     listDelete.setAttribute('class', 'list-delete-button');
@@ -130,7 +131,7 @@ const addList = async (id, name, check, uid, twitterID) => {
         listWrapper.appendChild(inviteLink);
     }
 
-    listWrapper.ontouchstart = (e) => {
+    listWrapper.ontouchstart = () => {
         listWrapper.style.background = '#EEEEEE';
     };
     listWrapper.ontouchend = () => {

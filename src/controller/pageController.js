@@ -9,7 +9,6 @@
 // 引数を渡さない場合、URLパラメータを読んでページを切り替え
 
 export const routing = async (path) => {
-    scrollTo(0, 0);
     if (path == undefined) {
         path = location.pathname;
         if (path === '/') {

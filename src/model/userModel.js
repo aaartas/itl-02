@@ -8,15 +8,16 @@ export const getUserData = async (uid) => {
     const docRef = doc(db, 'users', uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-        let data = {
+        const data = {
             uid: uid,
             user_name: docSnap.data().user_name,
             user_icon: docSnap.data().user_icon,
-            user_title: docSnap.data().user_title,
+            list_title: docSnap.data().list_title,
             user_bio: docSnap.data().user_bio,
             twitter_disp_id: docSnap.data().twitter_disp_id,
             twitter_sys_id: docSnap.data().twitter_sys_id
         }
+
         return data;
     }
 }
@@ -43,7 +44,7 @@ export const updateUserData = async (UserData) => {
 
     const db = getFirestore();
     updateDoc(doc(db, 'users', UserData.uid), {
-        user_title: UserData.user_title,
+        list_title: UserData.list_title,
         user_bio: UserData.user_bio
     });
 }

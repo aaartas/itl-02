@@ -1,5 +1,4 @@
 export const getLists = async (uid) => {
-    let lists = [];
     const { 
         getFirestore,
         collection,
@@ -8,101 +7,75 @@ export const getLists = async (uid) => {
         where
     } = await import('firebase/firestore');
     const db = getFirestore();
-    const q = query(collection(db, 'users', uid, 'lists'), where('removed', '==', false));
+    const q = query(collection(db, 'users', uid, 'lists'), where('item_remove', '==', false));
     const snapshot = await getDocs(q);
-    snapshot.forEach((doc) => {
-        lists.push({
-            id: doc.id,
-            name: doc.data().name,
-            check: doc.data().check,
-            removed: doc.data().removed,
-            order: doc.data().order,
-            timestamp: doc.data().timestamp,
-        })
+    const list = snapshot.docs.map((doc) => {
+        return {
+            iid: doc.id,
+            name: doc.data().item_name,
+            check: doc.data().item_check,
+            remove: doc.data().item_remove,
+            order: doc.data().item_order,
+            regist_date: doc.data().item_regist_date,
+            check_date: doc.data().item_check_date
+        }
     });
-
-    return lists;
+    return list;
 }
 
+
 //リスト編集内容の保存
-export const saveData = async (uid, yetLists, doneLists) => {
+export const saveData = async (uid, yetList, doneList) => {
     const { 
         getFirestore,
         collection,
-        getDocs,
-        query,
         addDoc,
         doc,
         updateDoc,
         serverTimestamp
     } = await import('firebase/firestore');
+
+    const db = getFirestore();
+
     //DBから編集前のリストデータ取得
-    let preLists = [];
-    const getPre = async () => {
-        const db = getFirestore();
-        const q = query(collection(db, 'users', uid, 'lists'));
-        const snapshot = await getDocs(q);
-        snapshot.forEach((doc) => {
-            preLists.push({
-                id: doc.id,
-                name: doc.data().name,
-                check: doc.data().check,
-                removed: doc.data().removed,
-                order: doc.data().order
-            })
-        });
-    }
-    await getPre();
-
-    preLists.map((preList) => {
-        //元々行ったチェックされていたリストを更新
-        doneLists.map((list) => {
-            if(list.id === preList.id){
-                if(list.removed && !preList.removed) {
-                    const db = getFirestore();
-                    updateDoc(doc(db, 'users', uid, 'lists', preList.id), {
-                        name: list.name,
-                        check: list.check,
-                        removed: list.removed,
-                        order: list.order,
-                        timestamp: serverTimestamp()
-                    });
-                }
+    const preList = await getLists(uid);
+    
+    // アクティブリスト更新
+    yetList.forEach(item => {
+        const find = preList.find(({iid}) => iid === item.iid);
+        if (find === undefined) {
+            // 新規追加
+            if (!item.remove) {
+                addDoc(collection(db, 'users', uid, 'lists'), {
+                    item_name: item.name,
+                    item_check: item.check,
+                    item_remove: false,
+                    item_order: item.order,
+                    item_regist_date: serverTimestamp(),
+                    item_check_date: item.check ? serverTimestamp() : null
+                });
             }
-        });
-        //元々行ったチェックされていなかったリストを更新
-        yetLists.map((list) => {
-            if(list.id === preList.id){
-                if(JSON.stringify(list) !== JSON.stringify(preList)){
-                    const db = getFirestore();
-                    updateDoc(doc(db, 'users', uid, 'lists', preList.id), {
-                        name: list.name,
-                        check: list.check,
-                        removed: list.removed,
-                        order: list.order,
-                        timestamp: serverTimestamp()
-                    });
-                }
+        } else {
+            // 未チェックのリスト更新
+            if(JSON.stringify(item) !== JSON.stringify(find)) {
+                updateDoc(doc(db, 'users', uid, 'lists', find.iid), {
+                    item_name: item.name,
+                    item_check: item.check,
+                    item_remove: item.remove,
+                    item_order: item.order,
+                    item_check_date: item.check ? serverTimestamp() : null
+                });
             }
-        });
-        
+        } 
     });
 
-    //新規追加されたリストを抽出
-    let newLists = yetLists.filter(({id}) => {
-        const _id = id;
-        return preLists.findIndex(({id}) => id === _id) === -1
-    });
-
-    //DBにリストデータ新規作成
-    newLists.map((list) => {
-        const db = getFirestore();
-        addDoc(collection(db, 'users', uid, 'lists'), {
-            name: list.name,
-            check: list.check,
-            removed: list.removed,
-            order: list.order,
-            timestamp: serverTimestamp()
-        });
+    // 元々チェック済のリストは削除のみ
+    doneList.forEach(item => {
+        const find = preList.find(({iid}) => iid === item.iid);
+        if (item.remove) {
+            updateDoc(doc(db, 'users', uid, 'lists', find.iid), {
+                item_remove: item.remove
+            });
+        }
     });
 }

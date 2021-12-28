@@ -18,10 +18,10 @@ let mode;
 let uid;
 let userData = [];
 let preUserData = [];
-let lists = [];
-let preLists = [];
-let yetLists = [];
-let doneLists = [];
+let list = [];
+let preList = [];
+let yetList = [];
+let doneList = [];
 
 const showMypage__ = async () => {
     mode = 'view';
@@ -40,7 +40,7 @@ const showMypage__ = async () => {
             userData = await getUserData(user.uid);
             document.getElementById('my-icon').src = userData.user_icon;
             document.getElementById('my-name').innerHTML = userData.user_name;
-            document.getElementById('my-title').value = userData.user_title;
+            document.getElementById('my-title').value = userData.list_title;
             document.getElementById('my-title').readOnly = true;
             const bio = document.getElementById('my-bio-textarea');
             bio.value = userData.user_bio;
@@ -52,16 +52,16 @@ const showMypage__ = async () => {
 
             // 登録リストの取得
             const { getLists } = await import('../../model/listModel');
-            lists = await getLists(user.uid);
+            list = await getLists(user.uid);
 
-            if (lists.length == 0) {
+            if (list.length == 0) {
                 document.getElementById('my-list-unregistered').style.display = 'block';
             } else {
                 document.getElementById('my-list-unregistered').style.display = 'none';
             }
 
-            preLists = JSON.stringify(lists);
-            preLists = JSON.parse(preLists);
+            preList = JSON.stringify(list);
+            preList = JSON.parse(preList);
             preUserData = JSON.stringify(userData);
             preUserData = JSON.parse(preUserData);
             setLists();
@@ -79,21 +79,22 @@ const setMode = async (_mode) => {
     setView(_mode);
 } 
 
-// listsをHTMLに追加
+// listをHTMLに追加
 const setLists = async () => {
     document.getElementById('yet-list-container').innerHTML = '';
     document.getElementById('done-list-container').innerHTML = '';
 
-    yetLists = lists.filter(list => !list.check && !list.removed);
-    yetLists.sort((a, b) => a.order - b.order);
-    yetLists.forEach(list => {
-        addList(list.id, list.name, list.check);
+    yetList = list.filter(item => !item.check && !item.remove);
+    yetList.sort((a, b) => a.order - b.order);
+    yetList.forEach((item, index) => {
+        item.order = index;
+        addList(item.iid, item.name, item.check);
     });
 
-    doneLists = lists.filter(list => list.check && !list.removed);
-    doneLists.sort((a, b) => a.timestamp - b.timestamp);
-    doneLists.forEach(list => {
-        addList(list.id, list.name, list.check);
+    doneList = list.filter(item => item.check && !item.remove);
+    doneList.sort((a, b) => a.check_date - b.check_date);
+    doneList.forEach(item => {
+        addList(item.iid, item.name, item.check);
     });
 }
 
@@ -111,7 +112,7 @@ const setEvents = async () => {
     // タイトル編集時
     const title = document.getElementById('my-title');
     document.getElementById('my-title').oninput = (e) => {
-        userData.user_title = e.target.value;
+        userData.list_title = e.target.value;
     }
     
     // bio編集時
@@ -130,17 +131,19 @@ const setEvents = async () => {
     };
 
     // ---------- 追加ボタン押下時 ----------
+    let tmp_id = 0;
     document.getElementById('my-add-submit-button').onclick = async () => {
         let newlist = document.getElementById('my-text-edit-area').value;
         if (newlist) {
-            yetLists.push({
-                id: 'aaa',
+            yetList.push({
+                iid: tmp_id.toString(),
                 name: newlist,
                 check: false,
-                removed: false,
-                order: yetLists.length
+                remove: false,
+                order: yetList.length
             })
-            addList('aaa', newlist, false);
+            addList(tmp_id.toString(), newlist, false);
+            tmp_id++;
         }
         setMode('edit');
     };
@@ -149,8 +152,8 @@ const setEvents = async () => {
     document.getElementById('my-rename-submit-button').onclick = async () => {
         let newname = document.getElementById('my-text-edit-area');
         if (newname.value) {
-            const find = yetLists.filter(list => list.id === newname.name);
-            find[0].name = newname.value;
+            const find = yetList.find(item => item.iid === newname.name);
+            find.name = newname.value;
             document.querySelector('#id-' + newname.name + ' .list-text-box').innerHTML = newname.value;
         }
         setMode('edit');
@@ -163,8 +166,8 @@ const setEvents = async () => {
 
     // ---------- 編集キャンセルボタン押下時 ----------
     document.getElementById('my-edit-cancel-button-img').onclick = async () => {
-        lists = JSON.stringify(preLists);
-        lists = JSON.parse(lists);
+        list = JSON.stringify(preList);
+        list = JSON.parse(list);
         setLists();
         setMode('view');
     };
@@ -172,15 +175,15 @@ const setEvents = async () => {
     // ---------- 完了ボタン押下時 ----------
     document.getElementById('my-save-button-img').onclick = async () => {
         const { saveData } = await import('../../model/listModel');
-        await saveData(uid, yetLists, doneLists);
-        lists = yetLists.concat(doneLists);
+        await saveData(uid, yetList, doneList);
+        list = yetList.concat(doneList);
         const { checkUserData, updateUserData} = await import('../../model/userModel');
         if (checkUserData(preUserData, userData)) {
             updateUserData(userData);
         }
         document.getElementById('my-popup').style.display = 'flex';
 
-        if (lists.length == 0) {
+        if (list.length == 0) {
             document.getElementById('my-list-unregistered').style.display = 'block';
         } else {
             document.getElementById('my-list-unregistered').style.display = 'none';
@@ -209,10 +212,10 @@ const setEvents = async () => {
 
 }
 
-const addList = async (id, name, check) => {
+const addList = async (iid, name, check) => {
     let listParent = document.createElement('div');
     listParent.setAttribute('class', 'list-parent');
-    listParent.setAttribute('id', 'id-' + id);
+    listParent.setAttribute('id', 'id-' + iid);
 
     let listDelete = document.createElement('div');
     listDelete.setAttribute('class', 'list-delete-button');
@@ -232,13 +235,13 @@ const addList = async (id, name, check) => {
 
         checkBox.onclick = () => {
             if (mode == 'edit') {
-                const find = yetLists.filter(list => list.id === id);
-                if (find[0].check) {
+                const find = yetList.find(item => item.iid === iid);
+                if (find.check) {
                     checkBox.setAttribute('src', '/data/yet.svg');
-                    find[0].check = false;
+                    find.check = false;
                 } else {
                     checkBox.setAttribute('src', '/data/done.svg');
-                    find[0].check = true;
+                    find.check = true;
                 }
             }
         };
@@ -301,9 +304,9 @@ const addList = async (id, name, check) => {
     if (!check) {
         textBox.onclick = () => {
             if (mode === 'edit') {
-                const find = yetLists.filter(list => list.id === id);
-                document.getElementById('my-text-edit-area').value = find[0].name;
-                document.getElementById('my-text-edit-area').name = id;
+                const find = yetList.find(item => item.iid === iid);
+                document.getElementById('my-text-edit-area').value = find.name;
+                document.getElementById('my-text-edit-area').name = iid;
                 setMode('rename');
             }
         }
@@ -359,12 +362,13 @@ const addList = async (id, name, check) => {
                                 listDelete.parentElement.style.display = 'none';
                             }
                             
-                            let find;
-                            find = yetLists.filter(list => list.id === listDelete.parentElement.id.substr(3));
-                            if (find.length == 0) {
-                                find = doneLists.filter(list => list.id === listDelete.parentElement.id.substr(3));
+                            const find1 = yetList.find(item => item.iid === listDelete.parentElement.id.substr(3));
+                            if (find1 !== undefined) {
+                                find1.remove = true;
+                            } else {
+                                const find2 = doneList.find(item => item.iid === listDelete.parentElement.id.substr(3));
+                                find2.remove = true;
                             }
-                            find[0].removed = true;
                             
                             height -= 4;
                             listDelete.parentElement.style.height = height + 'px';

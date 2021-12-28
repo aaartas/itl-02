@@ -1,5 +1,4 @@
 //firebase初期化
-
 const config = {
     apiKey: 'AIzaSyCn5TtBz45t0Lb3MP6snWqGa0_fR-a0gNE',
     authDomain: 'campa-room.firebaseapp.com',
