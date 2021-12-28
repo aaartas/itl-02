@@ -1,2 +1,2 @@
-public/js/* merge=ours
-webpack.config.js merge=ours
+/public/js/* merge=ours
+/webpack.config.js merge=ours
