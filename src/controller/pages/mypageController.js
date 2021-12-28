@@ -1,17 +1,19 @@
+// マイページ
 export const showMypage = () => {
+    // ajaxでHTMLを挿入
     const request = new XMLHttpRequest();
     request.open('GET', '/template/mypage.html', true);
     request.onload = () => {
         if (request.status >= 200 && request.status < 400) {
             const restxt=request.responseText;
 			document.getElementById('main').innerHTML = restxt;
+            
             showMypage__();
         }
     };
     request.send();
 }
 
-// マイページ
 let mode;
 let uid;
 let userData = [];
@@ -21,7 +23,7 @@ let preLists = [];
 let yetLists = [];
 let doneLists = [];
 
-export const showMypage__ = async () => {
+const showMypage__ = async () => {
     mode = 'view';
     
     const { getAuth, onAuthStateChanged } = await import('firebase/auth');
@@ -30,7 +32,7 @@ export const showMypage__ = async () => {
     // ---------- マイページアクセス時 ----------
     // ログイン状態の確認
     onAuthStateChanged(getAuth(), async (user) => {
-        if (user){
+        if (user && location.pathname === '/mypage'){
             uid = user.uid;
 
             // プロフィールの取得
@@ -65,7 +67,6 @@ export const showMypage__ = async () => {
             setLists();
             setEvents();
         } else {
-            console.log('logouted');
             routing('');
         }
     });
@@ -75,7 +76,6 @@ export const showMypage__ = async () => {
 const setMode = async (_mode) => {
     const { setView } = await import('../../view/mypageView');
     mode = _mode;
-    console.log('mode : ' + _mode);
     setView(_mode);
 } 
 
@@ -233,7 +233,6 @@ const addList = async (id, name, check) => {
         checkBox.onclick = () => {
             if (mode == 'edit') {
                 const find = yetLists.filter(list => list.id === id);
-                console.log(find[0])
                 if (find[0].check) {
                     checkBox.setAttribute('src', '/data/yet.svg');
                     find[0].check = false;

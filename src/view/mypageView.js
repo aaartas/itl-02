@@ -26,7 +26,7 @@ export const setView = (mode) => {
         for (let i = 0; i < editableContentsNum; i++) {
             editableContents[i].style.color = '#000';
         }
-        document.body.style.backgroundColor = '#EEB706';
+        document.getElementById('my-page').style.backgroundColor = '#EEB706';
         document.getElementById('my-sticky-container').style.backgroundColor = '#EEB706';
         bioArea.readOnly = true;
         title.readOnly = true;
@@ -43,7 +43,7 @@ export const setView = (mode) => {
         for (let i = 0; i < editableContentsNum; i++) {
             editableContents[i].style.color = '#F37504';
         }
-        document.body.style.backgroundColor = '#F37504';
+        document.getElementById('my-page').style.backgroundColor = '#F37504';
         document.getElementById('my-sticky-container').style.backgroundColor = '#F37504';
         bioArea.readOnly = false;
         title.readOnly = false;
@@ -61,58 +61,3 @@ export const setView = (mode) => {
         }
     }
 }
-
-// 1つのリストをHTMLに追加
-export const addList = (id, name, check) => {
-    let listParent = document.createElement('div');
-    listParent.setAttribute('class', 'list-parent');
-    listParent.setAttribute('id', id);
-
-    let listDelete = document.createElement('div');
-    listDelete.setAttribute('class', 'list-delete-button');
-    listParent.appendChild(listDelete);
-
-    let listWrapper = document.createElement('div');
-    listWrapper.setAttribute('class', 'list-wrapper');
-    listParent.appendChild(listWrapper);
-
-    let checkBox = document.createElement('img');
-    
-    listWrapper.appendChild(checkBox);
-
-    let textBox = document.createElement('div');
-    textBox.setAttribute('class', 'list-text-box');
-    listWrapper.appendChild(textBox);
-
-    let listText = document.createTextNode(name);
-    textBox.appendChild(listText);
-
-    // チェック有無で表示切り替え
-    if (check) {
-        checkBox.setAttribute('src', './data/done.svg');
-        checkBox.setAttribute('class', 'list-check-box-done');
-        textBox.style.color = '#C3C3C3';
-    } else {
-        checkBox.setAttribute('src', './data/yet.svg');
-        checkBox.setAttribute('class', 'list-check-box-yet');
-        textBox.style.color = '#000';
-    }
-
-    // タッチで色変える
-    listWrapper.ontouchstart = () => {
-        listWrapper.style.background = '#EEEEEE';
-    }
-    listWrapper.ontouchend = () => {
-        listWrapper.style.background = '#FFFFFF';
-    }
-
-    let listContainer;
-    if (check) {
-        listContainer = document.getElementById('done-list-container');
-    } else {
-        listContainer = document.getElementById('yet-list-container');
-    }
-    
-    listContainer.prepend(listParent);
-}
-

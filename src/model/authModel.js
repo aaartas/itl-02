@@ -1,14 +1,13 @@
-
 //twitterログイン処理
 export const login = async (callback) => {
     const { getAuth, TwitterAuthProvider, signInWithPopup } = await import('firebase/auth');
-    const { getFirestore, getDoc, doc } = await import('firebase/firestore');
-    const provider = new TwitterAuthProvider();
     const auth = getAuth();
+    const provider = new TwitterAuthProvider();
     
     signInWithPopup(auth, provider)
     .then(async () => {
         //新規ユーザーの時、リストデータ作成
+        const { getFirestore, getDoc, doc } = await import('firebase/firestore');
         const db = getFirestore();
         const docRef = doc(db, 'users', auth.currentUser.uid);
         const docSnap = await getDoc(docRef);
@@ -27,12 +26,11 @@ export const login = async (callback) => {
         //ログイン後、自動でマイページに遷移
         const { routing } = await import('../controller/pageController');
         routing('mypage');
+
+        // canvasアニメーションをコールバック
         if (callback) {
             callback();
         }
-        
-    }).catch((error) => {
-        console.log(error);
     });
 }
 

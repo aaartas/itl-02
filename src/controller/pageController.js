@@ -12,7 +12,6 @@ export const routing = async (path) => {
     scrollTo(0, 0);
     if (path == undefined) {
         path = location.pathname;
-        console.log('load-route : ' + path);
         if (path === '/') {
             const { showToppage } = await import('./pages/toppageController')
             showToppage();
@@ -32,7 +31,6 @@ export const routing = async (path) => {
             history.back();
         }
     } else {
-        console.log('change-route : ' + path);
         if (path === '') {
             history.pushState(null, null, '/')
             const { showToppage } = await import('./pages/toppageController')

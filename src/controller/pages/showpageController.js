@@ -1,26 +1,44 @@
 //閲覧ページ
 export const showShowpage = () => {
-    const request = new XMLHttpRequest();
-    request.open('GET', '/template/show.html', true);
-    request.onload = () => {
-        if (request.status >= 200 && request.status < 400) {
-            const restxt=request.responseText;
-			document.getElementById('main').innerHTML = restxt;
-            showShowpage__();
-        }
-    };
-    request.send();
-}
-
-const showShowpage__ = async () => {
-    // URLからユーザーIDを取得
     const path = location.pathname.toString();
     const uid = path.substring(6);
 
-    // プロフィールの取得
-    const { getUserData } = await import('../../model/userModel');
-    const userData = await getUserData(uid);
+    // ユーザーデータ取得
+    const getUser = new Promise(async (resolve, reject) => {
+        const { getUserData } = await import('../../model/userModel');
+        resolve(getUserData(uid));
+    });
 
+    // リストデータ取得
+    const getLists = new Promise(async (resolve, reject) => {
+        const { getLists } = await import('../../model/listModel');
+        resolve(getLists(uid));
+    });
+
+    // ajaxでHTML挿入
+    const getHTML = new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.open('GET', '/template/show.html', true);
+        request.onload = () => {
+            if (request.status >= 200 && request.status < 400) {
+                const restxt=request.responseText;
+                document.getElementById('main').innerHTML = restxt;
+                resolve();
+            }
+        };
+        request.send();
+    });
+
+    // ユーザーデータ取得、リストデータ取得、HTML取得を非同期実行。全て完了後thenを実行。
+    Promise.all([getUser, getLists, getHTML]).then((result) => {
+        setUserData(result[0]);
+        setLists(result[1], uid, result[0].twitter_sys_id)
+
+    })
+}
+
+// ユーザーデータをHTMLに反映
+const setUserData = async (userData) => {
     document.getElementById('show-icon').src = userData.user_icon;
     document.getElementById('show-name').innerHTML = userData.user_name;
     document.getElementById('show-title').innerHTML = userData.user_title;
@@ -28,7 +46,7 @@ const showShowpage__ = async () => {
 
     // 登録リストの取得
     const { getLists } = await import('../../model/listModel');
-    let lists = await getLists(uid);
+    let lists = await getLists(userData.uid);
     
     if (lists.length == 0) {
         document.getElementById('show-list-unregistered').style.display = 'block';
@@ -36,18 +54,12 @@ const showShowpage__ = async () => {
         document.getElementById('show-list-unregistered').style.display = 'none';
     }
 
-    setEvents(userData.twitter_disp_id);
-    setLists(lists, uid, userData.twitter_sys_id);
-}
-
-const setEvents = (id) => {
-    // ---------- twitterボタン押下時 ----------
     document.getElementById('show-prof').onclick = () => {
-        location.href = 'https://twitter.com/' + id;
+        location.href = 'https://twitter.com/' + userData.twitter_disp_id;
     };
 }
 
-// listsをHTMLに追加
+// リストデータをHTMLに反映
 const setLists = async (lists, uid, twitterID) => {
     document.getElementById('show-yet-list-container').innerHTML = '';
     document.getElementById('show-done-list-container').innerHTML = '';

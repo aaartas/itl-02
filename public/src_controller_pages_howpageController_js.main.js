@@ -15,7 +15,7 @@
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"showHowpage\": () => (/* binding */ showHowpage)\n/* harmony export */ });\n//使い方ページ\n\nconst showHowpage = () => {\n    document.getElementById('top-page').style.display = 'none';\n    document.getElementById('my-page').style.display = 'none';\n    document.getElementById('show-page').style.display = 'none';\n    document.getElementById('how-page').style.display = 'block';\n}\n\n//# sourceURL=webpack://listapp/./src/controller/pages/howpageController.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"showHowpage\": () => (/* binding */ showHowpage)\n/* harmony export */ });\n//使い方ページ\nconst showHowpage = () => {\n    const request = new XMLHttpRequest();\n    request.open('GET', '/template/how.html', true);\n    request.onload = () => {\n        if (request.status >= 200 && request.status < 400) {\n            const restxt=request.responseText;\n\t\t\tdocument.getElementById('main').innerHTML = restxt;\n        }\n    };\n    request.send();\n}\n\n//# sourceURL=webpack://listapp/./src/controller/pages/howpageController.js?");
 
 /***/ })
 

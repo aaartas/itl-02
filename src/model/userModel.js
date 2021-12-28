@@ -18,8 +18,6 @@ export const getUserData = async (uid) => {
             twitter_sys_id: docSnap.data().twitter_sys_id
         }
         return data;
-    } else {
-        console.log('ユーザーデータがありません');
     }
 }
 
