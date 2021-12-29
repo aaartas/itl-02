@@ -1,6 +1,6 @@
 // ユーザーデータ作成
 export const createUserData = async (user) => {
-    const { getFirestore, getDoc, doc } = await import('firebase/firestore');
+    const { getFirestore, getDoc, doc, serverTimestamp } = await import('firebase/firestore');
     const db = getFirestore();
     const docRef = doc(db, 'users', user.uid);
     const docSnap = await getDoc(docRef);
@@ -12,7 +12,8 @@ export const createUserData = async (user) => {
             list_title: 'の行きたいとこリスト',
             user_bio: '',
             twitter_disp_id: user.reloadUserInfo.screenName,
-            twitter_sys_id: user.providerData[0].uid
+            twitter_sys_id: user.providerData[0].uid,
+            user_regist_date: serverTimestamp()
         });
     }
 }
@@ -31,9 +32,10 @@ export const getUserData = async (uid) => {
             list_title: docSnap.data().list_title,
             user_bio: docSnap.data().user_bio,
             twitter_disp_id: docSnap.data().twitter_disp_id,
-            twitter_sys_id: docSnap.data().twitter_sys_id
+            twitter_sys_id: docSnap.data().twitter_sys_id,
+            user_regist_date: docSnap.data().user_regist_date
         }
-
+        
         return data;
     }
 }

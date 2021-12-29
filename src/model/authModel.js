@@ -8,8 +8,7 @@ export const login = async (callback) => {
     .then(async () => {
         //新規ユーザーの時、リストデータ作成
         const { createUserData } = await import('./userModel');
-        createUserData(auth.currentUser);
-        
+        await createUserData(auth.currentUser);
         
         //ログイン後、自動でマイページに遷移
         const { routing } = await import('../controller/pageController');
