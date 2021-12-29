@@ -16,7 +16,7 @@ export const login = async (callback) => {
             await setDoc(doc(db, 'users', auth.currentUser.uid), {
                 user_name: auth.currentUser.displayName,
                 user_icon: auth.currentUser.photoURL,
-                user_title: 'の行きたいとこリスト',
+                list_title: 'の行きたいとこリスト',
                 user_bio: '',
                 twitter_disp_id: auth.currentUser.reloadUserInfo.screenName,
                 twitter_sys_id: auth.currentUser.providerData[0].uid
