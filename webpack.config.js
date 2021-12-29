@@ -6,7 +6,8 @@ module.exports = {
     // ファイルの出力設定
     output: {
         //  出力ファイルのディレクトリ名(省略可)
-        path: `${__dirname}/js`,
+        path: `${__dirname}/public/js`,
+        publicPath: '/js/',
         // 出力ファイル名
         filename: 'main.js',
         path: path.resolve(__dirname, 'public/js'),
