@@ -7,7 +7,7 @@ export const getLists = async (uid) => {
         where
     } = await import('firebase/firestore');
     const db = getFirestore();
-    const q = query(collection(db, 'users', uid, 'lists'), where('item_remove', '==', false));
+    const q = query(collection(db, 'users', uid, 'list'), where('item_remove', '==', false));
     const snapshot = await getDocs(q);
     const list = snapshot.docs.map((doc) => {
         return {
@@ -46,7 +46,7 @@ export const saveData = async (uid, yetList, doneList) => {
         if (find === undefined) {
             // 新規追加
             if (!item.remove) {
-                addDoc(collection(db, 'users', uid, 'lists'), {
+                addDoc(collection(db, 'users', uid, 'list'), {
                     item_name: item.name,
                     item_check: item.check,
                     item_remove: false,
@@ -58,7 +58,7 @@ export const saveData = async (uid, yetList, doneList) => {
         } else {
             // 未チェックのリスト更新
             if(JSON.stringify(item) !== JSON.stringify(find)) {
-                updateDoc(doc(db, 'users', uid, 'lists', find.iid), {
+                updateDoc(doc(db, 'users', uid, 'list', find.iid), {
                     item_name: item.name,
                     item_check: item.check,
                     item_remove: item.remove,
@@ -73,7 +73,7 @@ export const saveData = async (uid, yetList, doneList) => {
     doneList.forEach(item => {
         const find = preList.find(({iid}) => iid === item.iid);
         if (item.remove) {
-            updateDoc(doc(db, 'users', uid, 'lists', find.iid), {
+            updateDoc(doc(db, 'users', uid, 'list', find.iid), {
                 item_remove: item.remove
             });
         }
