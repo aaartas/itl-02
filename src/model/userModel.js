@@ -1,5 +1,21 @@
 // ユーザーデータ作成
-
+export const createUserData = async (user) => {
+    const { getFirestore, getDoc, doc } = await import('firebase/firestore');
+    const db = getFirestore();
+    const docRef = doc(db, 'users', user.uid);
+    const docSnap = await getDoc(docRef);
+    if(!docSnap.exists()){
+        const { setDoc } = await import('firebase/firestore');
+        await setDoc(doc(db, 'users', user.uid), {
+            user_name: user.displayName,
+            user_icon: user.photoURL,
+            list_title: 'の行きたいとこリスト',
+            user_bio: '',
+            twitter_disp_id: user.reloadUserInfo.screenName,
+            twitter_sys_id: user.providerData[0].uid
+        });
+    }
+}
 
 // ユーザーデータ取得
 export const getUserData = async (uid) => {
