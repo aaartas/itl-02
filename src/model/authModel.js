@@ -1,10 +1,10 @@
 //twitterログイン処理
 export const login = async (callback) => {
-    const { getAuth, TwitterAuthProvider, signInWithPopup } = await import('firebase/auth');
+    const { getAuth, TwitterAuthProvider, signInWithRedirect } = await import('firebase/auth');
     const auth = getAuth();
     const provider = new TwitterAuthProvider();
     
-    signInWithPopup(auth, provider)
+    signInWithRedirect(auth, provider)
     .then(async () => {
         //新規ユーザーの時、リストデータ作成
         const { createUserData } = await import('./userModel');
@@ -26,6 +26,3 @@ export const logout = async () => {
     const { getAuth, signOut } = await import('firebase/auth');
     signOut(getAuth());
 }
-
-
-
