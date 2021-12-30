@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="70" height="27" viewBox="0 0 70 27">
-  <g id="グループ_75" data-name="グループ 75" transform="translate(-295 -143)">
-    <rect id="長方形_73" data-name="長方形 73" width="70" height="27" rx="2" transform="translate(295 143)" fill="#eeb706"/>
-    <text id="追加する" transform="translate(302 162)" fill="#fff" font-size="14" font-family="HiraKakuProN-W3, Hiragino Kaku Gothic ProN"><tspan x="0" y="0">追加する</tspan></text>
+  <g transform="translate(-295 -143)">
+    <rect width="70" height="27" rx="2" transform="translate(295 143)" fill="#eeb706"/>
+    <text transform="translate(302 162)" fill="#fff" font-size="14" font-family="HiraKakuProN-W3, Hiragino Kaku Gothic ProN"><tspan x="0" y="0">追加する</tspan></text>
   </g>
 </svg>

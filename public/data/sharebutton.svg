@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="70" height="27" viewBox="0 0 70 27">
-  <g id="グループ_93" data-name="グループ 93" transform="translate(-3384 -4240)">
-    <g id="長方形_73" data-name="長方形 73" transform="translate(3384 4240)" fill="#fff" stroke="#fff" stroke-width="1">
+  <g transform="translate(-3384 -4240)">
+    <g transform="translate(3384 4240)" fill="#fff" stroke="#fff" stroke-width="1">
       <rect width="70" height="27" rx="2" stroke="none"/>
       <rect x="0.5" y="0.5" width="69" height="26" rx="1.5" fill="none"/>
     </g>
-    <text id="共有" transform="translate(3412 4260)" fill="#eeb706" font-size="17" font-family="HiraKakuProN-W3, Hiragino Kaku Gothic ProN"><tspan x="0" y="0">共有</tspan></text>
-    <g id="Icon_feather-share" data-name="Icon feather-share" transform="translate(3385 4242)">
-      <path id="パス_17" data-name="パス 17" d="M6,18v6.606a1.651,1.651,0,0,0,1.651,1.651H17.56a1.651,1.651,0,0,0,1.651-1.651V18" transform="translate(0 -6.743)" fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      <path id="パス_18" data-name="パス 18" d="M18.606,6.3,15.3,3,12,6.3" transform="translate(-2.697 0)" fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      <path id="パス_19" data-name="パス 19" d="M18,3V13.734" transform="translate(-5.394 0)" fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <text transform="translate(3412 4260)" fill="#eeb706" font-size="17" font-family="HiraKakuProN-W3, Hiragino Kaku Gothic ProN"><tspan x="0" y="0">共有</tspan></text>
+    <g transform="translate(3385 4242)">
+      <path d="M6,18v6.606a1.651,1.651,0,0,0,1.651,1.651H17.56a1.651,1.651,0,0,0,1.651-1.651V18" transform="translate(0 -6.743)" fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M18.606,6.3,15.3,3,12,6.3" transform="translate(-2.697 0)" fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M18,3V13.734" transform="translate(-5.394 0)" fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
     </g>
   </g>
 </svg>
