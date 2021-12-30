@@ -29,11 +29,7 @@ export const commonController = async () => {
 
     // ログイン
     document.getElementById('menu-button-login').onclick = () => {
-        const callback = () => {
-            menu.style.display = 'none';
-            clickButton();
-        }
-        login(callback);
+        login();
     };
     
     // ログアウト

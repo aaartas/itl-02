@@ -9,7 +9,9 @@ new Promise((resolve) => {
     // firebase初期化
     (async () => {
         const { initFirebase } = await import('./model/initModel');
-        initFirebase();
+        const { checkAuth } = await import('./model/authModel');
+        await initFirebase();
+        checkAuth();
     })();
 
     // ページ遷移処理読み込み
@@ -22,5 +24,5 @@ new Promise((resolve) => {
     (async () => {
         const { commonController } = await import('./controller/commonController');
         commonController();
-    })();
+    })();    
 })
