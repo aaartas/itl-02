@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="70" height="27" viewBox="0 0 70 27">
-  <g transform="translate(-3384 -4240)">
-    <g transform="translate(3384 4240)" fill="#fff" stroke="#fff" stroke-width="1">
-      <rect width="70" height="27" rx="2" stroke="none"/>
-      <rect x="0.5" y="0.5" width="69" height="26" rx="1.5" fill="none"/>
-    </g>
-    <text transform="translate(3412 4260)" fill="#eeb706" font-size="17" font-family="HiraKakuProN-W3, Hiragino Kaku Gothic ProN"><tspan x="0" y="0">共有</tspan></text>
-    <g transform="translate(3385 4242)">
-      <path d="M6,18v6.606a1.651,1.651,0,0,0,1.651,1.651H17.56a1.651,1.651,0,0,0,1.651-1.651V18" transform="translate(0 -6.743)" fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      <path d="M18.606,6.3,15.3,3,12,6.3" transform="translate(-2.697 0)" fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      <path d="M18,3V13.734" transform="translate(-5.394 0)" fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-    </g>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="70" height="27"><g fill="#fff" stroke="#fff"><rect width="70" height="27" rx="2" stroke="none"/><rect x=".5" y=".5" width="69" height="26" rx="1.5" fill="none"/></g><text transform="translate(28 20)" fill="#eeb706" font-size="17" font-family="HiraKakuProN-W3, Hiragino Kaku Gothic ProN"><tspan x="0" y="0">共有</tspan></text><g fill="none" stroke="#eeb706" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13.257v6.606a1.651 1.651 0 0 0 1.651 1.651h9.909a1.651 1.651 0 0 0 1.651-1.651v-6.606M16.909 8.3 13.603 5l-3.3 3.3M13.606 5v10.734"/></g></svg>

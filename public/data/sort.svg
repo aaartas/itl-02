@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="19" height="8" viewBox="0 0 19 8">
-  <g transform="translate(-360 -11)">
-    <rect width="19" height="2" transform="translate(360 11)" fill="#747879"/>
-    <rect width="19" height="2" transform="translate(360 17)" fill="#747879"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="19" height="8"><g fill="#747879"><path d="M0 0h19v2H0zM0 6h19v2H0z"/></g></svg>
