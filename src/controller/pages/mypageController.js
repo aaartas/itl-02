@@ -7,7 +7,7 @@ export const showMypage = () => {
         if (request.status >= 200 && request.status < 400) {
             const restxt=request.responseText;
 			document.getElementById('main').innerHTML = restxt;
-            
+
             showMypage__();
         }
     };
@@ -237,6 +237,9 @@ const addList = async (iid, name, check) => {
     listDelete.setAttribute('class', 'list-delete-button');
     listParent.appendChild(listDelete);
 
+    let deleteText = document.createTextNode('削除');
+    listDelete.appendChild(deleteText);
+
     let listWrapper = document.createElement('div');
     listWrapper.setAttribute('class', 'list-wrapper');
     listParent.appendChild(listWrapper);
@@ -262,7 +265,7 @@ const addList = async (iid, name, check) => {
             }
         };
     }
-    
+
     listWrapper.appendChild(checkBox);
 
     let textBox = document.createElement('div');
@@ -271,8 +274,7 @@ const addList = async (iid, name, check) => {
     } else {
         textBox.setAttribute('class', 'list-text-box my-editable');
     }
-    
-    
+
     let listText = document.createTextNode(name);
     textBox.appendChild(listText);
 
@@ -327,74 +329,77 @@ const addList = async (iid, name, check) => {
             }
         }
     }
-    
+
     listWrapper.ontouchstart = (e) => {
         listWrapper.style.background = '#EEEEEE';
-        
+
+        let prePosX = listWrapper.offsetLeft;
         let touchX = e.touches[0].clientX;
         let touchY = e.touches[0].clientY;
         let move = true;
         listWrapper.ontouchmove = (e) => {
-            
+
             if (mode === 'edit') {
                 if (50 < Math.abs(e.touches[0].clientY - touchY)) {
                     move = false;
-                    
                 }
                 if (move) {
-                    let moveX = e.touches[0].clientX - touchX;
-                    if (moveX < 0) {
+                    let moveX = prePosX + e.touches[0].clientX - touchX;
+                    if (-100 < moveX && moveX < 0) {
                         listWrapper.style.left = moveX + 'px';
                     }
                 }
             }
-            
         };
+
         listWrapper.ontouchend = () => {
-            let height = 60;
             listWrapper.style.background = '#FFFFFF';
             if (mode === 'edit') {
                 if (listWrapper.offsetLeft < 0) {
-                    const loop = () => {
-                        if (Math.abs(listWrapper.offsetLeft) < 3) {
+                    const slideLoop = () => {
+                        if (-3 < listWrapper.offsetLeft) {
                             listWrapper.style.left = '0px';
                         } else 
-                        if (- document.body.clientWidth / 2 < listWrapper.offsetLeft) {
-                            requestAnimationFrame(loop);
-                            let returnX = listWrapper.offsetLeft + 5;
-                            listWrapper.style.left = returnX + 'px';
+                        if (-50 < listWrapper.offsetLeft) {
+                            requestAnimationFrame(slideLoop);
+                            listWrapper.style.left = listWrapper.offsetLeft + 5 + 'px';
                         } else 
-                        if (- document.body.clientWidth < listWrapper.offsetLeft) {
-                            requestAnimationFrame(loop);
-                            let returnX = listWrapper.offsetLeft - 10;
-                            listWrapper.style.left = returnX + 'px';
-                        } else 
-                        if (listWrapper.offsetLeft <= - document.body.clientWidth) {
-                            if (0 < height) {
-                                requestAnimationFrame(loop);
-                            } else {
-                                listDelete.parentElement.style.display = 'none';
-                            }
-                            
-                            const find1 = yetList.find(item => item.iid === listDelete.parentElement.id.substr(3));
-                            if (find1 !== undefined) {
-                                find1.remove = true;
-                            } else {
-                                const find2 = doneList.find(item => item.iid === listDelete.parentElement.id.substr(3));
-                                find2.remove = true;
-                            }
-                            
-                            height -= 4;
-                            listDelete.parentElement.style.height = height + 'px';
+                        if (-100 < listWrapper.offsetLeft) {
+                            requestAnimationFrame(slideLoop);
+                            listWrapper.style.left = listWrapper.offsetLeft - 5 + 'px';
+                        } else {
+                            listWrapper.style.left = -100 + 'px';
                         }
                     }
-                    loop();
+                    slideLoop();
                 }
-                
             }
         };
-        
     };
+
+    listDelete.onclick = () => {
+        const find1 = yetList.find(item => item.iid === listDelete.parentElement.id.substr(3));
+        if (find1 !== undefined) {
+            find1.remove = true;
+        } else {
+            const find2 = doneList.find(item => item.iid === listDelete.parentElement.id.substr(3));
+            find2.remove = true;
+        }
+
+        let height = 60;
+        const deleteLoop = () => {
+            if (0 < height) {
+                requestAnimationFrame(deleteLoop);
+            } else {
+                listDelete.parentElement.style.display = 'none';
+            }
+
+            listWrapper.style.left = listWrapper.offsetLeft - 20 + 'px';
+            height -= 5;
+            listDelete.parentElement.style.height = height + 'px';
+        }
+        deleteLoop();
+    }
 
     let listContainer;
     if (check) {
