@@ -92,6 +92,16 @@ const setLists = async () => {
     });
 
     doneList = list.filter(item => item.check && !item.remove);
+    const { Timestamp } = await import('firebase/firestore');
+    // チェック日がnullの時は現在の日時を仮に代入
+    doneList = doneList.map(item => {
+        if (item.check_date == null) {
+            item.check_date = Timestamp.now();
+            return item;
+        } else {
+            return item;
+        }
+    })
     doneList.sort((a, b) => a.check_date - b.check_date);
     doneList.forEach(item => {
         addList(item.iid, item.name, item.check);
@@ -191,6 +201,13 @@ const setEvents = async () => {
 
         setLists();
         setMode('view');
+
+        // 登録リストの取得
+        setTimeout( async () => {
+            const { getLists } = await import('../../model/listModel');
+            list = await getLists(uid);
+            yetList = list.filter(item => !item.check && !item.remove);
+        }, 1000);
     };
 
     document.getElementById('my-popup-twitter').onclick = () => {
@@ -209,7 +226,6 @@ const setEvents = async () => {
     document.getElementById('my-popup-close').onclick = () => {
         document.getElementById('my-popup').style.display = 'none';
     };
-
 }
 
 const addList = async (iid, name, check) => {
@@ -312,8 +328,6 @@ const addList = async (iid, name, check) => {
         }
     }
     
-    
-    
     listWrapper.ontouchstart = (e) => {
         listWrapper.style.background = '#EEEEEE';
         
@@ -373,7 +387,6 @@ const addList = async (iid, name, check) => {
                             height -= 4;
                             listDelete.parentElement.style.height = height + 'px';
                         }
-                        
                     }
                     loop();
                 }
@@ -390,5 +403,5 @@ const addList = async (iid, name, check) => {
         listContainer = document.getElementById('yet-list-container');
     }
     
-    listContainer.prepend(listParent);
+    listContainer.insertBefore(listParent, listContainer.firstChild);
 }
