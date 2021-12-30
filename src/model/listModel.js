@@ -56,7 +56,7 @@ export const saveData = async (uid, yetList, doneList) => {
                 });
             }
         } else {
-            // 未チェックのリスト更新
+            // リスト更新
             if(JSON.stringify(item) !== JSON.stringify(find)) {
                 updateDoc(doc(db, 'users', uid, 'list', find.iid), {
                     item_name: item.name,
