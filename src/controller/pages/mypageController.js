@@ -229,22 +229,22 @@ const setEvents = async () => {
 }
 
 const addList = async (iid, name, check) => {
-    let listParent = document.createElement('div');
+    const listParent = document.createElement('div');
     listParent.setAttribute('class', 'list-parent');
-    listParent.setAttribute('id', 'id-' + iid);
+    listParent.setAttribute('id', 'iid-' + iid);
 
-    let listDelete = document.createElement('div');
+    const listDelete = document.createElement('div');
     listDelete.setAttribute('class', 'list-delete-button');
     listParent.appendChild(listDelete);
 
-    let deleteText = document.createTextNode('削除');
+    const deleteText = document.createTextNode('削除');
     listDelete.appendChild(deleteText);
 
-    let listWrapper = document.createElement('div');
+    const listWrapper = document.createElement('div');
     listWrapper.setAttribute('class', 'list-wrapper');
     listParent.appendChild(listWrapper);
 
-    let checkBox = document.createElement('img');
+    const checkBox = document.createElement('img');
     if (check) {
         checkBox.setAttribute('src', '/data/done.svg');
         checkBox.setAttribute('class', 'list-check-box-done');
@@ -268,14 +268,14 @@ const addList = async (iid, name, check) => {
 
     listWrapper.appendChild(checkBox);
 
-    let textBox = document.createElement('div');
+    const textBox = document.createElement('div');
     if (check) {
         textBox.setAttribute('class', 'list-text-box');
     } else {
         textBox.setAttribute('class', 'list-text-box my-editable');
     }
 
-    let listText = document.createTextNode(name);
+    const listText = document.createTextNode(name);
     textBox.appendChild(listText);
 
     // チェック有無で表示切り替え
@@ -330,12 +330,13 @@ const addList = async (iid, name, check) => {
         }
     }
 
+    // リストをスライドで削除ボタン表示
     listWrapper.ontouchstart = (e) => {
         listWrapper.style.background = '#EEEEEE';
 
-        let prePosX = listWrapper.offsetLeft;
-        let touchX = e.touches[0].clientX;
-        let touchY = e.touches[0].clientY;
+        const prePosX = listWrapper.offsetLeft;
+        const touchX = e.touches[0].clientX;
+        const touchY = e.touches[0].clientY;
         let move = true;
         listWrapper.ontouchmove = (e) => {
 
@@ -377,12 +378,13 @@ const addList = async (iid, name, check) => {
         };
     };
 
+    // リスト削除ボタン押下時
     listDelete.onclick = () => {
-        const find1 = yetList.find(item => item.iid === listDelete.parentElement.id.substr(3));
+        const find1 = yetList.find(item => item.iid === listDelete.parentElement.id.substr(4));
         if (find1 !== undefined) {
             find1.remove = true;
         } else {
-            const find2 = doneList.find(item => item.iid === listDelete.parentElement.id.substr(3));
+            const find2 = doneList.find(item => item.iid === listDelete.parentElement.id.substr(4));
             find2.remove = true;
         }
 
@@ -401,12 +403,26 @@ const addList = async (iid, name, check) => {
         deleteLoop();
     }
 
-    let listContainer;
+    // 別の場所をタップされたら削除ボタンを隠す
+    document.addEventListener('touchstart', (e) => {
+        if (e.target !== listDelete) {
+            const fadeLoop = () => {
+                if (-3 < listWrapper.offsetLeft) {
+                    listWrapper.style.left = '0px';
+                } else {
+                    requestAnimationFrame(fadeLoop);
+                    listWrapper.style.left = listWrapper.offsetLeft + 10 + 'px';
+                }
+            }
+            fadeLoop();
+        } 
+    });
+
     if (check) {
-        listContainer = document.getElementById('done-list-container');
+        const listContainer = document.getElementById('done-list-container');
+        listContainer.insertBefore(listParent, listContainer.firstChild);
     } else {
-        listContainer = document.getElementById('yet-list-container');
+        const listContainer = document.getElementById('yet-list-container');
+        listContainer.insertBefore(listParent, listContainer.firstChild);
     }
-    
-    listContainer.insertBefore(listParent, listContainer.firstChild);
 }
