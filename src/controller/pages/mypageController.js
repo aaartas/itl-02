@@ -318,13 +318,9 @@ const addList = async (iid, name, check) => {
             sortY = 0;
             document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden';
-            
         }
         sortButton.ontouchmove = (e) => {
             if (mode === 'edit') {
-                if (50 < Math.abs(e.touches[0].clientX - touchX)) {
-                    move = false;
-                }
                 if (move) {
                     listParent.style.zIndex = 1;
                     moveY = e.touches[0].pageY - touchY + sortY;
@@ -403,6 +399,7 @@ const addList = async (iid, name, check) => {
             if (mode === 'edit') {
                 if (50 < Math.abs(e.touches[0].pageY - touchY)) {
                     move = false;
+                    listWrapper.style.left = '0px';
                 }
                 if (move) {
                     let moveX = prePosX + e.touches[0].clientX - touchX;
