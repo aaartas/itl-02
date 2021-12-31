@@ -185,6 +185,15 @@ const setEvents = async (uid) => {
 
     // ---------- 完了ボタン押下時 ----------
     document.getElementById('my-save-button-img').onclick = async () => {
+        // order書き換え
+        const yetListNodes = document.getElementById('yet-list-container').children;
+        const nodesNum = yetListNodes.length;
+        for (let i = 0; i < nodesNum; i++) {
+            const find = yetList.find(({iid}) => iid === yetListNodes[i].id.substr(4))
+            find.order = nodesNum - i - 1;
+        }
+        
+        // リストデータ保存
         const { saveData } = await import('../../model/listModel');
         await saveData(uid, yetList, doneList);
         list = yetList.concat(doneList);
@@ -230,6 +239,9 @@ const setEvents = async (uid) => {
 }
 
 const addList = async (iid, name, check) => {
+    const yetListContainer = document.getElementById('yet-list-container');
+    const doneListContainer = document.getElementById('done-list-container');
+
     const listParent = document.createElement('div');
     listParent.setAttribute('class', 'list-parent');
     listParent.setAttribute('id', 'iid-' + iid);
@@ -288,36 +300,76 @@ const addList = async (iid, name, check) => {
     listWrapper.appendChild(textBox);
 
     // 並べ替えボタン
-    // if (!check) {
-    //     let sortButton = document.createElement('img');
-    //     sortButton.setAttribute('src', '/data/sort.svg');
-    //     sortButton.setAttribute('class', 'list-sort-button my-edit-mode');
-    //     listWrapper.appendChild(sortButton);
+    if (!check) {
+        const sortButton = document.createElement('img');
+        sortButton.setAttribute('src', '/data/sort.svg');
+        sortButton.setAttribute('class', 'list-sort-button my-edit-mode');
+        listWrapper.appendChild(sortButton);
 
-    //     sortButton.ontouchstart = (e) => {
-    //         let touchX = e.touches[0].clientX;
-    //         let touchY = e.touches[0].clientY;
-    //         let move = true;
-    //         document.body.style.overflow = 'hidden';
-    //         sortButton.ontouchmove = (e) => {
-    //             if (mode === 'edit') {
-    //                 if (50 < Math.abs(e.touches[0].clientX - touchX)) {
-    //                     move = false;
-    //                 }
-    //                 if (move) {
-    //                     let moveY = e.touches[0].clientY - touchY;
-    //                     listParent.style.top = moveY + 'px';
-    //                     listParent.style.zIndex = 1;
-    //                 }
-    //             }
-    //         }
-    //         sortButton.ontouchend = () => {
-    //             document.body.style.overflow = 'auto';
-    //             listParent.style.top = 0;
-    //             listParent.style.zIndex = 0;
-    //         }
-    //     }
-    // }
+        sortButton.ontouchstart = (e) => {
+            const touchX = e.touches[0].clientX;
+            const touchY = e.touches[0].clientY;
+            let move = true;
+            let moveY = 0;
+            let sortY = 0;
+            document.body.style.overflow = 'hidden';
+            sortButton.ontouchmove = (e) => {
+                if (mode === 'edit') {
+                    if (50 < Math.abs(e.touches[0].clientX - touchX)) {
+                        move = false;
+                    }
+                    if (move) {
+                        listParent.style.zIndex = 1;
+                        moveY = e.touches[0].clientY - touchY + sortY;
+                        if (listParent == yetListContainer.firstChild && moveY < 0) {
+                            moveY = 0;
+                        } else
+                        if (listParent == yetListContainer.lastChild && 0 < moveY) {
+                            moveY = 0;
+                        } else
+                        if (moveY < -60) {
+                            sortY += 60;
+                            const prevList = listParent.previousElementSibling;
+                            let topDist = -60;
+                            const sortAnim = () => {
+                                if (-10 < topDist) {
+                                    topDist = 0;
+                                } else {
+                                    requestAnimationFrame(sortAnim);
+                                    topDist += 10;
+                                }
+                                prevList.style.top = topDist + 'px';
+                            }
+                            sortAnim();
+                            yetListContainer.insertBefore(listParent, prevList);
+                        } else
+                        if (60 < moveY) {
+                            sortY -= 60;
+                            const nextList = listParent.nextElementSibling;
+                            let topDist = 60;
+                            const sortAnim = () => {
+                                if (topDist < 10) {
+                                    topDist = 0;
+                                } else {
+                                    requestAnimationFrame(sortAnim);
+                                    topDist -= 10;
+                                }
+                                nextList.style.top = topDist + 'px';
+                            }
+                            sortAnim();
+                            yetListContainer.insertBefore(listParent, nextList.nextSibling);
+                        }
+                        listParent.style.top = moveY + 'px';
+                    }
+                }
+            }
+            sortButton.ontouchend = () => {
+                document.body.style.overflow = 'auto';
+                listParent.style.top = 0;
+                listParent.style.zIndex = 0;
+            }
+        }
+    }
 
     // 場所の名前変更
     if (!check) {
@@ -333,7 +385,7 @@ const addList = async (iid, name, check) => {
 
     // リストをスライドで削除ボタン表示
     listWrapper.ontouchstart = (e) => {
-        listWrapper.style.background = '#EEEEEE';
+        listWrapper.style.background = '#EEE';
 
         const prePosX = listWrapper.offsetLeft;
         const touchX = e.touches[0].clientX;
@@ -355,25 +407,25 @@ const addList = async (iid, name, check) => {
         };
 
         listWrapper.ontouchend = () => {
-            listWrapper.style.background = '#FFFFFF';
+            listWrapper.style.background = '#FFF';
             if (mode === 'edit') {
                 if (listWrapper.offsetLeft < 0) {
-                    const slideLoop = () => {
+                    const slideAnim = () => {
                         if (-3 < listWrapper.offsetLeft) {
                             listWrapper.style.left = '0px';
                         } else 
                         if (-50 < listWrapper.offsetLeft) {
-                            requestAnimationFrame(slideLoop);
+                            requestAnimationFrame(slideAnim);
                             listWrapper.style.left = listWrapper.offsetLeft + 5 + 'px';
                         } else 
                         if (-100 < listWrapper.offsetLeft) {
-                            requestAnimationFrame(slideLoop);
+                            requestAnimationFrame(slideAnim);
                             listWrapper.style.left = listWrapper.offsetLeft - 5 + 'px';
                         } else {
                             listWrapper.style.left = -100 + 'px';
                         }
                     }
-                    slideLoop();
+                    slideAnim();
                 }
             }
         };
@@ -390,9 +442,9 @@ const addList = async (iid, name, check) => {
         }
 
         let height = 60;
-        const deleteLoop = () => {
+        const deleteAnim = () => {
             if (0 < height) {
-                requestAnimationFrame(deleteLoop);
+                requestAnimationFrame(deleteAnim);
             } else {
                 listDelete.parentElement.style.display = 'none';
             }
@@ -401,29 +453,27 @@ const addList = async (iid, name, check) => {
             height -= 5;
             listDelete.parentElement.style.height = height + 'px';
         }
-        deleteLoop();
+        deleteAnim();
     }
 
     // 別の場所をタップされたら削除ボタンを隠す
     document.addEventListener('touchstart', (e) => {
         if (e.target !== listDelete && e.target !== listWrapper) {
-            const fadeLoop = () => {
+            const fadeAnim = () => {
                 if (-3 < listWrapper.offsetLeft) {
                     listWrapper.style.left = '0px';
                 } else {
-                    requestAnimationFrame(fadeLoop);
+                    requestAnimationFrame(fadeAnim);
                     listWrapper.style.left = listWrapper.offsetLeft + 10 + 'px';
                 }
             }
-            fadeLoop();
+            fadeAnim();
         } 
     });
 
     if (check) {
-        const listContainer = document.getElementById('done-list-container');
-        listContainer.insertBefore(listParent, listContainer.firstChild);
+        doneListContainer.insertBefore(listParent, doneListContainer.firstChild);
     } else {
-        const listContainer = document.getElementById('yet-list-container');
-        listContainer.insertBefore(listParent, listContainer.firstChild);
+        yetListContainer.insertBefore(listParent, yetListContainer.firstChild);
     }
 }
