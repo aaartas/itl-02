@@ -37,11 +37,16 @@ const showMypage__ = async () => {
             (async () => {
                 const { getUserData } = await import('../../model/userModel');
                 userData = await getUserData(user.uid);
-                const { setUserData } = await import('../../view/pages/mypageView');
-                setUserData(userData);
-
                 preUserData = JSON.stringify(userData);
                 preUserData = JSON.parse(preUserData);
+
+                const providerData = user.reloadUserInfo.providerUserInfo[0];
+                userData.user_name = providerData.displayName;
+                userData.user_icon = providerData.photoUrl;
+                userData.twitter_disp_id = providerData.screenName;
+
+                const { setUserData } = await import('../../view/pages/mypageView');
+                setUserData(userData);
             })();
             
             // 登録リストの取得

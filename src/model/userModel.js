@@ -1,21 +1,17 @@
 // ユーザーデータ作成
 export const createUserData = async (user) => {
-    const { getFirestore, getDoc, doc, serverTimestamp } = await import('firebase/firestore');
+    const { getFirestore, setDoc, doc, serverTimestamp } = await import('firebase/firestore');
     const db = getFirestore();
-    const docRef = doc(db, 'users', user.uid);
-    const docSnap = await getDoc(docRef);
-    if(!docSnap.exists()){
-        const { setDoc } = await import('firebase/firestore');
-        await setDoc(doc(db, 'users', user.uid), {
-            user_name: user.displayName,
-            user_icon: user.photoURL,
-            list_title: 'の行きたいとこリスト',
-            user_bio: '',
-            twitter_disp_id: user.reloadUserInfo.screenName,
-            twitter_sys_id: user.providerData[0].uid,
-            user_regist_date: serverTimestamp()
-        });
-    }
+    const providerData = user.reloadUserInfo.providerUserInfo[0];
+    await setDoc(doc(db, 'users', user.uid), {
+        user_name: providerData.displayName,
+        user_icon: providerData.photoUrl,
+        list_title: 'の行きたいとこリスト',
+        user_bio: '',
+        twitter_disp_id: providerData.screenName,
+        twitter_sys_id: providerData.rawId,
+        user_regist_date: serverTimestamp()
+    });
 }
 
 // ユーザーデータ取得
@@ -37,6 +33,8 @@ export const getUserData = async (uid) => {
         }
         
         return data;
+    } else {
+        return false;
     }
 }
 
@@ -53,7 +51,7 @@ export const checkUserData = (preUserData, userData) => {
 }
 
 // プロフィール編集内容の保存
-export const updateUserData = async (UserData) => {
+export const updateUserData = async (userData) => {
     const { 
         getFirestore,
         doc,
@@ -61,8 +59,11 @@ export const updateUserData = async (UserData) => {
     } = await import('firebase/firestore');
 
     const db = getFirestore();
-    updateDoc(doc(db, 'users', UserData.uid), {
-        list_title: UserData.list_title,
-        user_bio: UserData.user_bio
+    updateDoc(doc(db, 'users', userData.uid), {
+        user_name: userData.user_name,
+        user_icon: userData.user_icon,
+        list_title: userData.list_title,
+        user_bio: userData.user_bio,
+        twitter_disp_id: userData.twitter_disp_id
     });
 }

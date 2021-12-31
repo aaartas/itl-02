@@ -9,20 +9,20 @@ export const login = async () => {
 
 // ログインリダイレクト時の処理
 export const checkLoginRedirect = async () => {
-    const { getAuth, getRedirectResult, onAuthStateChanged } = await import('firebase/auth');
+    const { getAuth, getRedirectResult } = await import('firebase/auth');
     const auth = getAuth();
     getRedirectResult(auth).then(async (result) => {
         if (result != null) {
+            const { getUserData, createUserData } = await import('./userModel');
+            const dbUserData = await getUserData(result.user.uid);
+            // 新規ユーザーの時、リストデータ作成
+            if (!dbUserData) {
+                await createUserData(result.user);
+            }
+
             //ログイン後、自動でマイページに遷移
             const { routing } = await import('../controller/commonController');
             routing('mypage');
-
-            //新規ユーザーの時、リストデータ作成
-            const { createUserData } = await import('./userModel');
-            await createUserData(auth.currentUser);
-            return result.user;
-        } else {
-            return false;
         }
     })
 }
