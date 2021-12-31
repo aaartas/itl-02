@@ -4,19 +4,19 @@ export const showShowpage = () => {
     const uid = path.substring(6);
 
     // ユーザーデータ取得
-    const getUser = new Promise(async (resolve, reject) => {
+    const getUser = new Promise(async (resolve) => {
         const { getUserData } = await import('../../model/userModel');
         resolve(getUserData(uid));
     });
 
     // リストデータ取得
-    const getLists = new Promise(async (resolve, reject) => {
+    const getLists = new Promise(async (resolve) => {
         const { getLists } = await import('../../model/listModel');
         resolve(getLists(uid));
     });
 
     // ajaxでHTML挿入
-    const getHTML = new Promise((resolve, reject) => {
+    const getHTML = new Promise((resolve) => {
         const request = new XMLHttpRequest();
         request.open('GET', '/template/show.html', true);
         request.onload = () => {
@@ -33,7 +33,6 @@ export const showShowpage = () => {
     Promise.all([getUser, getLists, getHTML]).then((result) => {
         setUserData(result[0]);
         setLists(result[1], uid, result[0].twitter_sys_id)
-
     })
 }
 

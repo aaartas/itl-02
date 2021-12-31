@@ -1,5 +1,20 @@
+// ユーザーデータセット
+export const setUserData = (userData) => {
+    document.getElementById('my-icon').src = userData.user_icon;
+    document.getElementById('my-name').innerHTML = userData.user_name;
+    document.getElementById('my-title').value = userData.list_title;
+    document.getElementById('my-title').readOnly = true;
+    const bio = document.getElementById('my-bio-textarea');
+    bio.value = userData.user_bio;
+    
+    if (bio.offsetHeight < bio.scrollHeight) {
+        bio.style.height = bio.scrollHeight + 'px';
+    }
+}
+
 // マイページ表示切り替え
-export const setView = (mode) => {
+import { mode } from '../../controller/pages/mypageController';
+export const setView = () => {
     const bioArea = document.getElementById('my-bio-textarea');
     const title = document.getElementById('my-title');
     const editContents = document.getElementsByClassName('my-edit-mode');
