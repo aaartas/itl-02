@@ -25,10 +25,6 @@ export const checkLoginRedirect = async () => {
             return false;
         }
     })
-
-    onAuthStateChanged(auth, (user) => {
-        // console.log(user)
-    });
 }
 
 //ログアウト処理

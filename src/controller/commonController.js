@@ -58,9 +58,6 @@ export const routing = async (path) => {
 
 // 全ページ共通機能
 export const commonController = async () => {
-    const { routing } = await import('./commonController');
-    const { login, logout } = await import('../model/authModel');
-
     // ハンバーガーメニュー表示切り替え
     const { show, hide, clickButton } = await import('../view/commonView');
     let showMenu = false;
@@ -74,46 +71,59 @@ export const commonController = async () => {
         }
     };
 
-    // ハンバーガーメニューリンク設定
+    // ハンバーガーメニュー取得
     const menu = document.getElementById('menu');
+    const topButton = document.getElementById('menu-button-home');
+    const loginButton = document.getElementById('menu-button-login');
+    const logoutButton = document.getElementById('menu-button-logout');
+    const mypageButton = document.getElementById('menu-button-mypage');
+    const howButton = document.getElementById('menu-button-how');
+    const showButton = document.getElementById('menu-button-show');
 
-    // トップ
-    document.getElementById('menu-button-home').onclick = () => {
+    topButton.onclick = () => {
         routing('');
         menu.style.display = 'none';
         clickButton();
     };
 
-    // ログイン
-    document.getElementById('menu-button-login').onclick = () => {
-        login();
-    };
-    
-    // ログアウト
-    document.getElementById('menu-button-logout').onclick = () => {
-        logout();
-        menu.style.display = 'none';
-        clickButton();
-    };
-
-    // マイページ
-    document.getElementById('menu-button-mypage').onclick = () => {
-        routing('mypage');
-        menu.style.display = 'none';
-        clickButton();
-    };
-
-    // 使い方ページ
-    document.getElementById('menu-button-how').onclick = () => {
+    howButton.onclick = () => {
         routing('how');
         menu.style.display = 'none';
         clickButton();
     };
 
-    // 閲覧ページ
-    document.getElementById('menu-button-show').onclick = () => {
+    showButton.onclick = () => {
         routing('show');
         menu.style.display = 'none';
         clickButton();
-    };
+    }
+
+    const { getAuth, onAuthStateChanged } = await import('firebase/auth');
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+        if (user == null) {
+            const { login } = await import('../model/authModel');
+            loginButton.style.display = 'block';
+            loginButton.onclick = () => {
+                login();
+            };
+            logoutButton.style.display = 'none';
+            mypageButton.style.display = 'none';
+        } else {
+            const { logout } = await import('../model/authModel');
+            loginButton.style.display = 'none';
+            logoutButton.style.display = 'block';
+            logoutButton.onclick = () => {
+                logout();
+                menu.style.display = 'none';
+                clickButton();
+            }
+            mypageButton.style.display = 'block';
+            mypageButton.onclick = () => {
+                routing('mypage');
+                menu.style.display = 'none';
+                clickButton();
+            }
+        }
+    });
 }

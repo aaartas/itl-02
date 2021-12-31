@@ -26,8 +26,12 @@
     commonController();
 })();
 
+// ブラウザバック時の処理
 window.onpopstate = async () => {
     const { loadView } = await import('./view/commonView');
     loadView();
+    const { routing } = await import('./controller/commonController');
+    // URLからページ表示を切り替え
+    routing();
 }
 
