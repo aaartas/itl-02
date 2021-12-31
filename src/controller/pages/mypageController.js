@@ -289,14 +289,14 @@ const addList = async (iid, name, check) => {
 
     // 並べ替えボタン
     // if (!check) {
-    //     let sortButton = document.createElement('img');
+    //     const sortButton = document.createElement('img');
     //     sortButton.setAttribute('src', '/data/sort.svg');
     //     sortButton.setAttribute('class', 'list-sort-button my-edit-mode');
     //     listWrapper.appendChild(sortButton);
 
     //     sortButton.ontouchstart = (e) => {
-    //         let touchX = e.touches[0].clientX;
-    //         let touchY = e.touches[0].clientY;
+    //         const touchX = e.touches[0].clientX;
+    //         const touchY = e.touches[0].clientY;
     //         let move = true;
     //         document.body.style.overflow = 'hidden';
     //         sortButton.ontouchmove = (e) => {
@@ -317,6 +317,13 @@ const addList = async (iid, name, check) => {
     //             listParent.style.zIndex = 0;
     //         }
     //     }
+    // }
+
+    // listParent.setAttribute('draggable', true);
+
+    // listParent.ondragover = (e) => {
+    //     console.log(e.target);
+
     // }
 
     // 場所の名前変更
