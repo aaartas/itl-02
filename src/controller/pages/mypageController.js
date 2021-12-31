@@ -108,6 +108,7 @@ const setLists = async () => {
     });
 }
 
+// イベント処理設定
 const setEvents = async (uid) => {
     // ---------- 共有ボタン押下時 ----------
     document.getElementById('my-share-button-img').onclick = async () => {

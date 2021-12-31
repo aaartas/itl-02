@@ -1,4 +1,4 @@
-//firebase初期化
+// firebase設定
 const config = {
     apiKey: 'AIzaSyCn5TtBz45t0Lb3MP6snWqGa0_fR-a0gNE',
     authDomain: 'campa-room.firebaseapp.com',
@@ -10,6 +10,7 @@ const config = {
     measurementId: ''
 };
 
+// firebase初期化
 export const initFirebase = async () => {
     const { initializeApp } = await import('firebase/app');
     initializeApp(config);

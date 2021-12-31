@@ -4,26 +4,29 @@
     loadView();
 })();
 
+(async () => {
+    const { initFirebase } = await import('./model/initModel');
+
+    // firebase初期化
+    await initFirebase();
+
+    const { checkLoginRedirect } = await import('./model/authModel');
+    const { routing, commonController } = await import('./controller/commonController');
+
+    // ログインチェック
+    checkLoginRedirect();
+
+    // URLからページ表示を切り替え
+    routing();
+
+    // ページ共通の処理読み込み
+    commonController();
+})();
+
 // ハンバーガーメニューのアニメーション読み込み
 (async () => {
     const { drawCanvas } = await import('./view/commonView');
     drawCanvas();
-})();
-
-
-(async () => {
-    const { initFirebase } = await import('./model/initModel');
-    const { checkLoginRedirect } = await import('./model/authModel');
-    // firebase初期化
-    await initFirebase();
-    // ログインチェック
-    checkLoginRedirect();
-
-    const { routing, commonController } = await import('./controller/commonController');
-    // URLからページ表示を切り替え
-    routing();
-    // ページ共通の処理読み込み
-    commonController();
 })();
 
 // ブラウザバック時の処理
@@ -34,4 +37,3 @@ window.onpopstate = async () => {
     // URLからページ表示を切り替え
     routing();
 }
-

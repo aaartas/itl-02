@@ -1,19 +1,3 @@
-// ユーザーデータ作成
-export const createUserData = async (user) => {
-    const { getFirestore, setDoc, doc, serverTimestamp } = await import('firebase/firestore');
-    const db = getFirestore();
-    const providerData = user.reloadUserInfo.providerUserInfo[0];
-    await setDoc(doc(db, 'users', user.uid), {
-        user_name: providerData.displayName,
-        user_icon: providerData.photoUrl,
-        list_title: 'の行きたいとこリスト',
-        user_bio: '',
-        twitter_disp_id: providerData.screenName,
-        twitter_sys_id: providerData.rawId,
-        user_regist_date: serverTimestamp()
-    });
-}
-
 // ユーザーデータ取得
 export const getUserData = async (uid) => {
     const { getFirestore, getDoc, doc } = await import('firebase/firestore');
@@ -38,7 +22,23 @@ export const getUserData = async (uid) => {
     }
 }
 
-// プロフィール変更のチェック
+// ユーザーデータ作成
+export const createUserData = async (user) => {
+    const { getFirestore, setDoc, doc, serverTimestamp } = await import('firebase/firestore');
+    const db = getFirestore();
+    const providerData = user.reloadUserInfo.providerUserInfo[0];
+    await setDoc(doc(db, 'users', user.uid), {
+        user_name: providerData.displayName,
+        user_icon: providerData.photoUrl,
+        list_title: 'の行きたいとこリスト',
+        user_bio: '',
+        twitter_disp_id: providerData.screenName,
+        twitter_sys_id: providerData.rawId,
+        user_regist_date: serverTimestamp()
+    });
+}
+
+// ユーザーデータ変更のチェック
 export const checkUserData = (preUserData, userData) => {
     const preUserDataJSON = JSON.stringify(Object.entries(preUserData).sort());
     const userDataJSON = JSON.stringify(Object.entries(userData).sort());
@@ -50,7 +50,7 @@ export const checkUserData = (preUserData, userData) => {
     }
 }
 
-// プロフィール編集内容の保存
+// ユーザーデータ更新
 export const updateUserData = async (userData) => {
     const { 
         getFirestore,

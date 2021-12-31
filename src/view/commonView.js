@@ -1,11 +1,5 @@
 
-// 引数にページ名を入力
-//   ''       :  トップページ
-//   'mypage' :  マイページ
-//   'show'   :  閲覧ページ
-//   'how'    :  使い方ページ
-// 引数を渡さない場合、URLパラメータを読んでページを切り替え
-
+// URLパラメータを読んでページを切り替え
 export const loadView = async () => {
     const path = location.pathname;
     let targetHTML;
