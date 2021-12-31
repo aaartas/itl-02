@@ -406,7 +406,7 @@ const addList = async (iid, name, check) => {
 
     // 別の場所をタップされたら削除ボタンを隠す
     document.addEventListener('touchstart', (e) => {
-        if (e.target !== listDelete) {
+        if (e.target !== listDelete && e.target !== listWrapper) {
             const fadeLoop = () => {
                 if (-3 < listWrapper.offsetLeft) {
                     listWrapper.style.left = '0px';
