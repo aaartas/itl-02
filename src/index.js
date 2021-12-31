@@ -1,28 +1,37 @@
-new Promise((resolve) => {
-    resolve();
-    // ハンバーガーメニューのアニメーション読み込み
-    (async () => {
-        const { drawCanvas } = await import('./view/commonView');
-        drawCanvas();
-    })();
+// ajaxでHTML挿入
+(async () => {
+    const { loadView } = await import('./view/commonView');
+    loadView();
+})();
 
+// ハンバーガーメニューのアニメーション読み込み
+(async () => {
+    const { drawCanvas } = await import('./view/commonView');
+    drawCanvas();
+})();
+
+
+(async () => {
+    const { initFirebase } = await import('./model/initModel');
+    const { checkLoginRedirect } = await import('./model/authModel');
     // firebase初期化
-    (async () => {
-        const { initFirebase } = await import('./model/initModel');
-        const { checkAuth } = await import('./model/authModel');
-        await initFirebase();
-        checkAuth();
-    })();
+    await initFirebase();
+    // ログインチェック
+    checkLoginRedirect();
 
-    // ページ遷移処理読み込み
-    (async () => {
-        const { routing } = await import('./controller/pageController');
-        routing();
-    })();
-    
+    const { routing, commonController } = await import('./controller/commonController');
+    // URLからページ表示を切り替え
+    routing();
     // ページ共通の処理読み込み
-    (async () => {
-        const { commonController } = await import('./controller/commonController');
-        commonController();
-    })();    
-})
+    commonController();
+})();
+
+// ブラウザバック時の処理
+window.onpopstate = async () => {
+    const { loadView } = await import('./view/commonView');
+    loadView();
+    const { routing } = await import('./controller/commonController');
+    // URLからページ表示を切り替え
+    routing();
+}
+

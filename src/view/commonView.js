@@ -1,3 +1,41 @@
+
+// 引数にページ名を入力
+//   ''       :  トップページ
+//   'mypage' :  マイページ
+//   'show'   :  閲覧ページ
+//   'how'    :  使い方ページ
+// 引数を渡さない場合、URLパラメータを読んでページを切り替え
+
+export const loadView = async () => {
+    const path = location.pathname;
+    let targetHTML;
+    
+    if (path === '/') {
+        targetHTML = '/template/top.html';
+    } else
+    if (path === '/mypage') {
+        targetHTML = '/template/mypage.html';
+    } else
+    if (/show/.test(path)) {
+        targetHTML = '/template/show.html';
+    } else
+    if (path === '/how') {
+        targetHTML = '/template/how.html';
+    } else {
+        history.back();
+    }
+
+    const request = new XMLHttpRequest();
+    request.open('GET', targetHTML, true);
+    request.onload = () => {
+        if (request.status >= 200 && request.status < 400) {
+			document.getElementById('main').innerHTML = request.responseText;
+        }
+    };
+    request.send();
+}
+
+
 let isMenuShow, clickLink = false;
 let mouseX, mouseY;
 let clickX = 0;

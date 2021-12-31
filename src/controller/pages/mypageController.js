@@ -14,8 +14,7 @@ export const showMypage = () => {
     request.send();
 }
 
-let mode;
-let uid;
+export let mode;
 let userData = [];
 let preUserData = [];
 let list = [];
@@ -24,48 +23,49 @@ let yetList = [];
 let doneList = [];
 
 const showMypage__ = async () => {
-    mode = 'view';
-    
+    setMode('view');
+
     const { getAuth, onAuthStateChanged } = await import('firebase/auth');
-    const { routing } = await import('../pageController');
+    const { routing } = await import('../commonController');
 
     // ---------- マイページアクセス時 ----------
     // ログイン状態の確認
-    onAuthStateChanged(getAuth(), async (user) => {
+    onAuthStateChanged(getAuth(), (user) => {
         if (user && location.pathname === '/mypage'){
-            uid = user.uid;
 
             // プロフィールの取得
-            const { getUserData } = await import('../../model/userModel');
-            userData = await getUserData(user.uid);
-            document.getElementById('my-icon').src = userData.user_icon;
-            document.getElementById('my-name').innerHTML = userData.user_name;
-            document.getElementById('my-title').value = userData.list_title;
-            document.getElementById('my-title').readOnly = true;
-            const bio = document.getElementById('my-bio-textarea');
-            bio.value = userData.user_bio;
+            (async () => {
+                const { getUserData } = await import('../../model/userModel');
+                userData = await getUserData(user.uid);
+                preUserData = JSON.stringify(userData);
+                preUserData = JSON.parse(preUserData);
 
-            setMode('view');
-            if (bio.offsetHeight < bio.scrollHeight) {
-                bio.style.height = bio.scrollHeight + 'px';
-            }
+                const providerData = user.reloadUserInfo.providerUserInfo[0];
+                userData.user_name = providerData.displayName;
+                userData.user_icon = providerData.photoUrl;
+                userData.twitter_disp_id = providerData.screenName;
 
+                const { setUserData } = await import('../../view/pages/mypageView');
+                setUserData(userData);
+            })();
+            
             // 登録リストの取得
-            const { getLists } = await import('../../model/listModel');
-            list = await getLists(user.uid);
+            (async () => {
+                const { getLists } = await import('../../model/listModel');
+                list = await getLists(user.uid);
+                setLists();
 
-            if (list.length == 0) {
-                document.getElementById('my-list-unregistered').style.display = 'block';
-            } else {
-                document.getElementById('my-list-unregistered').style.display = 'none';
-            }
-
-            preList = JSON.stringify(list);
-            preList = JSON.parse(preList);
-            preUserData = JSON.stringify(userData);
-            preUserData = JSON.parse(preUserData);
-            setLists();
-            setEvents();
+                if (list.length == 0) {
+                    document.getElementById('my-list-unregistered').style.display = 'block';
+                } else {
+                    document.getElementById('my-list-unregistered').style.display = 'none';
+                }
+    
+                preList = JSON.stringify(list);
+                preList = JSON.parse(preList);
+            })();
+            
+            setEvents(user.uid);
         } else {
             routing('');
         }
@@ -74,7 +74,7 @@ const showMypage__ = async () => {
 
 // 表示モード切り替え処理
 const setMode = async (_mode) => {
-    const { setView } = await import('../../view/mypageView');
+    const { setView } = await import('../../view/pages/mypageView');
     mode = _mode;
     setView(_mode);
 } 
@@ -108,7 +108,7 @@ const setLists = async () => {
     });
 }
 
-const setEvents = async () => {
+const setEvents = async (uid) => {
     // ---------- 共有ボタン押下時 ----------
     document.getElementById('my-share-button-img').onclick = async () => {
         document.getElementById('my-popup').style.display = 'flex';
@@ -164,7 +164,7 @@ const setEvents = async () => {
         if (newname.value) {
             const find = yetList.find(item => item.iid === newname.name);
             find.name = newname.value;
-            document.querySelector('#id-' + newname.name + ' .list-text-box').innerHTML = newname.value;
+            document.querySelector('#iid-' + newname.name + ' .list-text-box').innerHTML = newname.value;
         }
         setMode('edit');
     };
