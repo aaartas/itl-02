@@ -30,32 +30,11 @@ export const showShowpage = () => {
     });
 
     // ユーザーデータ取得、リストデータ取得、HTML取得を非同期実行。全て完了後thenを実行。
-    Promise.all([getUser, getLists, getHTML]).then((result) => {
+    Promise.all([getUser, getLists, getHTML]).then( async (result) => {
+        const { setUserData } = await import('../../view/pages/showpageView');
         setUserData(result[0]);
         setLists(result[1], uid, result[0].twitter_sys_id)
     })
-}
-
-// ユーザーデータをHTMLに反映
-const setUserData = async (userData) => {
-    document.getElementById('show-icon').src = userData.user_icon;
-    document.getElementById('show-name').innerHTML = userData.user_name;
-    document.getElementById('show-title').innerHTML = userData.list_title;
-    document.getElementById('show-bio-text').innerHTML = userData.user_bio;
-
-    // 登録リストの取得
-    const { getLists } = await import('../../model/listModel');
-    let list = await getLists(userData.uid);
-    
-    if (list.length == 0) {
-        document.getElementById('show-list-unregistered').style.display = 'block';
-    } else {
-        document.getElementById('show-list-unregistered').style.display = 'none';
-    }
-
-    document.getElementById('show-prof').onclick = () => {
-        location.href = 'https://twitter.com/' + userData.twitter_disp_id;
-    };
 }
 
 // リストデータをHTMLに反映
@@ -77,19 +56,19 @@ const setLists = async (list, uid, twitterID) => {
 }
 
 const addList = async (iid, name, check, uid, twitterID) => {
-    let listParent = document.createElement('div');
+    const listParent = document.createElement('div');
     listParent.setAttribute('class', 'list-parent');
     listParent.setAttribute('id', 'id-' + iid);
 
-    let listDelete = document.createElement('div');
+    const listDelete = document.createElement('div');
     listDelete.setAttribute('class', 'list-delete-button');
     listParent.appendChild(listDelete);
 
-    let listWrapper = document.createElement('div');
+    const listWrapper = document.createElement('div');
     listWrapper.setAttribute('class', 'list-wrapper');
     listParent.appendChild(listWrapper);
 
-    let checkBox = document.createElement('img');
+    const checkBox = document.createElement('img');
     if (check) {
         checkBox.setAttribute('src', '/data/done.svg');
         checkBox.setAttribute('class', 'list-check-box-done');
@@ -100,10 +79,10 @@ const addList = async (iid, name, check, uid, twitterID) => {
     
     listWrapper.appendChild(checkBox);
 
-    let textBox = document.createElement('div');
+    const textBox = document.createElement('div');
     textBox.setAttribute('class', 'list-text-box');
     
-    let listText = document.createTextNode(name);
+    const listText = document.createTextNode(name);
     textBox.appendChild(listText);
 
     // チェック有無で表示切り替え
@@ -116,14 +95,14 @@ const addList = async (iid, name, check, uid, twitterID) => {
 
     // 行きたいボタン
     if (!check) {
-        let inviteLink = document.createElement('a');
+        const inviteLink = document.createElement('a');
         let shareLink = 'https://twitter.com/messages/compose?';
         shareLink += 'recipient_id=' + twitterID;
         shareLink += '&text=' + 'https://campa-room.web.app/show/' + uid + "%0A";
         shareLink += '行きたいとこリストからの送信%0A' + name + 'に一緒に行きませんか?'
         inviteLink.setAttribute('href', shareLink);
 
-        let inviteButton = document.createElement('img');
+        const inviteButton = document.createElement('img');
         inviteButton.setAttribute('src', '/data/invite.svg');
         inviteButton.setAttribute('class', 'show-invite-button-img');
         inviteLink.appendChild(inviteButton);
@@ -137,12 +116,11 @@ const addList = async (iid, name, check, uid, twitterID) => {
         listWrapper.style.background = '#FFFFFF';
     };
 
-    let listContainer;
     if (check) {
-        listContainer = document.getElementById('show-done-list-container');
+        const listContainer = document.getElementById('show-done-list-container');
+        listContainer.insertBefore(listParent, listContainer.firstChild);
     } else {
-        listContainer = document.getElementById('show-yet-list-container');
+        const listContainer = document.getElementById('show-yet-list-container');
+        listContainer.insertBefore(listParent, listContainer.firstChild);
     }
-    
-    listContainer.prepend(listParent);
 }

@@ -1,3 +1,4 @@
+// リストデータ取得
 export const getLists = async (uid) => {
     const { 
         getFirestore,
@@ -24,7 +25,7 @@ export const getLists = async (uid) => {
 }
 
 
-//リスト編集内容の保存
+// リスト編集内容の保存
 export const saveData = async (uid, yetList, doneList) => {
     const { 
         getFirestore,

@@ -1,4 +1,4 @@
-//twitterログイン処理
+// twitterログイン処理
 export const login = async () => {
     const { getAuth, TwitterAuthProvider, signInWithRedirect } = await import('firebase/auth');
     const auth = getAuth();
