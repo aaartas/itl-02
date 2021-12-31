@@ -308,7 +308,7 @@ const addList = async (iid, name, check) => {
 
         sortButton.ontouchstart = (e) => {
             const touchX = e.touches[0].clientX;
-            const touchY = e.touches[0].clientY;
+            const touchY = e.touches[0].pageY;
             let move = true;
             let moveY = 0;
             let sortY = 0;
@@ -320,7 +320,7 @@ const addList = async (iid, name, check) => {
                     }
                     if (move) {
                         listParent.style.zIndex = 1;
-                        moveY = e.touches[0].clientY - touchY + sortY;
+                        moveY = e.touches[0].pageY - touchY + sortY;
                         if (listParent == yetListContainer.firstChild && moveY < 0) {
                             moveY = 0;
                         } else
@@ -389,12 +389,12 @@ const addList = async (iid, name, check) => {
 
         const prePosX = listWrapper.offsetLeft;
         const touchX = e.touches[0].clientX;
-        const touchY = e.touches[0].clientY;
+        const touchY = e.touches[0].pageY;
         let move = true;
         listWrapper.ontouchmove = (e) => {
 
             if (mode === 'edit') {
-                if (50 < Math.abs(e.touches[0].clientY - touchY)) {
+                if (50 < Math.abs(e.touches[0].pageY - touchY)) {
                     move = false;
                 }
                 if (move) {
