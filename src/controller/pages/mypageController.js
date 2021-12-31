@@ -312,6 +312,8 @@ const addList = async (iid, name, check) => {
             let move = true;
             let moveY = 0;
             let sortY = 0;
+            // document.getElementById('main').style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden';
             sortButton.ontouchmove = (e) => {
                 if (mode === 'edit') {
@@ -364,6 +366,7 @@ const addList = async (iid, name, check) => {
                 }
             }
             sortButton.ontouchend = () => {
+                document.documentElement.style.overflow = 'auto';
                 document.body.style.overflow = 'auto';
                 listParent.style.top = 0;
                 listParent.style.zIndex = 0;
