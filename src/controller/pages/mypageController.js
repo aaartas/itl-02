@@ -8,7 +8,7 @@ export const showMypage = () => {
             const restxt=request.responseText;
 			document.getElementById('main').innerHTML = restxt;
 
-            showMypage__();
+            loadMypage();
         }
     };
     request.send();
@@ -22,7 +22,7 @@ let preList = [];
 let yetList = [];
 let doneList = [];
 
-const showMypage__ = async () => {
+const loadMypage = async () => {
     setMode('view');
 
     const { getAuth, onAuthStateChanged } = await import('firebase/auth');
@@ -257,6 +257,7 @@ const addList = async (iid, name, check) => {
     listWrapper.setAttribute('class', 'list-wrapper');
     listParent.appendChild(listWrapper);
 
+    // ---------- チェックボックス ----------
     const checkBox = document.createElement('img');
     if (check) {
         checkBox.setAttribute('src', '/data/done.svg');
@@ -299,85 +300,82 @@ const addList = async (iid, name, check) => {
     }
     listWrapper.appendChild(textBox);
 
-    // 並べ替えボタン
+
+    // ---------- 並べ替えボタン ----------
+    const sortButton = document.createElement('img');
     if (!check) {
-        const sortButton = document.createElement('img');
         sortButton.setAttribute('src', '/data/sort.svg');
         sortButton.setAttribute('class', 'list-sort-button my-edit-mode');
         listWrapper.appendChild(sortButton);
 
-        let touchX, touchY, move, moveY, sortY;
-        window.onresize = () => {
-            move = false;
-        }
+        let touchY, moveY, sortY;
         sortButton.ontouchstart = (e) => {
-            touchX = e.touches[0].clientX;
             touchY = e.touches[0].pageY;
-            move = true;
             moveY = 0;
             sortY = 0;
         }
+
         sortButton.ontouchmove = (e) => {
-            if (move) {
-                listParent.style.zIndex = 1;
-                moveY = e.touches[0].pageY - touchY + sortY;
-                if (listParent == yetListContainer.firstChild && moveY < 0) {
-                    moveY = 0;
-                } else
-                if (listParent == yetListContainer.lastChild && 0 < moveY) {
-                    moveY = 0;
-                } else
-                if (moveY < -60) {
-                    sortY += 60;
-                    const prevList = listParent.previousElementSibling;
-                    let topDist = -60;
+            listParent.style.zIndex = 1;
+            moveY = e.touches[0].pageY - touchY + sortY;
+            if (listParent == yetListContainer.firstChild && moveY < 0) {
+                moveY = 0;
+            } else
+            if (listParent == yetListContainer.lastChild && 0 < moveY) {
+                moveY = 0;
+            } else
+            if (moveY < -60) {
+                sortY += 60;
+                const prevList = listParent.previousElementSibling;
+                let topDist = -60;
+                prevList.style.top = topDist + 'px';
+                const sortAnim = () => {
+                    if (-10 < topDist) {
+                        topDist = 0;
+                    } else {
+                        requestAnimationFrame(sortAnim);
+                        topDist += 10;
+                    }
                     prevList.style.top = topDist + 'px';
-                    const sortAnim = () => {
-                        if (-10 < topDist) {
-                            topDist = 0;
-                        } else {
-                            requestAnimationFrame(sortAnim);
-                            topDist += 10;
-                        }
-                        prevList.style.top = topDist + 'px';
+                }
+                sortAnim();
+                yetListContainer.insertBefore(listParent, prevList);
+            } else
+            if (60 < moveY) {
+                sortY -= 60;
+                const nextList = listParent.nextElementSibling;
+                let topDist = 60;
+                nextList.style.top = topDist + 'px';
+                const sortAnim = () => {
+                    if (topDist < 10) {
+                        topDist = 0;
+                    } else {
+                        requestAnimationFrame(sortAnim);
+                        topDist -= 10;
                     }
-                    sortAnim();
-                    yetListContainer.insertBefore(listParent, prevList);
-                } else
-                if (60 < moveY) {
-                    sortY -= 60;
-                    const nextList = listParent.nextElementSibling;
-                    let topDist = 60;
                     nextList.style.top = topDist + 'px';
-                    const sortAnim = () => {
-                        if (topDist < 10) {
-                            topDist = 0;
-                        } else {
-                            requestAnimationFrame(sortAnim);
-                            topDist -= 10;
-                        }
-                        nextList.style.top = topDist + 'px';
-                    }
-                    sortAnim();
-                    yetListContainer.insertBefore(listParent, nextList.nextSibling);
                 }
-                moveY = e.touches[0].pageY - touchY + sortY;
-                if (listParent == yetListContainer.firstChild && moveY < 0) {
-                    moveY = 0;
-                } else
-                if (listParent == yetListContainer.lastChild && 0 < moveY) {
-                    moveY = 0;
-                }
-                listParent.style.top = moveY + 'px';
+                sortAnim();
+                yetListContainer.insertBefore(listParent, nextList.nextSibling);
             }
+            moveY = e.touches[0].pageY - touchY + sortY;
+            if (listParent == yetListContainer.firstChild && moveY < 0) {
+                moveY = 0;
+            } else
+            if (listParent == yetListContainer.lastChild && 0 < moveY) {
+                moveY = 0;
+            }
+            listParent.style.top = moveY + 'px';
         }
+
         sortButton.ontouchend = () => {
             listParent.style.top = 0;
             listParent.style.zIndex = 0;
         }
     }
 
-    // 場所の名前変更
+
+    // ---------- 場所の名前変更 ----------
     if (!check) {
         textBox.onclick = () => {
             if (mode === 'edit') {
@@ -389,53 +387,55 @@ const addList = async (iid, name, check) => {
         }
     }
 
-    // リストをスライドで削除ボタン表示
+    // ---------- 削除ボタン表示 ----------
+    let prePosX, touchX;
     listWrapper.ontouchstart = (e) => {
-        listWrapper.style.background = '#EEE';
-
-        const prePosX = listWrapper.offsetLeft;
-        const touchX = e.touches[0].clientX;
-        const touchY = e.touches[0].pageY;
-        let move = true;
-        listWrapper.ontouchmove = (e) => {
-            if (mode === 'edit') {
-                let moveX = prePosX + e.touches[0].clientX - touchX;
-                if (e.cancelable && moveX < 0) {
-                    e.preventDefault();
-                    if ( -100 < moveX) {
-                        listWrapper.style.left = moveX + 'px';
-                    }
-                }
-                
-            }
-        };
-
-        listWrapper.ontouchend = () => {
-            listWrapper.style.background = '#FFF';
-            if (mode === 'edit') {
-                if (listWrapper.offsetLeft < 0) {
-                    const slideAnim = () => {
-                        if (-3 < listWrapper.offsetLeft) {
-                            listWrapper.style.left = '0px';
-                        } else 
-                        if (-50 < listWrapper.offsetLeft) {
-                            requestAnimationFrame(slideAnim);
-                            listWrapper.style.left = listWrapper.offsetLeft + 5 + 'px';
-                        } else 
-                        if (-100 < listWrapper.offsetLeft) {
-                            requestAnimationFrame(slideAnim);
-                            listWrapper.style.left = listWrapper.offsetLeft - 5 + 'px';
-                        } else {
-                            listWrapper.style.left = -100 + 'px';
-                        }
-                    }
-                    slideAnim();
-                }
-            }
-        };
+        if (mode === 'edit' && e.target !== sortButton) {
+            listWrapper.style.background = '#EEE';
+            prePosX = listWrapper.offsetLeft;
+            touchX = e.touches[0].clientX;
+        }
     };
 
-    // リスト削除ボタン押下時
+    listWrapper.ontouchmove = (e) => {
+        if (mode === 'edit' && e.target !== sortButton) {
+            let moveX = prePosX + e.touches[0].clientX - touchX;
+            if (e.cancelable && moveX < 0) {
+                e.preventDefault();
+                if ( -100 < moveX) {
+                    listWrapper.style.left = moveX + 'px';
+                }
+            }
+            
+        }
+    };
+
+    listWrapper.ontouchend = (e) => {
+        listWrapper.style.background = '#FFF';
+        if (mode === 'edit' && e.target !== sortButton) {
+            if (listWrapper.offsetLeft < 0) {
+                const slideAnim = () => {
+                    if (-3 < listWrapper.offsetLeft) {
+                        listWrapper.style.left = '0px';
+                    } else 
+                    if (-50 < listWrapper.offsetLeft) {
+                        requestAnimationFrame(slideAnim);
+                        listWrapper.style.left = listWrapper.offsetLeft + 5 + 'px';
+                    } else 
+                    if (-100 < listWrapper.offsetLeft) {
+                        requestAnimationFrame(slideAnim);
+                        listWrapper.style.left = listWrapper.offsetLeft - 5 + 'px';
+                    } else {
+                        listWrapper.style.left = -100 + 'px';
+                    }
+                }
+                slideAnim();
+            }
+        }
+    };
+
+
+    // ---------- 削除ボタン押下 ----------
     listDelete.onclick = () => {
         const find1 = yetList.find(item => item.iid === listParent.id.substr(4));
         if (find1 !== undefined) {
@@ -462,7 +462,8 @@ const addList = async (iid, name, check) => {
         deleteAnim();
     }
 
-    // 別の場所をタップされたら削除ボタンを隠す
+
+    // ---------- 削除ボタンを隠す ----------
     document.addEventListener('touchstart', (e) => {
         if (e.target !== listDelete && e.target !== listWrapper && e.target !== textBox && listWrapper.offsetLeft < 0) {
             const fadeAnim = () => {

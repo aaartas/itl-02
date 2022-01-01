@@ -110,10 +110,10 @@ const addList = async (iid, name, check, uid, twitterID) => {
     }
 
     listWrapper.ontouchstart = () => {
-        listWrapper.style.background = '#EEEEEE';
+        listWrapper.style.background = '#EEE';
     };
     listWrapper.ontouchend = () => {
-        listWrapper.style.background = '#FFFFFF';
+        listWrapper.style.background = '#FFF';
     };
 
     if (check) {
