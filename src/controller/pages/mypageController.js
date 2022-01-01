@@ -320,7 +320,7 @@ const addList = async (iid, name, check) => {
             // document.body.style.overflow = 'hidden';
         }
         sortButton.ontouchmove = (e) => {
-            e.preventDefault();
+            // e.preventDefault();
             if (move) {
                 listParent.style.zIndex = 1;
                 moveY = e.touches[0].pageY - touchY + sortY;
