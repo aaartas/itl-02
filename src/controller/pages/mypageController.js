@@ -399,18 +399,15 @@ const addList = async (iid, name, check) => {
         const touchY = e.touches[0].pageY;
         let move = true;
         listWrapper.ontouchmove = (e) => {
-
             if (mode === 'edit') {
-                if (50 < Math.abs(e.touches[0].pageY - touchY)) {
-                    move = false;
-                    listWrapper.style.left = '0px';
-                }
-                if (move) {
-                    let moveX = prePosX + e.touches[0].clientX - touchX;
-                    if (-100 < moveX && moveX < 0) {
+                let moveX = prePosX + e.touches[0].clientX - touchX;
+                if (e.cancelable && moveX < 0) {
+                    e.preventDefault();
+                    if ( -100 < moveX) {
                         listWrapper.style.left = moveX + 'px';
                     }
                 }
+                
             }
         };
 
