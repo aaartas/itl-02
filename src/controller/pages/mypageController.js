@@ -257,6 +257,7 @@ const addList = async (iid, name, check) => {
     listWrapper.setAttribute('class', 'list-wrapper');
     listParent.appendChild(listWrapper);
 
+    // ---------- チェックボックス ----------
     const checkBox = document.createElement('img');
     if (check) {
         checkBox.setAttribute('src', '/data/done.svg');
@@ -299,9 +300,10 @@ const addList = async (iid, name, check) => {
     }
     listWrapper.appendChild(textBox);
 
-    // 並べ替えボタン
+
+    // ---------- 並べ替えボタン ----------
+    const sortButton = document.createElement('img');
     if (!check) {
-        const sortButton = document.createElement('img');
         sortButton.setAttribute('src', '/data/sort.svg');
         sortButton.setAttribute('class', 'list-sort-button my-edit-mode');
         listWrapper.appendChild(sortButton);
@@ -312,6 +314,7 @@ const addList = async (iid, name, check) => {
             moveY = 0;
             sortY = 0;
         }
+
         sortButton.ontouchmove = (e) => {
             listParent.style.zIndex = 1;
             moveY = e.touches[0].pageY - touchY + sortY;
@@ -364,13 +367,15 @@ const addList = async (iid, name, check) => {
             }
             listParent.style.top = moveY + 'px';
         }
+
         sortButton.ontouchend = () => {
             listParent.style.top = 0;
             listParent.style.zIndex = 0;
         }
     }
 
-    // 場所の名前変更
+
+    // ---------- 場所の名前変更 ----------
     if (!check) {
         textBox.onclick = () => {
             if (mode === 'edit') {
@@ -382,51 +387,55 @@ const addList = async (iid, name, check) => {
         }
     }
 
-    // リストをスライドで削除ボタン表示
+    // ---------- 削除ボタン表示 ----------
+    let prePosX, touchX;
     listWrapper.ontouchstart = (e) => {
-        listWrapper.style.background = '#EEE';
-
-        const prePosX = listWrapper.offsetLeft;
-        const touchX = e.touches[0].clientX;
-        listWrapper.ontouchmove = (e) => {
-            if (mode === 'edit') {
-                let moveX = prePosX + e.touches[0].clientX - touchX;
-                if (e.cancelable && moveX < 0) {
-                    e.preventDefault();
-                    if ( -100 < moveX) {
-                        listWrapper.style.left = moveX + 'px';
-                    }
-                }
-                
-            }
-        };
-
-        listWrapper.ontouchend = () => {
-            listWrapper.style.background = '#FFF';
-            if (mode === 'edit') {
-                if (listWrapper.offsetLeft < 0) {
-                    const slideAnim = () => {
-                        if (-3 < listWrapper.offsetLeft) {
-                            listWrapper.style.left = '0px';
-                        } else 
-                        if (-50 < listWrapper.offsetLeft) {
-                            requestAnimationFrame(slideAnim);
-                            listWrapper.style.left = listWrapper.offsetLeft + 5 + 'px';
-                        } else 
-                        if (-100 < listWrapper.offsetLeft) {
-                            requestAnimationFrame(slideAnim);
-                            listWrapper.style.left = listWrapper.offsetLeft - 5 + 'px';
-                        } else {
-                            listWrapper.style.left = -100 + 'px';
-                        }
-                    }
-                    slideAnim();
-                }
-            }
-        };
+        if (mode === 'edit' && e.target !== sortButton) {
+            listWrapper.style.background = '#EEE';
+            prePosX = listWrapper.offsetLeft;
+            touchX = e.touches[0].clientX;
+        }
     };
 
-    // リスト削除ボタン押下時
+    listWrapper.ontouchmove = (e) => {
+        if (mode === 'edit' && e.target !== sortButton) {
+            let moveX = prePosX + e.touches[0].clientX - touchX;
+            if (e.cancelable && moveX < 0) {
+                e.preventDefault();
+                if ( -100 < moveX) {
+                    listWrapper.style.left = moveX + 'px';
+                }
+            }
+            
+        }
+    };
+
+    listWrapper.ontouchend = (e) => {
+        listWrapper.style.background = '#FFF';
+        if (mode === 'edit' && e.target !== sortButton) {
+            if (listWrapper.offsetLeft < 0) {
+                const slideAnim = () => {
+                    if (-3 < listWrapper.offsetLeft) {
+                        listWrapper.style.left = '0px';
+                    } else 
+                    if (-50 < listWrapper.offsetLeft) {
+                        requestAnimationFrame(slideAnim);
+                        listWrapper.style.left = listWrapper.offsetLeft + 5 + 'px';
+                    } else 
+                    if (-100 < listWrapper.offsetLeft) {
+                        requestAnimationFrame(slideAnim);
+                        listWrapper.style.left = listWrapper.offsetLeft - 5 + 'px';
+                    } else {
+                        listWrapper.style.left = -100 + 'px';
+                    }
+                }
+                slideAnim();
+            }
+        }
+    };
+
+
+    // ---------- 削除ボタン押下 ----------
     listDelete.onclick = () => {
         const find1 = yetList.find(item => item.iid === listParent.id.substr(4));
         if (find1 !== undefined) {
@@ -453,7 +462,8 @@ const addList = async (iid, name, check) => {
         deleteAnim();
     }
 
-    // 別の場所をタップされたら削除ボタンを隠す
+
+    // ---------- 削除ボタンを隠す ----------
     document.addEventListener('touchstart', (e) => {
         if (e.target !== listDelete && e.target !== listWrapper && e.target !== textBox && listWrapper.offsetLeft < 0) {
             const fadeAnim = () => {
