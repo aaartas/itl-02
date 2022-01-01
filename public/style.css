@@ -388,6 +388,7 @@ main {
 
 .list-sort-button {
     padding: 15px 25px 15px 15px;
+    touch-action: none;
 }
 
 /* ポップアップ */
