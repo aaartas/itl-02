@@ -316,11 +316,8 @@ const addList = async (iid, name, check) => {
             move = true;
             moveY = 0;
             sortY = 0;
-            // document.documentElement.style.overflow = 'hidden';
-            // document.body.style.overflow = 'hidden';
         }
         sortButton.ontouchmove = (e) => {
-            // e.preventDefault();
             if (move) {
                 listParent.style.zIndex = 1;
                 moveY = e.touches[0].pageY - touchY + sortY;
@@ -366,8 +363,6 @@ const addList = async (iid, name, check) => {
             }
         }
         sortButton.ontouchend = () => {
-            // document.documentElement.style.overflow = 'auto';
-            // document.body.style.overflow = 'auto';
             listParent.style.top = 0;
             listParent.style.zIndex = 0;
         }
@@ -436,32 +431,34 @@ const addList = async (iid, name, check) => {
 
     // リスト削除ボタン押下時
     listDelete.onclick = () => {
-        const find1 = yetList.find(item => item.iid === listDelete.parentElement.id.substr(4));
+        const find1 = yetList.find(item => item.iid === listParent.id.substr(4));
         if (find1 !== undefined) {
             find1.remove = true;
         } else {
-            const find2 = doneList.find(item => item.iid === listDelete.parentElement.id.substr(4));
+            const find2 = doneList.find(item => item.iid === listParent.id.substr(4));
             find2.remove = true;
         }
 
         let height = 60;
+        let left = listWrapper.offsetLeft;
         const deleteAnim = () => {
             if (0 < height) {
                 requestAnimationFrame(deleteAnim);
             } else {
-                listDelete.parentElement.style.display = 'none';
+                listParent.style.display = 'none';
             }
 
-            listWrapper.style.left = listWrapper.offsetLeft - 20 + 'px';
+            left -= 20;
+            listWrapper.style.left = left + 'px';
             height -= 5;
-            listDelete.parentElement.style.height = height + 'px';
+            listParent.style.height = height + 'px';
         }
         deleteAnim();
     }
 
     // 別の場所をタップされたら削除ボタンを隠す
     document.addEventListener('touchstart', (e) => {
-        if (e.target !== listDelete && e.target !== listWrapper) {
+        if (e.target !== listDelete && e.target !== listWrapper && e.target !== textBox && listWrapper.offsetLeft < 0) {
             const fadeAnim = () => {
                 if (-3 < listWrapper.offsetLeft) {
                     listWrapper.style.left = '0px';
