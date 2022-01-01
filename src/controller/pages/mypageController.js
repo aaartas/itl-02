@@ -331,6 +331,7 @@ const addList = async (iid, name, check) => {
                     sortY += 60;
                     const prevList = listParent.previousElementSibling;
                     let topDist = -60;
+                    prevList.style.top = topDist + 'px';
                     const sortAnim = () => {
                         if (-10 < topDist) {
                             topDist = 0;
@@ -347,6 +348,7 @@ const addList = async (iid, name, check) => {
                     sortY -= 60;
                     const nextList = listParent.nextElementSibling;
                     let topDist = 60;
+                    nextList.style.top = topDist + 'px';
                     const sortAnim = () => {
                         if (topDist < 10) {
                             topDist = 0;
@@ -358,6 +360,13 @@ const addList = async (iid, name, check) => {
                     }
                     sortAnim();
                     yetListContainer.insertBefore(listParent, nextList.nextSibling);
+                }
+                moveY = e.touches[0].pageY - touchY + sortY;
+                if (listParent == yetListContainer.firstChild && moveY < 0) {
+                    moveY = 0;
+                } else
+                if (listParent == yetListContainer.lastChild && 0 < moveY) {
+                    moveY = 0;
                 }
                 listParent.style.top = moveY + 'px';
             }
