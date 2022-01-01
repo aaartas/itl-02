@@ -316,59 +316,58 @@ const addList = async (iid, name, check) => {
             move = true;
             moveY = 0;
             sortY = 0;
-            document.documentElement.style.overflow = 'hidden';
-            document.body.style.overflow = 'hidden';
+            // document.documentElement.style.overflow = 'hidden';
+            // document.body.style.overflow = 'hidden';
         }
         sortButton.ontouchmove = (e) => {
-            if (mode === 'edit') {
-                if (move) {
-                    listParent.style.zIndex = 1;
-                    moveY = e.touches[0].pageY - touchY + sortY;
-                    if (listParent == yetListContainer.firstChild && moveY < 0) {
-                        moveY = 0;
-                    } else
-                    if (listParent == yetListContainer.lastChild && 0 < moveY) {
-                        moveY = 0;
-                    } else
-                    if (moveY < -60) {
-                        sortY += 60;
-                        const prevList = listParent.previousElementSibling;
-                        let topDist = -60;
-                        const sortAnim = () => {
-                            if (-10 < topDist) {
-                                topDist = 0;
-                            } else {
-                                requestAnimationFrame(sortAnim);
-                                topDist += 10;
-                            }
-                            prevList.style.top = topDist + 'px';
+            e.preventDefault();
+            if (move) {
+                listParent.style.zIndex = 1;
+                moveY = e.touches[0].pageY - touchY + sortY;
+                if (listParent == yetListContainer.firstChild && moveY < 0) {
+                    moveY = 0;
+                } else
+                if (listParent == yetListContainer.lastChild && 0 < moveY) {
+                    moveY = 0;
+                } else
+                if (moveY < -60) {
+                    sortY += 60;
+                    const prevList = listParent.previousElementSibling;
+                    let topDist = -60;
+                    const sortAnim = () => {
+                        if (-10 < topDist) {
+                            topDist = 0;
+                        } else {
+                            requestAnimationFrame(sortAnim);
+                            topDist += 10;
                         }
-                        sortAnim();
-                        yetListContainer.insertBefore(listParent, prevList);
-                    } else
-                    if (60 < moveY) {
-                        sortY -= 60;
-                        const nextList = listParent.nextElementSibling;
-                        let topDist = 60;
-                        const sortAnim = () => {
-                            if (topDist < 10) {
-                                topDist = 0;
-                            } else {
-                                requestAnimationFrame(sortAnim);
-                                topDist -= 10;
-                            }
-                            nextList.style.top = topDist + 'px';
-                        }
-                        sortAnim();
-                        yetListContainer.insertBefore(listParent, nextList.nextSibling);
+                        prevList.style.top = topDist + 'px';
                     }
-                    listParent.style.top = moveY + 'px';
+                    sortAnim();
+                    yetListContainer.insertBefore(listParent, prevList);
+                } else
+                if (60 < moveY) {
+                    sortY -= 60;
+                    const nextList = listParent.nextElementSibling;
+                    let topDist = 60;
+                    const sortAnim = () => {
+                        if (topDist < 10) {
+                            topDist = 0;
+                        } else {
+                            requestAnimationFrame(sortAnim);
+                            topDist -= 10;
+                        }
+                        nextList.style.top = topDist + 'px';
+                    }
+                    sortAnim();
+                    yetListContainer.insertBefore(listParent, nextList.nextSibling);
                 }
+                listParent.style.top = moveY + 'px';
             }
         }
         sortButton.ontouchend = () => {
-            document.documentElement.style.overflow = 'auto';
-            document.body.style.overflow = 'auto';
+            // document.documentElement.style.overflow = 'auto';
+            // document.body.style.overflow = 'auto';
             listParent.style.top = 0;
             listParent.style.zIndex = 0;
         }
