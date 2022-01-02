@@ -62,12 +62,11 @@ export const commonController = async () => {
     window.oncontextmenu = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        return false;
    };
 
+   // ドラッグ無効
    window.ondragstart = (e) => {
         e.preventDefault();
-        return false;
    }
 
     // ハンバーガーメニュー表示切り替え
