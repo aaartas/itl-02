@@ -361,10 +361,10 @@ main {
     padding-right: 30px;
     height:60px;
     line-height:60px;
+    display: none;
 }
 
 .list-wrapper {
-    position: absolute;
     top: 0;
     width: 100%;
     display: flex;
@@ -380,7 +380,7 @@ main {
 .list-text-box {
     font-size: 18px;
     width: 80%;
-    padding-right: 25px;
+    padding: 15px 25px 15px 0;
     white-space: nowrap; /* 横幅のMAXに達しても改行しない */
     overflow: hidden; /* ハミ出した部分を隠す */
     text-overflow: ellipsis; /* 「…」と省略 */

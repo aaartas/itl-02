@@ -60,10 +60,6 @@ const addList = async (iid, name, check, uid, twitterID) => {
     listParent.setAttribute('class', 'list-parent');
     listParent.setAttribute('id', 'id-' + iid);
 
-    const listDelete = document.createElement('div');
-    listDelete.setAttribute('class', 'list-delete-button');
-    listParent.appendChild(listDelete);
-
     const listWrapper = document.createElement('div');
     listWrapper.setAttribute('class', 'list-wrapper');
     listParent.appendChild(listWrapper);
@@ -111,9 +107,19 @@ const addList = async (iid, name, check, uid, twitterID) => {
 
     listWrapper.ontouchstart = () => {
         listWrapper.style.background = '#EEE';
+        
     };
+    let detailShow = false;
     listWrapper.ontouchend = () => {
+        detailShow = !detailShow;
         listWrapper.style.background = '#FFF';
+        if (detailShow) {
+            textBox.style.whiteSpace = 'normal';
+            listWrapper.style.height = 'auto';
+        } else {
+            textBox.style.whiteSpace = 'nowrap';
+            listWrapper.style.height = '60px';
+        }
     };
 
     if (check) {

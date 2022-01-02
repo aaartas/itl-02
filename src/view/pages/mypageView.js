@@ -27,6 +27,10 @@ export const setView = () => {
     const renameButton = document.getElementById('my-rename-submit-button');
     const editableContents = document.getElementsByClassName('my-editable');
     const editableContentsNum = editableContents.length;
+    const listWrapper = document.getElementsByClassName('list-wrapper');
+    const listWrapperNum = listWrapper.length;
+    const deleteButton = document.getElementsByClassName('list-delete-button');
+    const deleteButtonNum = deleteButton.length;
     
     if (mode === 'view') {
         for (let i = 0; i < editContentsNum; i++) {
@@ -40,6 +44,12 @@ export const setView = () => {
         }
         for (let i = 0; i < editableContentsNum; i++) {
             editableContents[i].style.color = '#000';
+        }
+        for (let i = 0; i < deleteButtonNum; i++) {
+            deleteButton[i].style.display = 'none';
+        }
+        for (let i = 0; i < listWrapperNum; i++) {
+            listWrapper[i].style.position = 'static';
         }
         document.getElementById('my-page').style.backgroundColor = '#EEB706';
         document.getElementById('my-sticky-container').style.backgroundColor = '#EEB706';
@@ -57,6 +67,12 @@ export const setView = () => {
         }
         for (let i = 0; i < editableContentsNum; i++) {
             editableContents[i].style.color = '#F37504';
+        }
+        for (let i = 0; i < deleteButtonNum; i++) {
+            deleteButton[i].style.display = 'block';
+        }
+        for (let i = 0; i < listWrapperNum; i++) {
+            listWrapper[i].style.position = 'absolute';
         }
         document.getElementById('my-page').style.backgroundColor = '#F37504';
         document.getElementById('my-sticky-container').style.backgroundColor = '#F37504';
