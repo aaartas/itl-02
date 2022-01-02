@@ -412,10 +412,11 @@ const addList = async (iid, name, check) => {
     }
 
 
-    // ---------- 場所の名前変更 ----------
+    
     let detailShow = false;
     textBox.onclick = () => {
         if (mode === 'view') {
+            // ---------- テキスト省略切り替え ----------
             if (textBox.offsetWidth < textBox.scrollWidth) {
                 detailShow = true;
             } else {
@@ -430,6 +431,7 @@ const addList = async (iid, name, check) => {
             }
         } else
         if (!check && mode === 'edit') {
+            // ---------- 場所の名前変更 ----------
             const find = yetList.find(item => item.iid === iid);
             document.getElementById('my-text-edit-area').value = find.name;
             document.getElementById('my-text-edit-area').name = iid;
@@ -520,7 +522,7 @@ const addList = async (iid, name, check) => {
 
     // ---------- 削除ボタンを隠す ----------
     document.addEventListener('touchstart', (e) => {
-        if (e.target !== listDelete && e.target !== listWrapper && e.target !== textBox && e.target !== sortButton && listWrapper.offsetLeft < 0) {
+        if (mode === 'edit' && e.target !== listDelete && e.target !== listWrapper && e.target !== textBox && e.target !== sortButton && listWrapper.offsetLeft < 0) {
             const fadeAnim = () => {
                 if (-3 < listWrapper.offsetLeft) {
                     listWrapper.style.left = '0px';
@@ -530,7 +532,16 @@ const addList = async (iid, name, check) => {
                 }
             }
             fadeAnim();
-        } 
+        }
+    });
+
+    // リストテキスト詳細表示を戻す
+    document.addEventListener('click', (e) => {
+        if (mode === 'view' && e.target !== listParent && e.target !== listDelete && e.target !== listWrapper && e.target !== textBox) {
+            detailShow = false;
+            textBox.style.whiteSpace = 'nowrap';
+            listWrapper.style.height = '60px';
+        }
     });
 
     if (check) {

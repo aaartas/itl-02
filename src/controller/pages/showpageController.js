@@ -90,6 +90,7 @@ const addList = async (iid, name, check, uid, twitterID) => {
     listWrapper.appendChild(textBox);
 
     // 行きたいボタン
+    const inviteButton = document.createElement('img');
     if (!check) {
         const inviteLink = document.createElement('a');
         let shareLink = 'https://twitter.com/messages/compose?';
@@ -98,7 +99,6 @@ const addList = async (iid, name, check, uid, twitterID) => {
         shareLink += '行きたいとこリストからの送信%0A' + name + 'に一緒に行きませんか?'
         inviteLink.setAttribute('href', shareLink);
 
-        const inviteButton = document.createElement('img');
         inviteButton.setAttribute('src', '/data/invite.svg');
         inviteButton.setAttribute('class', 'show-invite-button-img');
         inviteLink.appendChild(inviteButton);
@@ -129,6 +129,15 @@ const addList = async (iid, name, check, uid, twitterID) => {
             listWrapper.style.height = '60px';
         }
     }
+
+    // リストテキスト詳細表示を戻す
+    document.addEventListener('click', (e) => {
+        if (e.target !== inviteButton && e.target !== textBox) {
+            detailShow = false;
+            textBox.style.whiteSpace = 'nowrap';
+            listWrapper.style.height = '60px';
+        }
+    });
 
     if (check) {
         const listContainer = document.getElementById('show-done-list-container');
