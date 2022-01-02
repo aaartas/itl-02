@@ -19,10 +19,10 @@ body {
     user-select: none;
 }
 
-#iid-9prPUdP4OilrKAXGqzsv {
+input{
+    -webkit-appearance: none;
 }
 
-.test {height: auto;}
 /* -------------------------------------------------- */
 /* ヘッダー */
 
