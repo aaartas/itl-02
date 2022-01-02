@@ -300,6 +300,7 @@ const addList = async (iid, name, check) => {
     }
     listWrapper.appendChild(textBox);
 
+    let sortPermit;
 
     // ---------- 並べ替えボタン ----------
     const sortButton = document.createElement('img');
@@ -308,14 +309,14 @@ const addList = async (iid, name, check) => {
         sortButton.setAttribute('class', 'list-sort-button my-edit-mode');
         listWrapper.appendChild(sortButton);
 
-        let touchY, moveY, sortY, timer, movePermit;
+        let touchY, moveY, sortY, timer;
         sortButton.ontouchstart = (e) => {
             touchY = e.touches[0].pageY;
             moveY = 0;
             sortY = 0;
-            movePermit = false;
+            sortPermit = false;
             timer = setTimeout(() => {
-                movePermit = true;
+                sortPermit = true;
                 listParent.style.boxShadow = '0 3px 30px #aaa';
                 listParent.style.zIndex = 1;
             }, 300)
@@ -323,7 +324,7 @@ const addList = async (iid, name, check) => {
 
         sortButton.ontouchmove = (e) => {
             clearTimeout(timer);
-            if (movePermit) {
+            if (sortPermit) {
                 moveY = e.touches[0].pageY - touchY + sortY;
                 if (listParent == yetListContainer.firstChild && moveY < 0) {
                     moveY = 0;
@@ -379,11 +380,11 @@ const addList = async (iid, name, check) => {
 
         sortButton.ontouchend = () => {
             clearTimeout(timer);
-            if (movePermit) {
+            if (sortPermit) {
                 listParent.style.top = 0;
                 listParent.style.zIndex = 0;
                 listParent.style.boxShadow = 'none';
-                movePermit = false;
+                sortPermit = false;
             }
             
         }
@@ -414,18 +415,21 @@ const addList = async (iid, name, check) => {
 
     listWrapper.ontouchmove = (e) => {
         if (mode === 'edit') {
-            let moveX = prePosX + e.touches[0].clientX - touchX;
-            if (e.cancelable && moveX < 0) {
-                e.preventDefault();
-                if ( -100 < moveX) {
-                    listWrapper.style.left = moveX + 'px';
+            if (sortPermit) {
+                listWrapper.style.left = '0px';
+            } else {
+                let moveX = prePosX + e.touches[0].clientX - touchX;
+                if (e.cancelable && moveX < 0) {
+                    e.preventDefault();
+                    if ( -100 < moveX) {
+                        listWrapper.style.left = moveX + 'px';
+                    }
                 }
             }
-            
         }
     };
 
-    listWrapper.ontouchend = (e) => {
+    listWrapper.ontouchend = () => {
         listWrapper.style.background = '#FFF';
         if (mode === 'edit') {
             if (listWrapper.offsetLeft < 0) {
