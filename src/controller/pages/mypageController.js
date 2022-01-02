@@ -427,8 +427,8 @@ const addList = async (iid, name, check) => {
     // ---------- 削除ボタン表示 ----------
     let prePosX, touchX;
     listWrapper.ontouchstart = (e) => {
+        listWrapper.style.background = '#EEE';
         if (mode === 'edit') {
-            listWrapper.style.background = '#EEE';
             prePosX = listWrapper.offsetLeft;
             touchX = e.touches[0].clientX;
         }
@@ -450,8 +450,19 @@ const addList = async (iid, name, check) => {
         }
     };
 
+    let detailShow = false;
     listWrapper.ontouchend = () => {
         listWrapper.style.background = '#FFF';
+        if (mode === 'view') {
+            detailShow = !detailShow;
+            if (detailShow) {
+                textBox.style.whiteSpace = 'normal';
+                listWrapper.style.height = 'auto';
+            } else {
+                textBox.style.whiteSpace = 'nowrap';
+                listWrapper.style.height = '60px';
+            }
+        } else
         if (mode === 'edit') {
             if (listWrapper.offsetLeft < 0) {
                 const slideAnim = () => {
