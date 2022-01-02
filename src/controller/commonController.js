@@ -58,6 +58,12 @@ export const routing = async (path) => {
 
 // 全ページ共通機能
 export const commonController = async () => {
+    window.oncontextmenu = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+   };
+
     // ハンバーガーメニュー表示切り替え
     const { show, hide, clickButton } = await import('../view/commonView');
     let showMenu = false;
