@@ -111,7 +111,11 @@ const addList = async (iid, name, check, uid, twitterID) => {
     };
     let detailShow = false;
     listWrapper.ontouchend = () => {
-        detailShow = !detailShow;
+        if (textBox.offsetWidth < textBox.scrollWidth) {
+            detailShow = true;
+        } else {
+            detailShow = false;
+        }
         listWrapper.style.background = '#FFF';
         if (detailShow) {
             textBox.style.whiteSpace = 'normal';

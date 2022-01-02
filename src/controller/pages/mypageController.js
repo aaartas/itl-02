@@ -454,7 +454,11 @@ const addList = async (iid, name, check) => {
     listWrapper.ontouchend = () => {
         listWrapper.style.background = '#FFF';
         if (mode === 'view') {
-            detailShow = !detailShow;
+            if (textBox.offsetWidth < textBox.scrollWidth) {
+                detailShow = true;
+            } else {
+                detailShow = false;
+            }
             if (detailShow) {
                 textBox.style.whiteSpace = 'normal';
                 listWrapper.style.height = 'auto';
