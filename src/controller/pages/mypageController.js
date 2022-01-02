@@ -320,13 +320,13 @@ const addList = async (iid, name, check) => {
                 listParent.style.boxShadow = '0 3px 30px #aaa';
                 listParent.style.zIndex = 1;
                 if(window.navigator.vibrate){
-                    window.navigator.vibrate([200]);
+                    window.navigator.vibrate([60]);
                 }else if (window.navigator.mozVibrate){
-                    window.navigator.mozVibrate([200]);
+                    window.navigator.mozVibrate([60]);
                 }else if (window.navigator.webkitVibrate){
-                    window.navigator.webkitVibrate([200]);
+                    window.navigator.webkitVibrate([60]);
                 }
-            }, 300)
+            }, 300);
         }
 
         sortButton.ontouchmove = (e) => {
@@ -356,11 +356,11 @@ const addList = async (iid, name, check) => {
                     sortAnim();
                     yetListContainer.insertBefore(listParent, prevList);
                     if(window.navigator.vibrate){
-                        window.navigator.vibrate([200]);
+                        window.navigator.vibrate([30]);
                     }else if (window.navigator.mozVibrate){
-                        window.navigator.mozVibrate([200]);
+                        window.navigator.mozVibrate([30]);
                     }else if (window.navigator.webkitVibrate){
-                        window.navigator.webkitVibrate([200]);
+                        window.navigator.webkitVibrate([30]);
                     }
                 } else
                 if (60 < moveY) {
@@ -380,11 +380,11 @@ const addList = async (iid, name, check) => {
                     sortAnim();
                     yetListContainer.insertBefore(listParent, nextList.nextSibling);
                     if(window.navigator.vibrate){
-                        window.navigator.vibrate([200]);
+                        window.navigator.vibrate([30]);
                     }else if (window.navigator.mozVibrate){
-                        window.navigator.mozVibrate([200]);
+                        window.navigator.mozVibrate([30]);
                     }else if (window.navigator.webkitVibrate){
-                        window.navigator.webkitVibrate([200]);
+                        window.navigator.webkitVibrate([30]);
                     }
                 }
                 moveY = e.touches[0].pageY - touchY + sortY;
