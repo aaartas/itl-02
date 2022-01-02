@@ -308,69 +308,84 @@ const addList = async (iid, name, check) => {
         sortButton.setAttribute('class', 'list-sort-button my-edit-mode');
         listWrapper.appendChild(sortButton);
 
-        let touchY, moveY, sortY;
+        let touchY, moveY, sortY, timer, movePermit;
         sortButton.ontouchstart = (e) => {
             touchY = e.touches[0].pageY;
             moveY = 0;
             sortY = 0;
+            movePermit = false;
+            timer = setTimeout(() => {
+                movePermit = true;
+                listParent.style.boxShadow = '0 3px 30px #aaa';
+                listParent.style.zIndex = 1;
+            }, 300)
         }
 
         sortButton.ontouchmove = (e) => {
-            listParent.style.zIndex = 1;
-            moveY = e.touches[0].pageY - touchY + sortY;
-            if (listParent == yetListContainer.firstChild && moveY < 0) {
-                moveY = 0;
-            } else
-            if (listParent == yetListContainer.lastChild && 0 < moveY) {
-                moveY = 0;
-            } else
-            if (moveY < -60) {
-                sortY += 60;
-                const prevList = listParent.previousElementSibling;
-                let topDist = -60;
-                prevList.style.top = topDist + 'px';
-                const sortAnim = () => {
-                    if (-10 < topDist) {
-                        topDist = 0;
-                    } else {
-                        requestAnimationFrame(sortAnim);
-                        topDist += 10;
-                    }
+            clearTimeout(timer);
+            if (movePermit) {
+                moveY = e.touches[0].pageY - touchY + sortY;
+                if (listParent == yetListContainer.firstChild && moveY < 0) {
+                    moveY = 0;
+                } else
+                if (listParent == yetListContainer.lastChild && 0 < moveY) {
+                    moveY = 0;
+                } else
+                if (moveY < -60) {
+                    sortY += 60;
+                    const prevList = listParent.previousElementSibling;
+                    let topDist = -60;
                     prevList.style.top = topDist + 'px';
-                }
-                sortAnim();
-                yetListContainer.insertBefore(listParent, prevList);
-            } else
-            if (60 < moveY) {
-                sortY -= 60;
-                const nextList = listParent.nextElementSibling;
-                let topDist = 60;
-                nextList.style.top = topDist + 'px';
-                const sortAnim = () => {
-                    if (topDist < 10) {
-                        topDist = 0;
-                    } else {
-                        requestAnimationFrame(sortAnim);
-                        topDist -= 10;
+                    const sortAnim = () => {
+                        if (-10 < topDist) {
+                            topDist = 0;
+                        } else {
+                            requestAnimationFrame(sortAnim);
+                            topDist += 10;
+                        }
+                        prevList.style.top = topDist + 'px';
                     }
+                    sortAnim();
+                    yetListContainer.insertBefore(listParent, prevList);
+                } else
+                if (60 < moveY) {
+                    sortY -= 60;
+                    const nextList = listParent.nextElementSibling;
+                    let topDist = 60;
                     nextList.style.top = topDist + 'px';
+                    const sortAnim = () => {
+                        if (topDist < 10) {
+                            topDist = 0;
+                        } else {
+                            requestAnimationFrame(sortAnim);
+                            topDist -= 10;
+                        }
+                        nextList.style.top = topDist + 'px';
+                    }
+                    sortAnim();
+                    yetListContainer.insertBefore(listParent, nextList.nextSibling);
                 }
-                sortAnim();
-                yetListContainer.insertBefore(listParent, nextList.nextSibling);
+                moveY = e.touches[0].pageY - touchY + sortY;
+                if (listParent == yetListContainer.firstChild && moveY < 0) {
+                    moveY = 0;
+                } else
+                if (listParent == yetListContainer.lastChild && 0 < moveY) {
+                    moveY = 0;
+                }
+                listParent.style.top = moveY + 'px';
             }
-            moveY = e.touches[0].pageY - touchY + sortY;
-            if (listParent == yetListContainer.firstChild && moveY < 0) {
-                moveY = 0;
-            } else
-            if (listParent == yetListContainer.lastChild && 0 < moveY) {
-                moveY = 0;
-            }
-            listParent.style.top = moveY + 'px';
+            
         }
 
         sortButton.ontouchend = () => {
-            listParent.style.top = 0;
-            listParent.style.zIndex = 0;
+            clearTimeout(timer);
+            if (movePermit) {
+                listParent.style.top = 0;
+                listParent.style.zIndex = 0;
+                listParent.style.boxShadow = 'none';
+                movePermit = false;
+            }
+            
         }
     }
 
@@ -390,7 +405,7 @@ const addList = async (iid, name, check) => {
     // ---------- 削除ボタン表示 ----------
     let prePosX, touchX;
     listWrapper.ontouchstart = (e) => {
-        if (mode === 'edit' && e.target !== sortButton) {
+        if (mode === 'edit') {
             listWrapper.style.background = '#EEE';
             prePosX = listWrapper.offsetLeft;
             touchX = e.touches[0].clientX;
@@ -398,7 +413,7 @@ const addList = async (iid, name, check) => {
     };
 
     listWrapper.ontouchmove = (e) => {
-        if (mode === 'edit' && e.target !== sortButton) {
+        if (mode === 'edit') {
             let moveX = prePosX + e.touches[0].clientX - touchX;
             if (e.cancelable && moveX < 0) {
                 e.preventDefault();
@@ -412,7 +427,7 @@ const addList = async (iid, name, check) => {
 
     listWrapper.ontouchend = (e) => {
         listWrapper.style.background = '#FFF';
-        if (mode === 'edit' && e.target !== sortButton) {
+        if (mode === 'edit') {
             if (listWrapper.offsetLeft < 0) {
                 const slideAnim = () => {
                     if (-3 < listWrapper.offsetLeft) {
@@ -465,7 +480,7 @@ const addList = async (iid, name, check) => {
 
     // ---------- 削除ボタンを隠す ----------
     document.addEventListener('touchstart', (e) => {
-        if (e.target !== listDelete && e.target !== listWrapper && e.target !== textBox && listWrapper.offsetLeft < 0) {
+        if (e.target !== listDelete && e.target !== listWrapper && e.target !== textBox && e.target !== sortButton && listWrapper.offsetLeft < 0) {
             const fadeAnim = () => {
                 if (-3 < listWrapper.offsetLeft) {
                     listWrapper.style.left = '0px';
