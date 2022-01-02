@@ -107,16 +107,20 @@ const addList = async (iid, name, check, uid, twitterID) => {
 
     listWrapper.ontouchstart = () => {
         listWrapper.style.background = '#EEE';
-        
     };
-    let detailShow = false;
+    
     listWrapper.ontouchend = () => {
+        listWrapper.style.background = '#FFF';
+    };
+
+    // 詳細表示
+    let detailShow = false;
+    textBox.onclick = () => {
         if (textBox.offsetWidth < textBox.scrollWidth) {
             detailShow = true;
         } else {
             detailShow = false;
         }
-        listWrapper.style.background = '#FFF';
         if (detailShow) {
             textBox.style.whiteSpace = 'normal';
             listWrapper.style.height = 'auto';
@@ -124,7 +128,7 @@ const addList = async (iid, name, check, uid, twitterID) => {
             textBox.style.whiteSpace = 'nowrap';
             listWrapper.style.height = '60px';
         }
-    };
+    }
 
     if (check) {
         const listContainer = document.getElementById('show-done-list-container');

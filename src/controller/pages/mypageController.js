@@ -413,16 +413,30 @@ const addList = async (iid, name, check) => {
 
 
     // ---------- 場所の名前変更 ----------
-    if (!check) {
-        textBox.onclick = () => {
-            if (mode === 'edit') {
-                const find = yetList.find(item => item.iid === iid);
-                document.getElementById('my-text-edit-area').value = find.name;
-                document.getElementById('my-text-edit-area').name = iid;
-                setMode('rename');
+    let detailShow = false;
+    textBox.onclick = () => {
+        if (mode === 'view') {
+            if (textBox.offsetWidth < textBox.scrollWidth) {
+                detailShow = true;
+            } else {
+                detailShow = false;
             }
+            if (detailShow) {
+                textBox.style.whiteSpace = 'normal';
+                listWrapper.style.height = 'auto';
+            } else {
+                textBox.style.whiteSpace = 'nowrap';
+                listWrapper.style.height = '60px';
+            }
+        } else
+        if (!check && mode === 'edit') {
+            const find = yetList.find(item => item.iid === iid);
+            document.getElementById('my-text-edit-area').value = find.name;
+            document.getElementById('my-text-edit-area').name = iid;
+            setMode('rename');
         }
     }
+    
 
     // ---------- 削除ボタン表示 ----------
     let prePosX, touchX;
@@ -450,23 +464,9 @@ const addList = async (iid, name, check) => {
         }
     };
 
-    let detailShow = false;
+    
     listWrapper.ontouchend = () => {
         listWrapper.style.background = '#FFF';
-        if (mode === 'view') {
-            if (textBox.offsetWidth < textBox.scrollWidth) {
-                detailShow = true;
-            } else {
-                detailShow = false;
-            }
-            if (detailShow) {
-                textBox.style.whiteSpace = 'normal';
-                listWrapper.style.height = 'auto';
-            } else {
-                textBox.style.whiteSpace = 'nowrap';
-                listWrapper.style.height = '60px';
-            }
-        } else
         if (mode === 'edit') {
             if (listWrapper.offsetLeft < 0) {
                 const slideAnim = () => {
