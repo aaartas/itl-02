@@ -319,13 +319,6 @@ const addList = async (iid, name, check) => {
                 sortPermit = true;
                 listParent.style.boxShadow = '0 3px 30px #aaa';
                 listParent.style.zIndex = 1;
-                if(window.navigator.vibrate){
-                    window.navigator.vibrate([200]);
-                }else if (window.navigator.mozVibrate){
-                    window.navigator.mozVibrate([200]);
-                }else if (window.navigator.webkitVibrate){
-                    window.navigator.webkitVibrate([200]);
-                }
             }, 300)
         }
 
@@ -355,13 +348,6 @@ const addList = async (iid, name, check) => {
                     }
                     sortAnim();
                     yetListContainer.insertBefore(listParent, prevList);
-                    if(window.navigator.vibrate){
-                        window.navigator.vibrate([200]);
-                    }else if (window.navigator.mozVibrate){
-                        window.navigator.mozVibrate([200]);
-                    }else if (window.navigator.webkitVibrate){
-                        window.navigator.webkitVibrate([200]);
-                    }
                 } else
                 if (60 < moveY) {
                     sortY -= 60;
@@ -379,13 +365,6 @@ const addList = async (iid, name, check) => {
                     }
                     sortAnim();
                     yetListContainer.insertBefore(listParent, nextList.nextSibling);
-                    if(window.navigator.vibrate){
-                        window.navigator.vibrate([200]);
-                    }else if (window.navigator.mozVibrate){
-                        window.navigator.mozVibrate([200]);
-                    }else if (window.navigator.webkitVibrate){
-                        window.navigator.webkitVibrate([200]);
-                    }
                 }
                 moveY = e.touches[0].pageY - touchY + sortY;
                 if (listParent == yetListContainer.firstChild && moveY < 0) {
