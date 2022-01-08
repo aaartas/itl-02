@@ -189,7 +189,7 @@ const setEvents = async (uid) => {
         const yetListNodes = document.getElementById('yet-list-container').children;
         const nodesNum = yetListNodes.length;
         for (let i = 0; i < nodesNum; i++) {
-            const find = yetList.find(({iid}) => iid === yetListNodes[i].id.substr(4))
+            const find = yetList.find(({iid}) => iid === yetListNodes[i].id.substr(4));
             find.order = nodesNum - i - 1;
         }
         
@@ -211,13 +211,6 @@ const setEvents = async (uid) => {
 
         setLists();
         setMode('view');
-
-        // 登録リストの取得
-        setTimeout( async () => {
-            const { getLists } = await import('../../model/listModel');
-            list = await getLists(uid);
-            yetList = list.filter(item => !item.check && !item.remove);
-        }, 1000);
     };
 
     document.getElementById('my-popup-twitter').onclick = () => {
