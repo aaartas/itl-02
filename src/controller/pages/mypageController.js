@@ -25,49 +25,89 @@ let doneList = [];
 const loadMypage = async () => {
     setMode('view');
 
-    const { getAuth, onAuthStateChanged } = await import('firebase/auth');
-    const { routing } = await import('../commonController');
-
+    const { getAuth, onAuthStateChanged, signInAnonymously } = await import('firebase/auth');
+    const auth = getAuth();
     // ---------- マイページアクセス時 ----------
     // ログイン状態の確認
-    onAuthStateChanged(getAuth(), (user) => {
-        if (user && location.pathname === '/mypage'){
+    onAuthStateChanged(auth, (user) => {
+        if (user){
+            if (user.isAnonymous) {
+                console.log(user);
+                // プロフィールの取得
+                (async () => {
+                    const { getUserData } = await import('../../model/userModel');
+                    userData = await getUserData(user.uid);
+                    preUserData = JSON.stringify(userData);
+                    preUserData = JSON.parse(preUserData);
+                    console.log(userData);
+                    // const { setUserData } = await import('../../view/pages/mypageView');
+                    // setUserData(userData);
+                })();
 
-            // プロフィールの取得
-            (async () => {
-                const { getUserData } = await import('../../model/userModel');
-                userData = await getUserData(user.uid);
-                preUserData = JSON.stringify(userData);
-                preUserData = JSON.parse(preUserData);
+                // // 登録リストの取得
+                // (async () => {
+                //     const { getLists } = await import('../../model/listModel');
+                //     list = await getLists(user.uid);
+                //     setLists();
 
-                const providerData = user.reloadUserInfo.providerUserInfo[0];
-                userData.user_name = providerData.displayName;
-                userData.user_icon = providerData.photoUrl;
-                userData.twitter_disp_id = providerData.screenName;
+                //     if (list.length == 0) {
+                //         document.getElementById('my-list-unregistered').style.display = 'block';
+                //     } else {
+                //         document.getElementById('my-list-unregistered').style.display = 'none';
+                //     }
 
-                const { setUserData } = await import('../../view/pages/mypageView');
-                setUserData(userData);
-            })();
+                //     preList = JSON.stringify(list);
+                //     preList = JSON.parse(preList);
+                // })();
+
+                setEvents(user.uid, user.isAnonymous);
+            } else {
+                // プロフィールの取得
+                (async () => {
+                    const { getUserData } = await import('../../model/userModel');
+                    userData = await getUserData(user.uid);
+                    preUserData = JSON.stringify(userData);
+                    preUserData = JSON.parse(preUserData);
+
+                    const providerData = user.reloadUserInfo.providerUserInfo[0];
+                    userData.user_name = providerData.displayName;
+                    userData.user_icon = providerData.photoUrl;
+                    userData.twitter_disp_id = providerData.screenName;
+
+                    const { setUserData } = await import('../../view/pages/mypageView');
+                    setUserData(userData);
+                })();
+
+                // 登録リストの取得
+                (async () => {
+                    const { getLists } = await import('../../model/listModel');
+                    list = await getLists(user.uid);
+                    setLists();
+
+                    if (list.length == 0) {
+                        document.getElementById('my-list-unregistered').style.display = 'block';
+                    } else {
+                        document.getElementById('my-list-unregistered').style.display = 'none';
+                    }
+
+                    preList = JSON.stringify(list);
+                    preList = JSON.parse(preList);
+                })();
+
+                setEvents(user.uid, user.isAnonymous);
+            }
             
-            // 登録リストの取得
-            (async () => {
-                const { getLists } = await import('../../model/listModel');
-                list = await getLists(user.uid);
-                setLists();
-
-                if (list.length == 0) {
-                    document.getElementById('my-list-unregistered').style.display = 'block';
-                } else {
-                    document.getElementById('my-list-unregistered').style.display = 'none';
-                }
-    
-                preList = JSON.stringify(list);
-                preList = JSON.parse(preList);
-            })();
-            
-            setEvents(user.uid);
         } else {
-            routing('');
+            signInAnonymously(auth).then(async () => {
+                console.log(auth.currentUser)
+                const { getUserData, createUserData } = await import('../../model/userModel');
+                const dbUserData = await getUserData(auth.currentUser.uid);
+                // 新規ユーザーの時、リストデータ作成
+                if (!dbUserData) {
+                    await createUserData(auth.currentUser);
+                }
+            });
+
         }
     });
 }
@@ -109,7 +149,7 @@ const setLists = async () => {
 }
 
 // イベント処理設定
-const setEvents = async (uid) => {
+const setEvents = async (uid, isAnonymous) => {
     // ---------- 共有ボタン押下時 ----------
     document.getElementById('my-share-button-img').onclick = async () => {
         document.getElementById('my-popup').style.display = 'flex';
@@ -213,19 +253,27 @@ const setEvents = async (uid) => {
         setMode('view');
     };
 
-    document.getElementById('my-popup-twitter').onclick = () => {
-        document.getElementById('my-popup').style.display = 'none';
-        const url = "https://campa-room.web.app/show/" + uid;
-        const text = "行きたいとこリストを更新しました!";
-        const hashtag = "行きたいとこリスト";
-        location.href = 'http://twitter.com/share?url=' + url + '&text=' + text + '&hashtags=' + hashtag;
+    // ---------- twitterシェアボタン押下時 ----------
+    document.getElementById('my-popup-twitter').onclick = async () => {
+        if (isAnonymous) {
+            const { login } = await import('../../model/authModel');
+            login();
+        } else {
+            document.getElementById('my-popup').style.display = 'none';
+            const url = "https://campa-room.web.app/show/" + uid;
+            const text = "行きたいとこリストを更新しました!";
+            const hashtag = "行きたいとこリスト";
+            location.href = 'http://twitter.com/share?url=' + url + '&text=' + text + '&hashtags=' + hashtag;
+        }
     };
 
+    // ---------- リンクコピーボタン押下時 ----------
     document.getElementById('my-popup-copylink').onclick = () => {
         document.getElementById('my-popup').style.display = 'none';
         navigator.clipboard.writeText("https://campa-room.web.app/show/" + uid);
     };
 
+    // ---------- ポップアップ閉じるボタン押下時 ----------
     document.getElementById('my-popup-close').onclick = () => {
         document.getElementById('my-popup').style.display = 'none';
     };

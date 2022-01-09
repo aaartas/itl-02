@@ -5,7 +5,7 @@ export const loadView = async () => {
     let targetHTML;
     
     if (path === '/') {
-        targetHTML = '/template/top.html';
+        targetHTML = '/template/mypage.html';
     } else
     if (path === '/mypage') {
         targetHTML = '/template/mypage.html';

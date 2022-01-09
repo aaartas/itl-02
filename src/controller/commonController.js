@@ -12,8 +12,8 @@ export const routing = async (path) => {
     if (path == undefined) {
         path = location.pathname;
         if (path === '/') {
-            const { showToppage } = await import('./pages/toppageController')
-            showToppage();
+            const { showMypage } = await import('./pages/mypageController')
+            showMypage();
         } else
         if (path === '/mypage') {
             const { showMypage } = await import('./pages/mypageController')
@@ -32,8 +32,8 @@ export const routing = async (path) => {
     } else {
         if (path === '') {
             history.pushState(null, null, '/')
-            const { showToppage } = await import('./pages/toppageController')
-            showToppage();
+            const { showMypage } = await import('./pages/mypageController')
+            showMypage();
         } else
         if (path === 'mypage') {
             history.pushState(null, null, '/mypage');
