@@ -1,5 +1,5 @@
 //閲覧ページ
-export const showShowpage = () => {
+export const showShowpage = async () => {
     const path = location.pathname.toString();
     const uid = path.substring(6);
 
@@ -35,6 +35,37 @@ export const showShowpage = () => {
         setUserData(result[0]);
         setLists(result[1], uid, result[0].twitter_sys_id)
     })
+
+    const { getAuth, onAuthStateChanged } = await import('firebase/auth');
+    const { routing } = await import('../commonController');
+    const { setNotice } = await import('../commonController');
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+        const makelistButton = document.getElementById('makelist-button');
+        if (user == null) {
+            makelistButton.style.display = 'inline';
+            makelistButton.onclick = () => {
+                routing('mypage');
+            }
+        } else {
+            makelistButton.style.display = 'none';
+        }
+        const array = [
+            {
+                message: '友達の行きたいとこリストから、お誘いをしよう',
+                isError: false
+            },
+            {
+                message: '行きたいとこリストを作成して共有しよう',
+                isError: false
+            },
+            {
+                message: 'エラー発生',
+                isError: true
+            }
+        ];
+        setNotice(array);
+    });
 }
 
 // リストデータをHTMLに反映

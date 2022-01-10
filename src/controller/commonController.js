@@ -9,6 +9,7 @@
 // 引数を渡さない場合、URLパラメータを読んでページを切り替え
 
 export const routing = async (path) => {
+    document.getElementById('makelist-button').style.display = 'none';
     if (path == undefined) {
         path = location.pathname;
         if (path === '/') {
@@ -137,4 +138,23 @@ export const commonController = async () => {
             }
         }
     });
+}
+
+export const setNotice = (array) => {
+
+    const length = array.length;
+
+    const noticeList = document.getElementById('notice-container')
+    noticeList.innerHTML = '';
+
+    for(let i=0; i<length; i++){
+        const noticeWrapper = document.createElement('div');
+        const message = document.createTextNode(array[i].message);
+        noticeWrapper.appendChild(message);
+        noticeWrapper.setAttribute('class', 'notice');
+        if(array[i].isError){
+            noticeWrapper.style.color = '#FF0000';
+        }
+        noticeList.insertBefore(noticeWrapper, noticeList.firstChild);
+    }
 }

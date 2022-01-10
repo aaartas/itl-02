@@ -27,12 +27,13 @@ const loadMypage = async () => {
 
     const { getAuth, onAuthStateChanged } = await import('firebase/auth');
     const { routing } = await import('../commonController');
+    const { setNotice } = await import('../commonController');
 
     // ---------- マイページアクセス時 ----------
     // ログイン状態の確認
     onAuthStateChanged(getAuth(), (user) => {
         if (user && location.pathname === '/mypage'){
-
+            setNotice();
             // プロフィールの取得
             (async () => {
                 const { getUserData } = await import('../../model/userModel');
@@ -67,7 +68,14 @@ const loadMypage = async () => {
             
             setEvents(user.uid);
         } else {
-            routing('');
+            // routing('');
+            const array = [
+                {
+                    message: 'Twitterで行きたいとこリストを共有しよう',
+                    isError: false
+                }
+            ];
+            setNotice(array);
         }
     });
 }
