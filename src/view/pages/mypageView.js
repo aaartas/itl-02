@@ -1,12 +1,14 @@
 // ユーザーデータセット
 export const setUserData = (userData) => {
+    const titleInput = document.getElementById('my-title');
+    const titleText = document.getElementById('my-title-text');
     const bioTextarea = document.getElementById('my-bio-textarea');
     const bioText = document.getElementById('my-bio-text');
 
     if (userData != undefined) {
         document.getElementById('my-name').innerHTML = userData.user_name;
-        document.getElementById('my-title').value = userData.list_title;
-        document.getElementById('my-title').readOnly = true;
+        titleInput.value = userData.list_title;
+        titleInput.readOnly = true;
         document.getElementById('my-icon').src = userData.user_icon;
         
         bioText.style.display = 'none';
@@ -16,6 +18,8 @@ export const setUserData = (userData) => {
                 bioTextarea.style.height = bioTextarea.scrollHeight + 'px';
             }
     } else {
+        titleText.style.display = 'block';
+        titleInput.style.display = 'none';
         bioTextarea.style.display = 'none';
         bioText.style.display = 'block';
     }
