@@ -2,8 +2,7 @@
 // ページ遷移用の関数
 
 // 引数にページ名を入力
-//   ''       :  トップページ
-//   'mypage' :  マイページ
+//   ''       :  マイページ
 //   'show'   :  閲覧ページ
 //   'how'    :  使い方ページ
 // 引数を渡さない場合、URLパラメータを読んでページを切り替え
@@ -13,10 +12,6 @@ export const routing = async (path) => {
     if (path == undefined) {
         path = location.pathname;
         if (path === '/') {
-            const { showMypage } = await import('./pages/mypageController')
-            showMypage();
-        } else
-        if (path === '/mypage') {
             const { showMypage } = await import('./pages/mypageController')
             showMypage();
         } else
@@ -33,11 +28,6 @@ export const routing = async (path) => {
     } else {
         if (path === '') {
             history.pushState(null, null, '/')
-            const { showMypage } = await import('./pages/mypageController')
-            showMypage();
-        } else
-        if (path === 'mypage') {
-            history.pushState(null, null, '/mypage');
             const { showMypage } = await import('./pages/mypageController')
             showMypage();
         } else

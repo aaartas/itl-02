@@ -42,10 +42,10 @@ export const showShowpage = async () => {
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
         const makelistButton = document.getElementById('makelist-button');
-        if (user == null) {
+        if (user == null || user.isAnonymous) {
             makelistButton.style.display = 'inline';
             makelistButton.onclick = () => {
-                routing('mypage');
+                routing('');
             }
         } else {
             makelistButton.style.display = 'none';
