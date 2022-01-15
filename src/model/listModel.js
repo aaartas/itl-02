@@ -26,7 +26,7 @@ export const getLists = async (uid) => {
 
 
 // リスト編集内容の保存
-export const saveData = async (uid, yetList, doneList) => {
+export const saveData = async (uid, yetList, doneList, preList) => {
     const { 
         getFirestore,
         collection,
@@ -38,9 +38,6 @@ export const saveData = async (uid, yetList, doneList) => {
 
     const db = getFirestore();
 
-    //DBから編集前のリストデータ取得
-    const preList = await getLists(uid);
-    
     // アクティブリスト更新
     yetList.forEach(item => {
         const find = preList.find(({iid}) => iid === item.iid);
