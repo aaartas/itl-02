@@ -26,42 +26,48 @@ const loadMypage = async () => {
     setMode('view');
 
     const { getAuth, onAuthStateChanged, signInAnonymously } = await import('firebase/auth');
+    const { setNotice } = await import('../commonController');
     const auth = getAuth();
     // ---------- マイページアクセス時 ----------
     // ログイン状態の確認
     onAuthStateChanged(auth, (user) => {
         if (user){
             if (user.isAnonymous) {
-                console.log(user);
+                // フッターメッセージ挿入
+                const array = [
+                    {
+                        message: 'Twitterで行きたいとこリストを共有しよう',
+                        isError: false
+                    }
+                ];
+                setNotice(array);
+
                 // プロフィールの取得
                 (async () => {
-                    const { getUserData } = await import('../../model/userModel');
-                    userData = await getUserData(user.uid);
-                    preUserData = JSON.stringify(userData);
-                    preUserData = JSON.parse(preUserData);
-                    console.log(userData);
-                    // const { setUserData } = await import('../../view/pages/mypageView');
-                    // setUserData(userData);
+                    const { setUserData } = await import('../../view/pages/mypageView');
+                    setUserData();
                 })();
 
-                // // 登録リストの取得
-                // (async () => {
-                //     const { getLists } = await import('../../model/listModel');
-                //     list = await getLists(user.uid);
-                //     setLists();
+                // 登録リストの取得
+                (async () => {
+                    const { getLists } = await import('../../model/listModel');
+                    list = await getLists(user.uid);
+                    setLists();
 
-                //     if (list.length == 0) {
-                //         document.getElementById('my-list-unregistered').style.display = 'block';
-                //     } else {
-                //         document.getElementById('my-list-unregistered').style.display = 'none';
-                //     }
+                    if (list.length == 0) {
+                        document.getElementById('my-list-unregistered').style.display = 'block';
+                    } else {
+                        document.getElementById('my-list-unregistered').style.display = 'none';
+                    }
 
-                //     preList = JSON.stringify(list);
-                //     preList = JSON.parse(preList);
-                // })();
+                    preList = JSON.stringify(list);
+                    preList = JSON.parse(preList);
+                })();
 
                 setEvents(user.uid, user.isAnonymous);
             } else {
+                
+                setNotice();
                 // プロフィールの取得
                 (async () => {
                     const { getUserData } = await import('../../model/userModel');
@@ -84,10 +90,14 @@ const loadMypage = async () => {
                     list = await getLists(user.uid);
                     setLists();
 
-                    if (list.length == 0) {
+                    if (list == undefined) {
                         document.getElementById('my-list-unregistered').style.display = 'block';
                     } else {
-                        document.getElementById('my-list-unregistered').style.display = 'none';
+                        if (list.length == 0) {
+                            document.getElementById('my-list-unregistered').style.display = 'block';
+                        } else {
+                            document.getElementById('my-list-unregistered').style.display = 'none';
+                        }
                     }
 
                     preList = JSON.stringify(list);
@@ -96,18 +106,8 @@ const loadMypage = async () => {
 
                 setEvents(user.uid, user.isAnonymous);
             }
-            
         } else {
-            signInAnonymously(auth).then(async () => {
-                console.log(auth.currentUser)
-                const { getUserData, createUserData } = await import('../../model/userModel');
-                const dbUserData = await getUserData(auth.currentUser.uid);
-                // 新規ユーザーの時、リストデータ作成
-                if (!dbUserData) {
-                    await createUserData(auth.currentUser);
-                }
-            });
-
+            signInAnonymously(auth);
         }
     });
 }
@@ -152,7 +152,11 @@ const setLists = async () => {
 const setEvents = async (uid, isAnonymous) => {
     // ---------- 共有ボタン押下時 ----------
     document.getElementById('my-share-button-img').onclick = async () => {
-        document.getElementById('my-popup').style.display = 'flex';
+        if (isAnonymous) {
+            document.getElementById('my-popup-login').style.display = 'flex';
+        } else {
+            document.getElementById('my-popup').style.display = 'flex';
+        }
     };
 
     // ---------- 編集ボタン押下時 ----------
@@ -237,12 +241,18 @@ const setEvents = async (uid, isAnonymous) => {
         const { saveData } = await import('../../model/listModel');
         await saveData(uid, yetList, doneList);
         list = yetList.concat(doneList);
-        const { checkUserData, updateUserData} = await import('../../model/userModel');
-        if (checkUserData(preUserData, userData)) {
-            updateUserData(userData);
-        }
-        document.getElementById('my-popup').style.display = 'flex';
 
+        if (isAnonymous) {
+            document.getElementById('my-popup-login').style.display = 'flex';
+        } else {
+            // ユーザーデータ保存
+            const { checkUserData, updateUserData} = await import('../../model/userModel');
+            if (checkUserData(preUserData, userData)) {
+                updateUserData(userData);
+            }
+            document.getElementById('my-popup').style.display = 'flex';
+        }
+        
         if (list.length == 0) {
             document.getElementById('my-list-unregistered').style.display = 'block';
         } else {
@@ -255,16 +265,12 @@ const setEvents = async (uid, isAnonymous) => {
 
     // ---------- twitterシェアボタン押下時 ----------
     document.getElementById('my-popup-twitter').onclick = async () => {
-        if (isAnonymous) {
-            const { login } = await import('../../model/authModel');
-            login();
-        } else {
-            document.getElementById('my-popup').style.display = 'none';
-            const url = "https://campa-room.web.app/show/" + uid;
-            const text = "行きたいとこリストを更新しました!";
-            const hashtag = "行きたいとこリスト";
-            location.href = 'http://twitter.com/share?url=' + url + '&text=' + text + '&hashtags=' + hashtag;
-        }
+        document.getElementById('my-popup').style.display = 'none';
+        const url = "https://campa-room.web.app/show/" + uid;
+        const text = "行きたいとこリストを更新しました!";
+        const hashtag = "行きたいとこリスト";
+        location.href = 'http://twitter.com/share?url=' + url + '&text=' + text + '&hashtags=' + hashtag;
+
     };
 
     // ---------- リンクコピーボタン押下時 ----------
@@ -276,6 +282,23 @@ const setEvents = async (uid, isAnonymous) => {
     // ---------- ポップアップ閉じるボタン押下時 ----------
     document.getElementById('my-popup-close').onclick = () => {
         document.getElementById('my-popup').style.display = 'none';
+    };
+
+    // ---------- 新規ログインボタン押下時 ----------
+    document.getElementById('my-popup-new-login').onclick = async () => {
+        const { linkAccount } = await import('../../model/authModel');
+        linkAccount();
+    };
+
+    // ---------- 既存ログインボタン押下時 ----------
+    document.getElementById('my-popup-old-login').onclick = async () => {
+        const { login } = await import('../../model/authModel');
+        login();
+    };
+
+    // ---------- ポップアップ閉じるボタン押下時 ----------
+    document.getElementById('my-popup-login-close').onclick = () => {
+        document.getElementById('my-popup-login').style.display = 'none';
     };
 }
 

@@ -65,17 +65,35 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 45px;
+    text-align: center;
     background-color: #ffffff;
     border-style: none none solid;
     border-color: #EEB706;
     border-width: 1px;
+}
+
+#notice-container{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-flow: column;
+    justify-content: space-around;
+    padding: 3px 0;
+    background-color: #F2E1A2;
+}
+
+.notice{
+    margin: 1px 0;
+    padding: 10px 0;
+    font-size: 12px;
+    background-color: #fff;
+}
+
+#makelist-button{
+    display: none;
+    padding-top: 16px;
 }
 
 #footer-text {
+    padding: 16px 0;
     font-size: 12px;
     color: #EEB706;
 }
@@ -227,6 +245,13 @@ main {
 
 #my-bio {
     position: relative;
+}
+
+#my-bio-text {
+    font-size: 12px;
+    margin: 15px 0;
+    line-height: 20px;
+    display: none;
 }
 
 #my-bio-textarea {
@@ -433,6 +458,49 @@ main {
 }
 
 #my-popup-copylink {
+    background-color: #EFECEC;
+}
+
+/* ログインポップアップ */
+#my-popup-login {
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.2);
+    display: none;
+    justify-content: center;
+}
+
+#my-popup-login-wrapper {
+    background-color: #FFF;
+    width: 80%;
+    position: absolute;
+    top: 100px;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16);
+}
+
+.my-popup-item {
+    font-size: 12px;
+    text-align: center;
+    width: 80%;
+    margin: 10px auto;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+#my-popup-login-message {
+    font-weight: bold;
+}
+
+#my-popup-new-login {
+    background-color: #00ACEE;
+    color: #FFF;
+}
+
+#my-popup-old-login {
     background-color: #EFECEC;
 }
 

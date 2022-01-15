@@ -15,7 +15,6 @@ export const getUserData = async (uid) => {
             twitter_sys_id: docSnap.data().twitter_sys_id,
             user_regist_date: docSnap.data().user_regist_date
         }
-        
         return data;
     } else {
         return false;
@@ -26,27 +25,15 @@ export const getUserData = async (uid) => {
 export const createUserData = async (user) => {
     const { getFirestore, setDoc, doc, serverTimestamp } = await import('firebase/firestore');
     const db = getFirestore();
-    await setDoc(doc(db, 'users', user.uid), {
-        user_name: 'あなた',
-        user_icon: null,
-        list_title: 'の行きたいとこリスト',
-        user_bio: '',
-        twitter_disp_id: null,
-        twitter_sys_id: null,
-        user_regist_date: serverTimestamp()
-    });
-}
-
-// 匿名ユーザーのアップグレード
-export const upgradeUserData = async (user) => {
-    const { getFirestore, updateDoc, doc } = await import('firebase/firestore');
-    const db = getFirestore();
     const providerData = user.reloadUserInfo.providerUserInfo[0];
-    await updateDoc(doc(db, 'users', user.uid), {
+    await setDoc(doc(db, 'users', user.uid), {
         user_name: providerData.displayName,
         user_icon: providerData.photoUrl,
+        list_title: 'の行きたいとこリスト',
+        user_bio: '一緒にいきましょう!',
         twitter_disp_id: providerData.screenName,
-        twitter_sys_id: providerData.rawId
+        twitter_sys_id: providerData.rawId,
+        user_regist_date: serverTimestamp()
     });
 }
 

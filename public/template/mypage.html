@@ -25,6 +25,7 @@
             <input type="text" id="my-title" class="my-editable" value="の行きたいとこリスト">
         </div>
         <div id="my-bio">
+            <p id="my-bio-text">一緒に行きましょう!</p>
             <textarea name="bio" id="my-bio-textarea" class="my-editable" placeholder="自己紹介文を入力しよう！"></textarea>
         </div>
     </div>
@@ -55,13 +56,23 @@
         <div id="done-list-container"></div>
     </div>
 
-    <!-- ポップアップ -->
+    <!-- 共有ポップアップ -->
     <div id="my-popup">
         <div id="my-popup-wrapper">
             <div class="my-popup-item" id="my-popup-message">変更したリストをみんなと共有しよう!</div>
             <div class="my-popup-item" id="my-popup-twitter">Twitterでシェアして保存</div>
             <div class="my-popup-item" id="my-popup-copylink">URLをコピーして保存</div>
-            <div class="my-popup-item" id="my-popup-close">閉じる</div>
+            <div class="my-popup-item" id="my-popup-close">後で</div>
+        </div>
+    </div>
+
+    <!-- ログインポップアップ -->
+    <div id="my-popup-login">
+        <div id="my-popup-login-wrapper">
+            <div class="my-popup-item" id="my-popup-login-message">変更したリストをみんなと共有しよう!</div>
+            <div class="my-popup-item" id="my-popup-new-login">新しくTwitterアカウントでログインする</div>
+            <div class="my-popup-item" id="my-popup-old-login">既存アカウントにログイン</div>
+            <div class="my-popup-item" id="my-popup-login-close">後で</div>
         </div>
     </div>
 

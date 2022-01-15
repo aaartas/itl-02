@@ -1,15 +1,25 @@
 // ユーザーデータセット
 export const setUserData = (userData) => {
-    document.getElementById('my-icon').src = userData.user_icon;
-    document.getElementById('my-name').innerHTML = userData.user_name;
-    document.getElementById('my-title').value = userData.list_title;
-    document.getElementById('my-title').readOnly = true;
-    const bio = document.getElementById('my-bio-textarea');
-    bio.value = userData.user_bio;
-    
-    if (bio.offsetHeight < bio.scrollHeight) {
-        bio.style.height = bio.scrollHeight + 'px';
+    const bioTextarea = document.getElementById('my-bio-textarea');
+    const bioText = document.getElementById('my-bio-text');
+
+    if (userData != undefined) {
+        document.getElementById('my-name').innerHTML = userData.user_name;
+        document.getElementById('my-title').value = userData.list_title;
+        document.getElementById('my-title').readOnly = true;
+        document.getElementById('my-icon').src = userData.user_icon;
+        
+        bioText.style.display = 'none';
+            bioTextarea.style.display = 'block';
+            bioTextarea.value = userData.user_bio;
+            if (bioTextarea.offsetHeight < bioTextarea.scrollHeight) {
+                bioTextarea.style.height = bioTextarea.scrollHeight + 'px';
+            }
+    } else {
+        bioTextarea.style.display = 'none';
+        bioText.style.display = 'block';
     }
+    
 }
 
 // マイページ表示切り替え

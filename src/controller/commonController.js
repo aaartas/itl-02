@@ -9,6 +9,7 @@
 // 引数を渡さない場合、URLパラメータを読んでページを切り替え
 
 export const routing = async (path) => {
+    document.getElementById('makelist-button').style.display = 'none';
     if (path == undefined) {
         path = location.pathname;
         if (path === '/') {
@@ -84,14 +85,13 @@ export const commonController = async () => {
 
     // ハンバーガーメニュー取得
     const menu = document.getElementById('menu');
-    const topButton = document.getElementById('menu-button-home');
     const loginButton = document.getElementById('menu-button-login');
     const logoutButton = document.getElementById('menu-button-logout');
     const mypageButton = document.getElementById('menu-button-mypage');
     const howButton = document.getElementById('menu-button-how');
     const showButton = document.getElementById('menu-button-show');
 
-    topButton.onclick = () => {
+    mypageButton.onclick = () => {
         routing('');
         menu.style.display = 'none';
         clickButton();
@@ -110,31 +110,65 @@ export const commonController = async () => {
     }
 
     const { getAuth, onAuthStateChanged } = await import('firebase/auth');
+    const { login, logout } = await import('../model/authModel');
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
         if (user == null) {
-            const { login } = await import('../model/authModel');
+            // 未ログイン時
             loginButton.style.display = 'block';
             loginButton.onclick = () => {
                 login();
             };
             logoutButton.style.display = 'none';
-            mypageButton.style.display = 'none';
+        } else 
+        if (user.isAnonymous) {
+            // 匿名ログイン時
+            logoutButton.style.display = 'none';
+            loginButton.style.display = 'block';
+            loginButton.onclick = () => {
+                login();
+            };
         } else {
-            const { logout } = await import('../model/authModel');
+            // twitterログイン時
             loginButton.style.display = 'none';
             logoutButton.style.display = 'block';
             logoutButton.onclick = () => {
                 logout();
-                menu.style.display = 'none';
-                clickButton();
-            }
-            mypageButton.style.display = 'block';
-            mypageButton.onclick = () => {
-                routing('mypage');
+                routing('');
                 menu.style.display = 'none';
                 clickButton();
             }
         }
     });
+}
+
+export const addNotice = (text, isError) => {
+    const noticeList = document.getElementById('notice-container');
+    const noticeWrapper = document.createElement('div');
+    const message = document.createTextNode(text);
+    noticeWrapper.appendChild(message);
+    noticeWrapper.setAttribute('class', 'notice');
+    if(isError){
+        noticeWrapper.style.color = '#FF0000';
+    }
+    noticeList.insertBefore(noticeWrapper, noticeList.firstChild);
+}
+
+export const setNotice = (array) => {
+    const noticeList = document.getElementById('notice-container');
+    noticeList.innerHTML = '';
+
+    if (array != undefined) {
+        const length = array.length;
+        for(let i=0; i<length; i++){
+            const noticeWrapper = document.createElement('div');
+            const message = document.createTextNode(array[i].message);
+            noticeWrapper.appendChild(message);
+            noticeWrapper.setAttribute('class', 'notice');
+            if(array[i].isError){
+                noticeWrapper.style.color = '#FF0000';
+            }
+            noticeList.insertBefore(noticeWrapper, noticeList.firstChild);
+        }
+    }
 }
