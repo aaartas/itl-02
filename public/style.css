@@ -227,6 +227,14 @@ main {
     padding-left: 10px;
 }
 
+#my-title-text {
+    grid-area: title;
+    font-size: 16px;
+    padding-left: 10px;
+    height: 18px;
+    display: none;
+}
+
 #my-title {
     grid-area: title;
     font-size: 16px;
