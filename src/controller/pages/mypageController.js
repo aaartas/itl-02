@@ -239,8 +239,9 @@ const setEvents = async (uid, isAnonymous) => {
         
         // リストデータ保存
         const { saveData } = await import('../../model/listModel');
-        await saveData(uid, yetList, doneList);
+        await saveData(uid, yetList, doneList, preList);
         list = yetList.concat(doneList);
+        preList = list;
 
         if (isAnonymous) {
             document.getElementById('my-popup-login').style.display = 'flex';
