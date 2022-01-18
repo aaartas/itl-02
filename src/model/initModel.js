@@ -1,7 +1,7 @@
 // firebase設定
 const config = {
     apiKey: 'AIzaSyCn5TtBz45t0Lb3MP6snWqGa0_fR-a0gNE',
-    authDomain: 'campa-room.firebaseapp.com',
+    authDomain: 'go-list.net',
     databaseURL: 'https://wannago-dev-0000.firebaseio.com',
     projectId: 'campa-room',
     storageBucket: 'campa-room.appspot.com',
