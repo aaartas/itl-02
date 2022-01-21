@@ -122,7 +122,7 @@ const addList = async (iid, name, check, uid, twitterID) => {
         const inviteLink = document.createElement('a');
         let shareLink = 'https://twitter.com/messages/compose?';
         shareLink += 'recipient_id=' + twitterID;
-        shareLink += '&text=' + 'https://campa-room.web.app/show/' + uid + "%0A";
+        shareLink += '&text=' + 'https://go-list.net/show/' + uid + "%0A";
         shareLink += '行きたいとこリストからの送信%0A' + name + 'に一緒に行きませんか?'
         inviteLink.setAttribute('href', shareLink);
 
