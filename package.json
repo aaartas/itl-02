@@ -13,8 +13,9 @@
         "webpack-dev-server": "^4.6.0"
     },
     "scripts": {
-        "build": "webpack",
-        "start": "webpack serve"
+        "build": "NODE_ENV=dev webpack",
+        "production": "NODE_ENV=prd webpack",
+        "start": "NODE_ENV=dev webpack serve"
     },
     "repository": "https://github.com/kanaru-ssk/itl-02.git",
     "author": "Kimihiko Sasaki <tappurin555@gmail.com>"

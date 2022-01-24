@@ -1,4 +1,5 @@
 const path = require('path');
+const environment = process.env.NODE_ENV || 'dev';
 
 module.exports = {
     mode: 'development',
@@ -23,5 +24,10 @@ module.exports = {
         buildDependencies: {
             config: [__filename]
         }
-    }
+    },
+    resolve: {
+        alias: {
+            userEnv$: path.resolve(__dirname, `.env/${environment}.js`),
+        },
+    },
 };
