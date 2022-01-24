@@ -1,3 +1,4 @@
+import userEnv from 'userEnv';
 
 // ページ遷移用の関数
 
@@ -79,7 +80,6 @@ export const commonController = async () => {
     const logoutButton = document.getElementById('menu-button-logout');
     const mypageButton = document.getElementById('menu-button-mypage');
     const howButton = document.getElementById('menu-button-how');
-    const showButton = document.getElementById('menu-button-show');
 
     mypageButton.onclick = () => {
         routing('');
@@ -92,12 +92,6 @@ export const commonController = async () => {
         menu.style.display = 'none';
         clickButton();
     };
-
-    showButton.onclick = () => {
-        routing('show');
-        menu.style.display = 'none';
-        clickButton();
-    }
 
     const { getAuth, onAuthStateChanged } = await import('firebase/auth');
     const { login, logout } = await import('../model/authModel');
@@ -130,6 +124,16 @@ export const commonController = async () => {
             }
         }
     });
+
+    // デバッグ用
+    if (userEnv.isDevelop) {
+        const showButton = document.getElementById('menu-button-show');
+        showButton.onclick = () => {
+            routing('show');
+            menu.style.display = 'none';
+            clickButton();
+        };
+    }
 }
 
 export const addNotice = (text, isError) => {

@@ -2,7 +2,6 @@ const path = require('path');
 const environment = process.env.NODE_ENV || 'dev';
 
 module.exports = {
-    mode: 'production',
     entry: `./src/index.js`,
     // ファイルの出力設定
     output: {
@@ -24,5 +23,10 @@ module.exports = {
         buildDependencies: {
             config: [__filename]
         }
+    },
+    resolve: {
+        alias: {
+            userEnv$: path.resolve(__dirname, `.env/${environment}.js`),
+        },
     }
 };

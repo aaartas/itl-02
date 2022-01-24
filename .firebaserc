@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "campa-room",
+    "prd": "campa-room",
     "test": "listapp-test-afe38"
   },
   "targets": {}
