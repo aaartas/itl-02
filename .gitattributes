@@ -1,4 +1,3 @@
 /.gitignore merge=ours
 /public/js/** merge=ours
 /webpack.config.js merge=ours
-/src/model/initModel.js merge=ours
