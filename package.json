@@ -1,7 +1,8 @@
 {
     "dependencies": {
         "firebase": "^9.6.0",
-        "fs": "^0.0.1-security"
+        "fs": "^0.0.1-security",
+        "xss": "^1.0.10"
     },
     "name": "listapp",
     "version": "1.0.0",
@@ -13,10 +14,9 @@
         "webpack-dev-server": "^4.6.0"
     },
     "scripts": {
-        "build": "NODE_ENV=dev webpack",
-        "production": "NODE_ENV=prd webpack",
+        "build": "firebase use test && NODE_ENV=dev webpack --mode development && cp public/index.html functions/hosting/ && firebase deploy --only hosting",
+        "production": "firebase use prd && NODE_ENV=prd  webpack --mode production && cp public/index.html functions/hosting/ && firebase deploy --only hosting",
         "start": "NODE_ENV=dev webpack serve"
     },
-    "repository": "https://github.com/kanaru-ssk/itl-02.git",
-    "author": "Kimihiko Sasaki <tappurin555@gmail.com>"
+    "repository": "https://github.com/kanaru-ssk/itl-02.git"
 }

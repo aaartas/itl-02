@@ -147,7 +147,7 @@ export const drawCanvas = () => {
 
             // マスク
             context.globalCompositeOperation = 'destination-out';
-            context.beginPath () ;
+            context.beginPath ();
             context.arc(clickX, clickY, alphaR, 0, 2 * Math.PI, true);
             context.fill() ;
         }
