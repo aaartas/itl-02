@@ -1,7 +1,7 @@
 {
   "projects": {
     "prd": "campa-room",
-    "test": "listapp-test-afe38"
+    "dev": "listapp-test-afe38"
   },
   "targets": {}
 }
