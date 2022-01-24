@@ -16,5 +16,7 @@
     "scripts": {
         "build": "webpack && cp public/index.html functions/hosting/",
         "start": "webpack serve"
-    }
+    },
+    "repository": "https://github.com/kanaru-ssk/itl-02.git",
+    "author": "Kimihiko Sasaki <tappurin555@gmail.com>"
 }
