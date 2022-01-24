@@ -2,7 +2,7 @@
 const config = {
     apiKey: 'AIzaSyCn5TtBz45t0Lb3MP6snWqGa0_fR-a0gNE',
     authDomain: 'go-list.net',
-    databaseURL: 'https://wannago-dev-0000.firebaseio.com',
+    databaseURL: 'https://campa-room.firebaseio.com',
     projectId: 'campa-room',
     storageBucket: 'campa-room.appspot.com',
     messagingSenderId: '439711886641',
