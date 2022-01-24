@@ -1,13 +1,14 @@
+import userEnv from 'userEnv';
+
 // firebase設定
 const config = {
-    apiKey: 'AIzaSyCn5TtBz45t0Lb3MP6snWqGa0_fR-a0gNE',
-    authDomain: 'go-list.net',
-    databaseURL: 'https://campa-room.firebaseio.com',
-    projectId: 'campa-room',
-    storageBucket: 'campa-room.appspot.com',
-    messagingSenderId: '439711886641',
-    appId: '1:439711886641:web:292d5d61beb60cedfd5410',
-    measurementId: ''
+    apiKey: userEnv.apiKey,
+    authDomain: userEnv.domain,
+    projectId: userEnv.projectId,
+    storageBucket: userEnv.storageBucket,
+    messagingSenderId: userEnv.messagingSenderId,
+    appId: userEnv.appId,
+    measurementId: userEnv.measurementId,
 };
 
 // firebase初期化

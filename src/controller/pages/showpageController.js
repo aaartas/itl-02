@@ -122,8 +122,8 @@ const addList = async (iid, name, check, uid, twitterID) => {
         const inviteLink = document.createElement('a');
         let shareLink = 'https://twitter.com/messages/compose?';
         shareLink += 'recipient_id=' + twitterID;
-        shareLink += '&text=' + 'https://go-list.net/show/' + uid + "%0A";
-        shareLink += '行きたいとこリストからの送信%0A' + name + 'に一緒に行きませんか?'
+        shareLink += '&text=' + 'https://' + userEnv.domain + '/show/' + uid + "%0A";
+        shareLink += name + 'にリアクションが届きました!';
         inviteLink.setAttribute('href', shareLink);
 
         inviteButton.setAttribute('src', '/data/invite.svg');

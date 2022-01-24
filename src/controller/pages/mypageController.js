@@ -1,3 +1,5 @@
+import userEnv from 'userEnv';
+
 // マイページ
 export const showMypage = () => {
     // ajaxでHTMLを挿入
@@ -267,7 +269,7 @@ const setEvents = async (uid, isAnonymous) => {
     // ---------- twitterシェアボタン押下時 ----------
     document.getElementById('my-popup-twitter').onclick = async () => {
         document.getElementById('my-popup').style.display = 'none';
-        const url = "https://go-list.net/show/" + uid;
+        const url = "https://" + userEnv.domain + "/show/" + uid;
         const text = "行きたいとこリストを更新しました!";
         const hashtag = "行きたいとこリスト";
         location.href = 'http://twitter.com/share?url=' + url + '&text=' + text + '&hashtags=' + hashtag;
@@ -277,7 +279,7 @@ const setEvents = async (uid, isAnonymous) => {
     // ---------- リンクコピーボタン押下時 ----------
     document.getElementById('my-popup-copylink').onclick = () => {
         document.getElementById('my-popup').style.display = 'none';
-        navigator.clipboard.writeText("https://go-list.net/show/" + uid);
+        navigator.clipboard.writeText("https://" + userEnv.domain + "/show/" + uid);
     };
 
     // ---------- ポップアップ閉じるボタン押下時 ----------

@@ -14,9 +14,9 @@
         "webpack-dev-server": "^4.6.0"
     },
     "scripts": {
-        "build": "webpack && cp public/index.html functions/hosting/",
-        "start": "webpack serve"
+        "build": "NODE_ENV=dev webpack && cp public/index.html functions/hosting/ firebase deploy --only hosting",
+        "production": "NODE_ENV=prd  webpack  && cp public/index.html functions/hosting/",
+        "start": "NODE_ENV=dev webpack serve"
     },
-    "repository": "https://github.com/kanaru-ssk/itl-02.git",
-    "author": "Kimihiko Sasaki <tappurin555@gmail.com>"
+    "repository": "https://github.com/kanaru-ssk/itl-02.git"
 }
