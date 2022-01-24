@@ -1,2 +1,2 @@
-/.gitignore merge=ours
-/public/js/ merge=ours
+.gitignore merge=ours
+public/js merge=ours

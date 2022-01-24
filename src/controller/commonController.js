@@ -126,13 +126,15 @@ export const commonController = async () => {
     });
 
     // デバッグ用
+    const showButton = document.getElementById('menu-button-show');
     if (userEnv.isDevelop) {
-        const showButton = document.getElementById('menu-button-show');
         showButton.onclick = () => {
             routing('show');
             menu.style.display = 'none';
             clickButton();
         };
+    } else {
+        showButton.style.display = 'none';
     }
 }
 
