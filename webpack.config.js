@@ -1,8 +1,8 @@
 const path = require('path');
 const environment = process.env.NODE_ENV || 'dev';
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+    mode: "production",
     entry: `./src/index.js`,
     // ファイルの出力設定
     output: {
@@ -28,8 +28,5 @@ module.exports = {
         alias: {
             userEnv$: path.resolve(__dirname, `.env/${environment}.js`),
         },
-    },
-    plugins: [
-		new CleanWebpackPlugin()
-	]
+    }
 };

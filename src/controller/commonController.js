@@ -33,7 +33,7 @@ export const routing = async (path) => {
             showMypage();
         } else
         if (path === 'show') {
-            history.pushState(null, null, '/show/qluDnqRzxkdLO8U0GqSgUWUltPf1');
+            history.pushState(null, null, '/show/vMpCFBiomENGYnKW99UU6oPfdsw1');
             const { showShowpage } = await import('./pages/showpageController');
             showShowpage();
         } else
