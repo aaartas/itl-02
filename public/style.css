@@ -485,9 +485,13 @@ main {
 
 .howto-img {
     display: block;
-    /* transform: scale(0.8); */
     margin: 5px auto;
-    height: 17vh;
+    /* height: 22vh; */
+    height: 180px;
+}
+
+#how1{
+    transform:translate(0,0)
 }
 
 .howto-text {
