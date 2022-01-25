@@ -9,7 +9,6 @@
     "main": "index.js",
     "license": "MIT",
     "devDependencies": {
-        "clean-webpack-plugin": "^4.0.0",
         "webpack": "^5.65.0",
         "webpack-cli": "^4.9.1",
         "webpack-dev-server": "^4.6.0"
@@ -19,7 +18,7 @@
         "build-prd": "NODE_ENV=prd  webpack --mode production",
         "deploy": "firebase use dev && firebase deploy --only hosting",
         "deploy-prd": "firebase use prd && firebase deploy --only hosting",
-        "start": "NODE_ENV=dev webpack serve"
+        "start": "NODE_ENV=dev webpack-dev-server --mode development"
     },
     "repository": "https://github.com/kanaru-ssk/itl-02.git"
 }

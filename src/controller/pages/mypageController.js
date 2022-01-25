@@ -33,6 +33,8 @@ const loadMypage = async () => {
     // ---------- マイページアクセス時 ----------
     // ログイン状態の確認
     onAuthStateChanged(auth, (user) => {
+        const makelistButton = document.getElementById('makelist-button');
+        makelistButton.style.display = 'none';
         if (user){
             if (user.isAnonymous) {
                 // フッターメッセージ挿入

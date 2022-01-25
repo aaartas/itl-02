@@ -41,7 +41,7 @@ export const drawCanvas = () => {
 
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
-        var context = canvas.getContext('2d');
+        let context = canvas.getContext('2d');
         
         //マウス座標を取得
         
@@ -51,8 +51,8 @@ export const drawCanvas = () => {
         });
 
         //キャンバスのサイズを取得
-        const width= canvas.clientWidth;
-        const height= canvas.clientHeight;
+        let width = canvas.clientWidth;
+        let height = canvas.clientHeight;
         let fillX = width - 30;
         let fillY = 25;
         let fillR = 0;
@@ -60,6 +60,15 @@ export const drawCanvas = () => {
         let buttonR_01 = 0;
         let buttonR_02 = 0;
         let buttonColor = '#F37504';
+
+        window.onresize = () => {
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+            context = canvas.getContext('2d');
+            width = canvas.clientWidth;
+            height = canvas.clientHeight;
+            fillX = width - 30;
+        }
 
         const update = () => {
             if ( isMenuShow ) {
@@ -108,6 +117,7 @@ export const drawCanvas = () => {
             context.fill();
 
             // ハンバーガー
+            // console.log(width)
             context.save();
             context.translate(width - 35, 25);
             context.beginPath ();
