@@ -271,11 +271,10 @@ const setEvents = async (uid, isAnonymous) => {
     // ---------- twitterシェアボタン押下時 ----------
     document.getElementById('my-popup-twitter').onclick = async () => {
         document.getElementById('my-popup').style.display = 'none';
-        const url = "https://" + userEnv.domain + "/show/" + uid;
-        const text = "行きたいとこリストを更新しました!";
-        const hashtag = "行きたいとこリスト";
-        location.href = 'http://twitter.com/share?url=' + url + '&text=' + text + '&hashtags=' + hashtag;
-
+        const url = 'https://' + userEnv.domain + '/show/' + uid;
+        const hashtag = '行きたいとこリスト';
+        const text = '行きたいとこリストを更新しました!%0A%20%23' + hashtag + '%20';
+        location.href = 'http://twitter.com/share?url=' + url + '&text=' + text;
     };
 
     // ---------- リンクコピーボタン押下時 ----------

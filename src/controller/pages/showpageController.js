@@ -124,7 +124,7 @@ const addList = async (iid, name, check, uid, twitterID) => {
         const inviteLink = document.createElement('a');
         let shareLink = 'https://twitter.com/messages/compose?';
         shareLink += 'recipient_id=' + twitterID;
-        shareLink += '&text=' + 'https://' + userEnv.domain + '/show/' + uid + "%0A";
+        shareLink += '&text=' + 'https://' + userEnv.domain + '/show/' + uid + '%0A';
         shareLink += name + 'にリアクションが届きました!';
         inviteLink.setAttribute('href', shareLink);
 
