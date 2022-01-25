@@ -19,7 +19,7 @@
         "build-prd": "NODE_ENV=prd  webpack --mode production",
         "deploy": "firebase use dev && firebase deploy --only hosting",
         "deploy-prd": "firebase use prd && firebase deploy --only hosting",
-        "start": "NODE_ENV=dev webpack serve"
+        "start": "NODE_ENV=dev webpack-dev-server"
     },
     "repository": "https://github.com/kanaru-ssk/itl-02.git"
 }

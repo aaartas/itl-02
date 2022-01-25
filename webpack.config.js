@@ -3,6 +3,7 @@ const environment = process.env.NODE_ENV || 'dev';
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+    mode: "production",
     entry: `./src/index.js`,
     // ファイルの出力設定
     output: {
