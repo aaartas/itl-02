@@ -1,3 +1,5 @@
+import userEnv from 'userEnv';
+
 //閲覧ページ
 export const showShowpage = async () => {
     const path = location.pathname.toString();
