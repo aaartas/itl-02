@@ -134,65 +134,11 @@ canvas {
 /* -------------------------------------------------- */
 /* メイン */
 main {
-    height: 100%;
+    height: calc(100% - 107px);
 }
 
 .pages {
     min-height: 100%;
-}
-
-/* -------------------------------------------------- */
-/* トップページ */
-
-#top-title {
-    font-size: 18px;
-    color: #FFF;
-    width: 300px;
-    margin: 50px auto;
-    text-align: center;
-}
-
-#top-logo-wrapper {
-    background-color: #FFF;
-    width: 250px;
-    height: 250px;
-    margin: 0 auto;
-    border-radius: 50%;
-}
-
-#top-logo-img {
-    width: 200px;
-    height: 200px;
-    margin: 25px;
-}
-
-#top-navi-text {
-    font-size: 18px;
-    color: #FFF;
-    width: 300px;
-    margin: 60px auto 0;
-    text-align: center;
-}
-
-#top-login-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    background-color: #00ACEE;
-    border-radius: 5px;
-    margin: 10px 25px;
-}
-
-#top-login-twitter-logo {
-    margin: 10px;
-    width: 20px;
-}
-
-#top-login-button-text {
-    margin: 10px;
-    font-size: 15px;
-    color: #FFF
 }
 
 /* -------------------------------------------------- */
@@ -512,6 +458,49 @@ main {
     background-color: #EFECEC;
 }
 
+/* -------------------------------------------------- */
+/* 使い方ページ */
+#how-page {
+    max-height: 100%;
+}
+
+#howto-head {
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+    font-size: 24px;
+    color: white;
+}
+
+#howto-container {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.howto {
+    margin: 0 auto 15px;
+    border: white solid 4px;
+    border-radius: 10px;
+}
+
+.howto-img {
+    display: block;
+    /* transform: scale(0.8); */
+    margin: 5px auto;
+    height: 17vh;
+}
+
+.howto-text {
+    margin: 5px auto;
+    text-align: center;
+    width: 80%;
+    font-size: 13px;
+    color: white;
+}
+
+#spacing {
+    height: 56px;
+}
 
 /* -------------------------------------------------- */
 /* 閲覧ページ */
