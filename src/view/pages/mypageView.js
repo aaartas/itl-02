@@ -27,8 +27,7 @@ export const setUserData = (userData) => {
 }
 
 // マイページ表示切り替え
-import { mode } from '../../controller/pages/mypageController';
-export const setView = () => {
+export const setView = (mode) => {
     const bioArea = document.getElementById('my-bio-textarea');
     const title = document.getElementById('my-title');
     const editContents = document.getElementsByClassName('my-edit-mode');
