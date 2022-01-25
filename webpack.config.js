@@ -1,5 +1,5 @@
 const path = require('path');
-const environment = process.env.NODE_ENV || 'dev';
+const environment = process.env.NODE_ENV;
 
 module.exports = {
     mode: "production",
