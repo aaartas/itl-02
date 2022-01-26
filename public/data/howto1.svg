@@ -12,8 +12,53 @@
     <clipPath id="clip-path-4">
       <rect id="長方形_154" data-name="長方形 154" width="45" height="54.782" fill="none"/>
     </clipPath>
+    <filter id="パス_71" x="98.714" y="6.426" width="43.434" height="48.029" filterUnits="userSpaceOnUse">
+      <feOffset dx="5" dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-opacity="0.051"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="パス_72">
+      <feOffset dx="0.1" dy="0.1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur-2"/>
+      <feFlood flood-opacity="0.204" result="color"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur-2"/>
+      <feComposite operator="in" in="color"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+    <filter id="パス_71-2" x="98.714" y="44.977" width="43.434" height="48.029" filterUnits="userSpaceOnUse">
+      <feOffset dx="5" dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-3"/>
+      <feFlood flood-opacity="0.051"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="パス_72-2">
+      <feOffset dx="0.1" dy="0.1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur-4"/>
+      <feFlood flood-opacity="0.204" result="color-2"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur-4"/>
+      <feComposite operator="in" in="color-2"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+    <filter id="パス_71-3" x="98.714" y="85.861" width="43.434" height="48.029" filterUnits="userSpaceOnUse">
+      <feOffset dx="5" dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-5"/>
+      <feFlood flood-opacity="0.051"/>
+      <feComposite operator="in" in2="blur-5"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="パス_72-3">
+      <feOffset dx="0.1" dy="0.1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur-6"/>
+      <feFlood flood-opacity="0.204" result="color-3"/>
+      <feComposite operator="out" in="SourceGraphic" in2="blur-6"/>
+      <feComposite operator="in" in="color-3"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
   </defs>
-  <g id="グループ_149" data-name="グループ 149" transform="translate(-6167.155 -13829.738)">
+  <g id="グループ_190" data-name="グループ 190" transform="translate(-6167.154 -13829.738)">
     <g id="グループ_147" data-name="グループ 147" transform="translate(6244 13829.738)">
       <g id="グループ_128" data-name="グループ 128" transform="translate(18.118 0)">
         <g id="グループ_114" data-name="グループ 114" transform="translate(0)" clip-path="url(#clip-path)">
@@ -35,7 +80,7 @@
     <text id="スタバで課題" transform="translate(6297 13898.808)" fill="#fff" font-size="13" font-family="HiraKakuProN-W3, Hiragino Kaku Gothic ProN"><tspan x="0" y="0">スタバで課題</tspan></text>
     <text id="みんなでBBQ_誰でも_" data-name="みんなでBBQ（誰でも！）" transform="translate(6297 13937.808)" fill="#fff" font-size="9" font-family="HiraKakuProN-W3, Hiragino Kaku Gothic ProN"><tspan x="0" y="0">みんなでBBQ（誰でも！）</tspan></text>
   </g>
-  <g id="グループ_163" data-name="グループ 163" transform="translate(0 63.991)">
+  <g id="グループ_191" data-name="グループ 191" transform="translate(0 63.991)">
     <g id="グループ_161" data-name="グループ 161" clip-path="url(#clip-path-3)">
       <g id="グループ_160" data-name="グループ 160" transform="translate(0 35.589)" style="isolation: isolate">
         <g id="グループ_159" data-name="グループ 159">
@@ -48,5 +93,41 @@
       <path id="パス_56" data-name="パス 56" d="M14.432,19.715c0-8.889,5.028-16.505,12.173-19.708a19.708,19.708,0,0,0,0,39.416C19.46,36.22,14.432,28.6,14.432,19.715" transform="translate(-4.397 -0.004)" fill="#eaa65e"/>
       <path id="パス_57" data-name="パス 57" d="M46.421,19.711a19.711,19.711,0,1,0-38.7,5.268A15.673,15.673,0,0,0,19.279,9.855c0-.385-.013-.766-.042-1.141a12.008,12.008,0,0,0,3.92.656A11.889,11.889,0,0,0,29,7.842,17.448,17.448,0,0,0,45.9,24.222a19.751,19.751,0,0,0,.525-4.511" transform="translate(-4.397)"/>
     </g>
+  </g>
+  <g id="yet" transform="translate(98.714 6.426)">
+    <g transform="matrix(1, 0, 0, 1, -98.71, -6.43)" filter="url(#パス_71)">
+      <path id="パス_71-4" data-name="パス 71" d="M16.736,28.029a1.722,1.722,0,0,1-1.4-.717c-.65-.906-1.91-2.716-3.045-4.663C10,18.71,10,17.21,10,16.717a6.717,6.717,0,1,1,13.434,0c0,.492,0,1.991-2.277,5.927-1.126,1.947-2.376,3.757-3.021,4.663a1.721,1.721,0,0,1-1.4.722" transform="translate(98.71 6.43)" fill="#fff"/>
+    </g>
+    <g data-type="innerShadowGroup">
+      <path id="パス_72-4" data-name="パス 72" d="M31.029,41.614a1.013,1.013,0,0,1-.821-.422c-.643-.9-1.888-2.685-3.008-4.607C25,32.812,25,31.455,25,31.009a6.009,6.009,0,0,1,12.019,0,4.532,4.532,0,0,1-.254,1.465,21.041,21.041,0,0,1-1.928,4.108c-1.111,1.921-2.347,3.711-2.985,4.607a1.012,1.012,0,0,1-.823.424" transform="translate(-14.293 -14.293)" fill="#fff"/>
+      <g transform="matrix(1, 0, 0, 1, -98.71, -6.43)" filter="url(#パス_72)">
+        <path id="パス_72-5" data-name="パス 72" d="M31.029,41.614a1.013,1.013,0,0,1-.821-.422c-.643-.9-1.888-2.685-3.008-4.607C25,32.812,25,31.455,25,31.009a6.009,6.009,0,0,1,12.019,0,4.532,4.532,0,0,1-.254,1.465,21.041,21.041,0,0,1-1.928,4.108c-1.111,1.921-2.347,3.711-2.985,4.607a1.012,1.012,0,0,1-.823.424" transform="translate(84.42 -7.87)" fill="#fff"/>
+      </g>
+    </g>
+    <path id="パス_73" data-name="パス 73" d="M10,10H23.434V28.029H10Z" transform="translate(0 0)" fill="none"/>
+  </g>
+  <g id="yet-2" data-name="yet" transform="translate(98.714 44.977)">
+    <g transform="matrix(1, 0, 0, 1, -98.71, -44.98)" filter="url(#パス_71-2)">
+      <path id="パス_71-5" data-name="パス 71" d="M16.736,28.029a1.722,1.722,0,0,1-1.4-.717c-.65-.906-1.91-2.716-3.045-4.663C10,18.71,10,17.21,10,16.717a6.717,6.717,0,1,1,13.434,0c0,.492,0,1.991-2.277,5.927-1.126,1.947-2.376,3.757-3.021,4.663a1.721,1.721,0,0,1-1.4.722" transform="translate(98.71 44.98)" fill="#fff"/>
+    </g>
+    <g data-type="innerShadowGroup">
+      <path id="パス_72-6" data-name="パス 72" d="M31.029,41.614a1.013,1.013,0,0,1-.821-.422c-.643-.9-1.888-2.685-3.008-4.607C25,32.812,25,31.455,25,31.009a6.009,6.009,0,0,1,12.019,0,4.532,4.532,0,0,1-.254,1.465,21.041,21.041,0,0,1-1.928,4.108c-1.111,1.921-2.347,3.711-2.985,4.607a1.012,1.012,0,0,1-.823.424" transform="translate(-14.293 -14.293)" fill="#fff"/>
+      <g transform="matrix(1, 0, 0, 1, -98.71, -44.98)" filter="url(#パス_72-2)">
+        <path id="パス_72-7" data-name="パス 72" d="M31.029,41.614a1.013,1.013,0,0,1-.821-.422c-.643-.9-1.888-2.685-3.008-4.607C25,32.812,25,31.455,25,31.009a6.009,6.009,0,0,1,12.019,0,4.532,4.532,0,0,1-.254,1.465,21.041,21.041,0,0,1-1.928,4.108c-1.111,1.921-2.347,3.711-2.985,4.607a1.012,1.012,0,0,1-.823.424" transform="translate(84.42 30.68)" fill="#fff"/>
+      </g>
+    </g>
+    <path id="パス_73-2" data-name="パス 73" d="M10,10H23.434V28.029H10Z" transform="translate(0 0)" fill="none"/>
+  </g>
+  <g id="yet-3" data-name="yet" transform="translate(98.714 85.861)">
+    <g transform="matrix(1, 0, 0, 1, -98.71, -85.86)" filter="url(#パス_71-3)">
+      <path id="パス_71-6" data-name="パス 71" d="M16.736,28.029a1.722,1.722,0,0,1-1.4-.717c-.65-.906-1.91-2.716-3.045-4.663C10,18.71,10,17.21,10,16.717a6.717,6.717,0,1,1,13.434,0c0,.492,0,1.991-2.277,5.927-1.126,1.947-2.376,3.757-3.021,4.663a1.721,1.721,0,0,1-1.4.722" transform="translate(98.71 85.86)" fill="#fff"/>
+    </g>
+    <g data-type="innerShadowGroup">
+      <path id="パス_72-8" data-name="パス 72" d="M31.029,41.614a1.013,1.013,0,0,1-.821-.422c-.643-.9-1.888-2.685-3.008-4.607C25,32.812,25,31.455,25,31.009a6.009,6.009,0,0,1,12.019,0,4.532,4.532,0,0,1-.254,1.465,21.041,21.041,0,0,1-1.928,4.108c-1.111,1.921-2.347,3.711-2.985,4.607a1.012,1.012,0,0,1-.823.424" transform="translate(-14.293 -14.293)" fill="#fff"/>
+      <g transform="matrix(1, 0, 0, 1, -98.71, -85.86)" filter="url(#パス_72-3)">
+        <path id="パス_72-9" data-name="パス 72" d="M31.029,41.614a1.013,1.013,0,0,1-.821-.422c-.643-.9-1.888-2.685-3.008-4.607C25,32.812,25,31.455,25,31.009a6.009,6.009,0,0,1,12.019,0,4.532,4.532,0,0,1-.254,1.465,21.041,21.041,0,0,1-1.928,4.108c-1.111,1.921-2.347,3.711-2.985,4.607a1.012,1.012,0,0,1-.823.424" transform="translate(84.42 71.57)" fill="#fff"/>
+      </g>
+    </g>
+    <path id="パス_73-3" data-name="パス 73" d="M10,10H23.434V28.029H10Z" transform="translate(0 0)" fill="none"/>
   </g>
 </svg>
