@@ -2,6 +2,7 @@
     "dependencies": {
         "firebase": "^9.6.0",
         "fs": "^0.0.1-security",
+        "get-outer-size": "^0.1.1",
         "xss": "^1.0.10"
     },
     "name": "listapp",
