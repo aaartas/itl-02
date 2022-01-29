@@ -1515,6 +1515,11 @@ get-intrinsic@^1.0.2:
     has "^1.0.3"
     has-symbols "^1.0.1"
 
+get-outer-size@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/get-outer-size/-/get-outer-size-0.1.1.tgz#0962a75b8c8fd81fe10d5d06f3553dbb0c017ee8"
+  integrity sha512-YZhcAhKtvZeU/3O5h0QGIqqPBqp0cXSpjX3X6VHhWIAkPGK3XCZRx7hH9+nh1hBmFGSohmdnKgcCFjgiJ/o0cg==
+
 get-stream@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/get-stream/-/get-stream-6.0.1.tgz#a262d8eef67aced57c2852ad6167526a43cbf7b7"
