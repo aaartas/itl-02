@@ -14,5 +14,7 @@ const config = {
 // firebase初期化
 export const initFirebase = async () => {
     const { initializeApp } = await import('firebase/app');
-    initializeApp(config);
+    const { getAnalytics } = await import('firebase/analytics');
+    const app = initializeApp(config);
+    getAnalytics(app);
 }
